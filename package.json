@@ -1,0 +1,14 @@
+{
+  "name": "@lifaon/rx-dom",
+  "version": "1.0.0",
+  "description": "Description",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifaon74/rx-dom"
+  },
+  "keywords": [],
+  "author": "Valentin Richard",
+  "license": "MIT",
+  "access": "public",
+  "dependencies": {}
+}
