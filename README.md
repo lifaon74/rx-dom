@@ -3,7 +3,7 @@
 ![npm](https://img.shields.io/npm/dm/@lifaon/rx-dom.svg)
 ![NPM](https://img.shields.io/npm/l/@lifaon/rx-dom.svg)
 ![npm type definitions](https://img.shields.io/npm/types/@lifaon/rx-dom.svg)
-![release date](https://img.shields.io//github/release-date/lifaon74/rx-dom)
+
 
 # 📑 rx-dom
 
