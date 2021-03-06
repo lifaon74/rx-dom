@@ -3,7 +3,7 @@ import { extractRXAttributes, IMappedAttributes } from '../helpers/extract-rx-at
 import { compileRXSwitchCase } from './compile-rx-switch-case';
 import { getChildNodes } from '../../../../../../../light-dom/node/properties/get-child-nodes';
 import { scopeLines } from '../../../../helpers/lines-formating-helpers';
-import { isElementNode } from '../../../../../../../light-dom/node/type/is-element';
+import { isElementNode } from '../../../../../../../light-dom/node/type/is-element-node';
 import { compileRXSwitchDefault } from './compile-rx-switch-default';
 
 

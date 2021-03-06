@@ -1,6 +1,5 @@
 import { createDocumentFragment } from '../../../../../create/create-document-fragment';
 import { attachNode } from '../../../attach-node';
-import { dispatchNodeDetached } from '../../detach-node-with-event';
 import { dispatchNodeAttached } from '../../attach-node-with-event';
 
 

@@ -56,6 +56,15 @@ It compiles to something similar to this:
 observable((value) => div.classList.toggle('my-class', value));
 ```
 
+
+###### alternative syntax
+
+```html
+<input
+  bind-class-my-class="observable"
+/>
+```
+
 ##### Bind class list: [class...]
 
 ```html
@@ -93,6 +102,15 @@ It compiles to something similar to this:
 observable((value) => div.style.setProperty('font-size', value));
 ```
 
+
+###### alternative syntax
+
+```html
+<input
+  bind-style-font-size="observable"
+/>
+```
+
 ##### Bind style list: [style...]
 
 ```html
@@ -128,6 +146,14 @@ It compiles to something similar to this:
 
 ```ts
 observable((value) => div.setAttribute('aria-label', value));
+```
+
+###### alternative syntax
+
+```html
+<input
+  bind-attr-aria-label="observable"
+/>
 ```
 
 ---
@@ -168,6 +194,8 @@ It compiles to something similar to this:
 ```ts
 var myDiv = div;
 ```
+
+ℹ️ the `var` instead of `let` or `const` is intentional: it allows the reference to be available on the whole component.
 
 ###### alternative syntax
 
@@ -357,10 +385,11 @@ Attributes:
 
 It compiles to something similar to this:
 
-TODO
-
 ```ts
-nodeAppendChild(parentNode, createReactiveIfNode(conditionObservable, templateReferenceTrue, templateReferenceFalse));
+nodeAppendChild(parentNode, createReactiveSwitchNode(observable, new Map([
+  [valueA, templateReferenceA],
+  [valueB, templateReferenceB],
+]), templateReferenceC));
 ```
 
 ###### alternative syntax
@@ -407,17 +436,17 @@ Which is equivalent to:
     name="uuidB"
 >
   <tag-mame-b
-      ...otherAttributesB
+    ...otherAttributesB
   >
     ...contentB
   </tag-mame-b>
 </rx-template>
 
 <rx-template
-    name="uuidC"
+  name="uuidC"
 >
   <tag-mame-c
-      ...otherAttributesC
+    ...otherAttributesC
   >
     ...contentC
   </tag-mame-c>
@@ -518,26 +547,21 @@ It only accepts `*command` attributes.
 *Example:*
 
 ```html
-a
+List of names:
 <rx-container
-  *for="let item of of(1, 2, 3)"
+  *for="let item of of('Alice', 'Bob', 'Carol')"
 >
-  {{ of(item) }}
+  {{ of(item) }},
 </rx-container>
-b
 ```
 
 Results in:
 
 ```html
-a
-1
-2
-3
-b
+List of names: Alice, Bob, Carol
 ```
 
-
+**NOTE:** as you may see there's no element around the text nodes.
 
 
 

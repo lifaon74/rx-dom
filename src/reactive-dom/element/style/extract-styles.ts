@@ -1,8 +1,8 @@
-import { uuid } from '../../../../misc/helpers/uuid';
-
 /**
  * Allows pattern like 'property.unit': value
  */
+import { uuid } from '../../../misc';
+
 const STYLE_KEY_EXTRACTOR_REG_EXP: RegExp = new RegExp('\\.([a-zA-Z%]+)$');
 
 export type IStylePropertyAndUnit = [propertyName: string, unit: string | null];

@@ -1,6 +1,6 @@
 {
   "name": "@lifaon/rx-dom",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-alpha.1",
   "description": "Description",
   "repository": {
     "type": "git",
@@ -10,6 +10,9 @@
   "author": "Valentin Richard",
   "license": "MIT",
   "access": "public",
+  "__dependencies": {
+    "@lifaon/rx-js-light": "^1.0.0-beta.1"
+  },
   "dependencies": {
     "@lifaon/rx-js-light": "^1.0.0-beta.1"
   }

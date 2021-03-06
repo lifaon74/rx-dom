@@ -1,7 +1,7 @@
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
 import { extractClassNamesFromAny, IExtractClassNamesFromAny } from './extract-class-names';
 import { differClassNames } from './differ-class-names';
-import { ISubscribeFunction } from '../../../../types/subscribe-function/subscribe-function.type';
+import { ISubscribeFunction } from '@lifaon/rx-js-light';
 
 export type IReactiveClassListValue = IExtractClassNamesFromAny;
 

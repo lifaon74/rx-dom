@@ -1,7 +1,5 @@
-import { uuid } from '../../../../misc/helpers/uuid';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
 import { IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
-import { ISubscribeFunction } from '../../../../types/subscribe-function/subscribe-function.type';
 import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
 import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
 import { detachManyNodesWithEvent } from '../../../light-dom/node/move/node/with-event/bulk/detach-many-nodes-with-event';
@@ -10,6 +8,8 @@ import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/refer
 import {
   createReferenceNode, IReferenceNode
 } from '../../../light-dom/node/create/reference-node/create-reference-node';
+import { ISubscribeFunction } from '@lifaon/rx-js-light';
+import { uuid } from '../../../misc';
 
 export type IReactiveContent = ISubscribeFunction<IDocumentFragmentOrNull>;
 

@@ -1,11 +1,6 @@
-import { uuid } from '../../../../misc/helpers/uuid';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
 import { IHTMLTemplate, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
 import { trackByIdentity } from './track-by-identity';
-import { ISource } from '../../../../source/source.type';
-import { IEmitFunction } from '../../../../types/emit-function/emit-function.type';
-import { ISubscribeFunction } from '../../../../types/subscribe-function/subscribe-function.type';
-import { distinctEmitPipe } from '../../../../pipes/distinct-emit-pipe';
 import { detachNodeWithEvent } from '../../../light-dom/node/move/node/with-event/detach-node-with-event';
 import { attachDocumentFragmentWithAttachEvent } from '../../../light-dom/node/move/node/with-event/bulk/fragment/attach-document-fragment-with-event';
 import { getChildNodes } from '../../../light-dom/node/properties/get-child-nodes';
@@ -18,7 +13,10 @@ import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/refer
 import {
   createReferenceNode, IReferenceNode
 } from '../../../light-dom/node/create/reference-node/create-reference-node';
-import { createMulticastReplayLastSource } from '../../../../source/replay-last-source/derived/create-multicast-replay-last-source';
+import {
+  createMulticastReplayLastSource, distinctEmitPipe, IEmitFunction, ISource, ISubscribeFunction
+} from '@lifaon/rx-js-light';
+import { uuid } from '../../../misc';
 
 interface INodesAndIndex {
   nodes: IHTMLTemplateNodeList | DocumentFragment;

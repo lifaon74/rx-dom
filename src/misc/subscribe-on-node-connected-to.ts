@@ -1,10 +1,6 @@
-
 import { TOP_PARENT_NODE } from './top-parent-node-constant';
-import {
-  onNodeConnectedToWithImmediate, onNodeConnectedToWithImmediateCached
-} from '../light-dom/node/state/on-node-connected-to';
-import { IEmitFunction } from '../../types/emit-function/emit-function.type';
-import { ISubscribeFunction, IUnsubscribeFunction } from '../../types/subscribe-function/subscribe-function.type';
+import { onNodeConnectedToWithImmediateCached } from '../light-dom/node/state/on-node-connected-to';
+import { IEmitFunction, ISubscribeFunction, IUnsubscribeFunction } from '@lifaon/rx-js-light';
 
 export function subscribeOnNodeConnectedTo<GValue>(
   node: Node,

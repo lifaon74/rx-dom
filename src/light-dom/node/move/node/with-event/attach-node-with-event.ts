@@ -1,6 +1,6 @@
 import {
   createListenerBuilderFunctions, createListenerMap
-} from '../../../../../../misc/event-listener/build-event-listener';
+} from '@lifaon/rx-js-light';
 import { attachNode } from '../attach-node';
 
 

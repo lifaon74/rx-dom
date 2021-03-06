@@ -1,13 +1,25 @@
+import { dashCaseToCamelCase } from '../../../../../../../misc/case-converters/dash-case';
+
+
 /**
  * Syntax:
  *  - standard: #name
  *  - prefixed: ref-name
  */
-
 export interface IReferenceProperty {
   readonly name: string;
   readonly value: string;
   readonly prefixMode: boolean;
+}
+
+/*--------*/
+
+export function getReferencePropertyJSName(
+  referenceProperty: IReferenceProperty
+): string {
+  return (referenceProperty.value === '')
+    ? dashCaseToCamelCase(referenceProperty.name)
+    : referenceProperty.value;
 }
 
 

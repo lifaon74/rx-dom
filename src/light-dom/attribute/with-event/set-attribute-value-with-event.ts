@@ -1,6 +1,5 @@
-import { createListenerBuilderFunctions, createListenerMap } from '../../../../misc/event-listener/build-event-listener';
+import { createListenerBuilderFunctions, createListenerMap, freeze, ISubscribeFunction } from '@lifaon/rx-js-light';
 import { getAttributeValue } from '../get-attribute-value';
-import { ISubscribeFunction } from '../../../../types/subscribe-function/subscribe-function.type';
 import { IAttributeValue, setAttributeValue } from '../set-attribute-value';
 
 const ATTRIBUTE_REFERENCE_STORE = new WeakMap<Element, Map<string, IAttributeReference>>();
@@ -25,7 +24,7 @@ export function generateAttributeReference(
   if (map.has(name)) {
     return map.get(name) as IAttributeReference;
   } else {
-    const reference: IAttributeReference = Object.freeze({
+    const reference: IAttributeReference = freeze({
       element,
       name,
     });

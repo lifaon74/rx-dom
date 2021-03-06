@@ -1,12 +1,10 @@
-import { noop } from '../../../../misc/helpers/noop';
 import { onNodeDetachedListener } from '../move/node/with-event/detach-node-with-event';
 import { onNodeAttachedListener } from '../move/node/with-event/attach-node-with-event';
-import { IEmitFunction } from '../../../../types/emit-function/emit-function.type';
-import { ISubscribeFunction, IUnsubscribeFunction } from '../../../../types/subscribe-function/subscribe-function.type';
 import { getParentNode } from '../properties/get-parent-node';
 import { isDocumentFragment } from '../type/is-document-fragment';
-import { pipeSubscribeFunction } from '../../../../functions/piping/pipe-subscribe-function/pipe-subscribe-function';
-import { shareSubscribePipe } from '../../../../subscribe-function/subscribe-pipe/source-related/share-subscribe-pipe';
+import {
+  IEmitFunction, ISubscribeFunction, IUnsubscribeFunction, pipeSubscribeFunction, shareSubscribePipe, noop
+} from '@lifaon/rx-js-light';
 
 
 export function onNodeConnectedTo(

@@ -1,6 +1,6 @@
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
 import { extractUnit, IStylePropertyAndUnit } from './extract-styles';
-import { ISubscribeFunction } from '../../../../types/subscribe-function/subscribe-function.type';
+import { ISubscribeFunction } from '@lifaon/rx-js-light';
 
 export type IDynamicStyleValue = string | number | null;
 

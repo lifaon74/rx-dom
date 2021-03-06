@@ -3,11 +3,13 @@ import { DEFAULT_ARITHMETIC_CONSTANTS_TO_IMPORT } from './default-arithmetic-con
 import { DEFAULT_FROM_CONSTANTS_TO_IMPORT } from './default-from-constants-to-import.constant';
 import { DEFAULT_COMPARISON_CONSTANTS_TO_IMPORT } from './default-comparison-constants-to-import.constant';
 import { DEFAULT_PIPE_CONSTANTS_TO_IMPORT } from './default-pipe-constants-to-import.constant';
+import { DEFAULT_CASTING_CONSTANTS_TO_IMPORT } from './default-casting-constants-to-import.constant';
 
 export const DEFAULT_OBSERVABLE_CONSTANTS_TO_IMPORT = {
   ...DEFAULT_LOGIC_CONSTANTS_TO_IMPORT,
   ...DEFAULT_ARITHMETIC_CONSTANTS_TO_IMPORT,
   ...DEFAULT_COMPARISON_CONSTANTS_TO_IMPORT,
+  ...DEFAULT_CASTING_CONSTANTS_TO_IMPORT,
   ...DEFAULT_FROM_CONSTANTS_TO_IMPORT,
   ...DEFAULT_PIPE_CONSTANTS_TO_IMPORT,
 };

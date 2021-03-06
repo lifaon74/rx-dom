@@ -1,8 +1,8 @@
-import { uuid } from '../../../misc/helpers/uuid';
 import { deactivateStyleElement } from './helpers/deactivate-style-element';
 import { setAttributeValue } from '../../light-dom/attribute/set-attribute-value';
 import { reflectCSSStyleSheetOnOwnStyleElement } from './helpers/reflect-css-style-sheet-on-own-style-element';
 import { getAttributeValue } from '../../light-dom/attribute/get-attribute-value';
+import { uuid } from '../../misc';
 
 export const HOST_ATTRIBUTE_NAME = 'host';
 
@@ -10,7 +10,7 @@ export function prepareStyleElementForComponent(
   htmlStyleElement: HTMLStyleElement,
   refreshCSS: boolean = false,
 ): void {
-  const key: string = uuid();
+  const key: string = uuid(); // TODO instead of uuid, create an increment counter to reduce generated css size
   const id: string = `style-${ key }`;
   setAttributeValue(htmlStyleElement, HOST_ATTRIBUTE_NAME, id);
   deactivateStyleElement(htmlStyleElement);

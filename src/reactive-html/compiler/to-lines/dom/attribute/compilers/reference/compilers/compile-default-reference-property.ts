@@ -1,12 +1,20 @@
 import { ILines } from '../../../../../compiler.types';
-import { IReferenceProperty } from '../extract-reference-property';
+import { getReferencePropertyJSName, IReferenceProperty } from '../extract-reference-property';
 
 
 export function compileDefaultReferenceProperty(
   referenceProperty: IReferenceProperty,
 ): ILines {
-  return [
-    `// reference '${ referenceProperty.name }'`,
-    `var ${ referenceProperty.name } = node;`,
+  const variableName: string = getReferencePropertyJSName(referenceProperty);
+
+  const lines: ILines = [
+    `// reference '${ variableName }'`,
+    `var ${ variableName } = node;`,
   ];
+
+  // if (referenceProperty.value !== '') {
+  //   lines.push(`setNodeReference(${ JSON.stringify(referenceProperty.value) }, ${ variableName });`);
+  // }
+
+  return lines;
 }

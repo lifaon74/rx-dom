@@ -1,4 +1,4 @@
-import { ContainerNode } from '../create/__container-node/container-node';
+import { ContainerNode } from './container-node';
 
 export function isContainerNode(
   node: Node,

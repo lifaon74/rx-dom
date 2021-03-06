@@ -4,22 +4,24 @@
 ![NPM](https://img.shields.io/npm/l/@lifaon/rx-dom.svg)
 ![npm type definitions](https://img.shields.io/npm/types/@lifaon/rx-dom.svg)
 
-
-# 📑 rx-dom
-
-**WORK IN PROGRESS - NOT READY FOR USE**
-
+# 🌱 rx-dom
 
 [comment]: <> (https://github.com/tusharmath/reactive-dom#virtualdomvsreactivedom)
 
-**rx-dom** is an [observable based](https://github.com/lifaon74/rx-js-light) library for building very high performance user interfaces.
+**rx-dom** is an [observable based](https://github.com/lifaon74/rx-js-light) library for building very high performance user interfaces:
+you get the angular like syntax with a near native performance.
 
-It binds DOM nodes with observables to automatically update only the relevant nodes, ensuring maximal efficiency.
+It binds for you the DOM nodes with observables to automatically update only the relevant nodes, ensuring maximal efficiency.
 
 It's light, fast, and simple ! Give it a try !
 
+[SYNTAX](./src/syntax.md)
+
 
 ## 📦 Installation
+
+**ALPHA**: the lib is currently in alpha, meaning it's stable enough for 80% of its functions,
+but some may evolve in the future. Feel free to test and give feedback.
 
 ```bash
 yarn add @lifaon/rx-dom
@@ -27,13 +29,14 @@ yarn add @lifaon/rx-dom
 npm install @lifaon/rx-dom --save
 ```
 
+**seed coming soon**
+
 This library supports:
 
 - **common-js** (require): transpiled as es5, with .cjs extension, useful for old nodejs versions
 - **module** (esm import): transpiled as esnext, with .mjs extension (requires node resolution for external packages)
 
-In a **node** environment the library works immediately (no extra tooling required),
-however, in a **browser** environment, you'll need to resolve external imports thought a bundler like
+In a **browser** environment, you'll need to resolve external imports thought a bundler like
 [snowpack](https://www.snowpack.dev/),
 [rollup](https://rollupjs.org/guide/en/),
 [webpack](https://webpack.js.org/),
@@ -46,32 +49,27 @@ or directly using [skypack](https://www.skypack.dev/):
 
 #### Differences with other popular frameworks:
 
-Popular frameworks are more mature and offers more tools, but this project may close the gap in the future.
-Here we'll speak only on the methods used by the frameworks to update the DOM, and how this library improved these weaknesses.
+Feature | Angular | Virtual DOM | rx-dom
+---     |--- |---          | ---
+**Semantics**| html with special flavour | `jsx` or `hyperscript` | html with special flavour
+**Memory** | **low**: data are directly reflected on the nodes | **high** a lot of virtual DOM elements are created every time the DOM updates, and the number of virtual nodes is also linearly proportional to size of the DOM tree. | **very low**: once the data pipeline is set, on every update the data is directly reflected on the node.
+**CPU** | **medium**: when zoneJs triggers, all expressions in the html are evaluated and reflected on the nodes | **high** because a lot of time is spent regenerating the Virtual DOM, calculating the diff and figuring out what changed. | **low**: the nodes subscribe only to the part of the data that is needed for rendering / updating them. It's almost unbeatable, because when the data changes, it directly updates the nodes.
+**Size** | ~50KB | ~10KB (preact) | ~10KB (including the jit compiler)
 
-##### Angular
+*size is calculated for: 'hello world' project, compiled, minified and gzipped.
 
-Angular uses [zone.js](https://github.com/angular/zone.js/) to refresh the DOM:
+**rx-dom** anticipated aot (compiled when bundling, instead of doing it in the browser): this would remove almost 8KB (coming from the jit compiler).
+It currently lacks of its own cli, so AOT will be available in a future release.
 
-- it binds the nodes with the *expressions* we assigned to them
-- when an async function executes in the context of your component, it re-evaluates all these *expressions* to refresh the DOM
+We may conclude that current frameworks are pretty efficient, but are not as optimized as they could be.
+**rx-dom** tries to do better by conciliating an elegant syntax with maximal performances.
 
-It's very efficient, and offers a simple syntax, but with hundreds of properties per component it's not optimal, as all of them are evaluated each time.
+The learning curve about [observables](https://github.com/lifaon74/rx-js-light) is a little longer,
+but once you're comfortable with this principle, you'll fully enjoy the potential, and the performances it provides.
 
-**rx-dom** only updates the nodes bound with an observable. So updating one property only changes the nodes which listen to it.
+Obviously, current popular frameworks are more mature and offers more tools, having a very important community.
+However, this project may close the gap in the future.
 
-
-##### React (or any virtual DOM based framework like Vue.js)
-
-It uses [hooks](https://reactjs.org/docs/hooks-intro.html) to re-generate a VirtualDOM and reflect it on the DOM.
-
-Actually *hooks* are extremely close to observables, but re-generating each time the VirtualDOM when a hook is updated is not efficient at all.
-
-Check [this comparison table](https://github.com/tusharmath/reactive-dom#virtualdomvsreactivedom) for more details.
-
-
-At the end, we may conclude that current framework trade a lot of the performances for an elegant syntax.
-**rx-dom** tries to accomplish both: an elegant syntax with maximal performances.
 
 
 

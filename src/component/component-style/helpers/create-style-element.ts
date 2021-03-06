@@ -10,6 +10,7 @@ export function createStyleElement(
   disabled: boolean = false,
 ): HTMLStyleElement {
   const styleElement: HTMLStyleElement = createElementNode('style');
+  styleElement.sheet
   nodeAppendChild(styleElement, createTextNode(css));
   nodeAppendChild(document.head, styleElement);
   (styleElement.sheet as StyleSheet).disabled = disabled;

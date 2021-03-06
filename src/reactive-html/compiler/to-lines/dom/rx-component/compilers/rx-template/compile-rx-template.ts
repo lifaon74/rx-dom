@@ -1,11 +1,10 @@
 import { ICompilerReturn, ILines } from '../../../../compiler.types';
 import {
-  convertLetPropertyToObjectPropertyEntry,
-  extractLetProperty, ILetProperty
+  convertLetPropertyToObjectPropertyEntry, extractLetProperty, ILetProperty
 } from '../helpers/extract-let-property';
 import { indentLines } from '../../../../helpers/lines-formating-helpers';
 import {
-  extractReferenceProperty, IReferenceProperty
+  extractReferenceProperty, getReferencePropertyJSName, IReferenceProperty
 } from '../../../attribute/compilers/reference/extract-reference-property';
 import { compileNodes } from '../../../nodes/compile-nodes';
 import { getChildNodes } from '../../../../../../../light-dom/node/properties/get-child-nodes';
@@ -29,7 +28,8 @@ export function compileRXTemplate(
 ): ILines | null {
   const name: string = node.tagName.toLowerCase();
   if (name === 'rx-template') {
-    let referenceName!: string;
+    // let referenceName: string | undefined;
+    let referenceProperty!: IReferenceProperty;
     const constantsToImports: IObjectProperties = [];
 
     const attributes: Attr[] = Array.from(node.attributes);
@@ -37,11 +37,15 @@ export function compileRXTemplate(
       const attribute: Attr = attributes[i];
       const letProperty: ILetProperty | null = extractLetProperty(attribute);
       if (letProperty === null) {
-        const referenceProperty: IReferenceProperty | null = extractReferenceProperty(attribute);
-        if (referenceProperty === null) {
+        const _referenceProperty: IReferenceProperty | null = extractReferenceProperty(attribute);
+        if (_referenceProperty === null) {
           if (attribute.name === 'name') {
-            if (referenceName === void 0) {
-              referenceName = attribute.value;
+            if ((referenceProperty === void 0)) {
+              referenceProperty = {
+                value: attribute.value,
+                name: '',
+                prefixMode: false,
+              }
             } else {
               throw new Error(`Found duplicate template's name through attribute 'name'`);
             }
@@ -49,8 +53,8 @@ export function compileRXTemplate(
             throw new Error(`Found invalid attribute '${ attribute.name }'`);
           }
         } else {
-          if (referenceName === void 0) {
-            referenceName = referenceProperty.name;
+          if (referenceProperty === void 0) {
+            referenceProperty = _referenceProperty;
           } else {
             throw new Error(`Found duplicate template's name through reference #${ referenceProperty.name }`);
           }
@@ -60,27 +64,31 @@ export function compileRXTemplate(
       }
     }
 
+    if (referenceProperty === void 0) {
+      throw new Error(`Missing a reference for this template`);
+    }
+
     let compiledChildren: ICompilerReturn = compileNodes(getChildNodes(node));
     if (compiledChildren === null) {
       compiledChildren = [];
     }
 
-    return [
+    const variableName: string = getReferencePropertyJSName(referenceProperty);
+
+    const lines: ILines = [
       `// template`,
-      `var ${ referenceName } = (`,
+      `var ${ variableName } = (`,
       ...indentLines(
         generateRXTemplateFunctionLines(compiledChildren, constantsToImports),
       ),
       `);`,
     ];
-    // return [
-    //   `setTemplateReference(`,
-    //   ...indentLines([
-    //     `${ JSON.stringify(referenceName) },`,
-    //     ...generateRXTemplateFunctionLines(constantsToImports, compiledChildren),
-    //   ]),
-    //   `);`,
-    // ];
+
+    // if (referenceProperty.value !== '') {
+    //   lines.push(`setTemplateReference(${ JSON.stringify(referenceProperty.value) }, ${ variableName });`);
+    // }
+
+    return lines;
   } else {
     return null;
   }

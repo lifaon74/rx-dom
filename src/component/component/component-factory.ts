@@ -10,10 +10,13 @@ import { TOP_PARENT_NODE } from '../../misc/top-parent-node-constant';
 import { registerCustomElement } from '../custom-element/custom-element-functions';
 import { IHTMLTemplate } from '../../light-dom/template/template.type';
 import { IComponentStyle } from '../component-style/component-style.type';
-import { incrementStyleElementUsageCount } from '../component-style/style-element-usage-count';
+import {
+  decrementStyleElementUsageCount, incrementStyleElementUsageCount
+} from '../component-style/style-element-usage-count';
 import { activateStyleElement } from '../component-style/helpers/activate-style-element';
 import { deactivateStyleElement } from '../component-style/helpers/deactivate-style-element';
 import { applyStyleElementForComponent } from '../component-style/prepare-style-element-for-component';
+import { freeze } from '@lifaon/rx-js-light';
 
 function loadComponentTemplate<GData extends object>(
   instance: IComponent<GData>,
@@ -46,7 +49,7 @@ function loadComponentStyle<GData extends object>(
               activateStyleElement(htmlStyleElement);
             }
           } else {
-            if (incrementStyleElementUsageCount(htmlStyleElement) === 0) {
+            if (decrementStyleElementUsageCount(htmlStyleElement) === 0) {
               deactivateStyleElement(htmlStyleElement);
             }
           }
@@ -60,9 +63,11 @@ function initComponent<GData extends object>(
   options: IComponentOptions<GData>,
 ): void {
 
-  const data: GData = (typeof instance.onCreate === 'function')
-    ? Object.freeze(instance.onCreate())
-    : Object.freeze(Object.create(null)) as GData;
+  const data: GData = freeze(
+    (typeof instance.onCreate === 'function')
+      ? instance.onCreate()
+      : Object.create(null)
+  ) as GData;
 
   Promise.all([
     loadComponentTemplate<GData>(instance, data, options.template),

@@ -1,5 +1,5 @@
-import { createNetworkErrorFromResponse } from '../../../../misc/errors/network-error/create-network-error';
 import { compileReactiveCSSAsComponentStyle } from '../compile/compile-reactive-css-as-component-style';
+import { createNetworkErrorFromResponse } from '@lifaon/rx-js-light';
 
 
 export function loadAndCompileReactiveCSSAsComponentStyle(
