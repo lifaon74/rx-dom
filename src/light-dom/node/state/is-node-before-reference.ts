@@ -30,5 +30,5 @@ export function isNodeNotMovingForInsertBefore(
       (node === referenceNode)
       || (node === getPreviousSibling(referenceNode))
     )
-  ;
+    ;
 }

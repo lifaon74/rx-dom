@@ -18,7 +18,6 @@ observable((value) => text.value = value);
 
 #### Bind: []
 
-
 ##### Bind property: [property]
 
 ```html
@@ -41,7 +40,6 @@ observable((value) => input.value = value);
 />
 ```
 
-
 ##### Bind class: [class.class-name]
 
 ```html
@@ -55,7 +53,6 @@ It compiles to something similar to this:
 ```ts
 observable((value) => div.classList.toggle('my-class', value));
 ```
-
 
 ###### alternative syntax
 
@@ -87,7 +84,6 @@ observable((classes) => div.className = classes);
 ></div>
 ```
 
-
 ##### Bind style: [style.style-property]
 
 ```html
@@ -101,7 +97,6 @@ It compiles to something similar to this:
 ```ts
 observable((value) => div.style.setProperty('font-size', value));
 ```
-
 
 ###### alternative syntax
 
@@ -132,7 +127,6 @@ observable((styles) => div.setAttribute('style', styles));
   bind-style---="observable"
 ></div>
 ```
-
 
 ##### Bind attribute: [attr.name]
 
@@ -180,12 +174,11 @@ div.addEventListener('click', observer);
 ></div>
 ```
 
-
 #### Reference: #referenceName
 
 ```html
 <div
-  #myDiv
+  #my-div
 ></div>
 ```
 
@@ -197,11 +190,21 @@ var myDiv = div;
 
 ℹ️ the `var` instead of `let` or `const` is intentional: it allows the reference to be available on the whole component.
 
+⚠️ html attributes are case-insensitive, so the reference is converted from `dash-case` to `camelCase`.
+
+ℹ️ you may set a value to this ref attribute. In this case, the value will define the name of the javascript variable:
+
+```html
+<div
+  #div="myDiv"
+></div>
+```
+
 ###### alternative syntax
 
 ```html
 <div
-  ref-myDiv
+  ref-my-div
 ></div>
 ```
 
@@ -228,13 +231,11 @@ Attributes:
 - `name`: the name of the template
 - `let-XXX`: declare a variable for this template
 
-
 It compiles to something similar to this:
 
 ```ts
 var templateReference = ({ var1, var2 }): DocumentFragment => content;
 ```
-
 
 #### Template injection: rx-inject-template
 
@@ -267,8 +268,7 @@ attachTemplate(templateReference, { var1: data1, var2: data2 }, parentNode);
 ></rx-inject-content>
 ```
 
-Injects dynamically a DocumentFragment into the DOM.
-Previously inserted nodes are removed.
+Injects dynamically a DocumentFragment into the DOM. Previously inserted nodes are removed.
 
 Attributes:
 
@@ -279,7 +279,6 @@ It compiles to something similar to this:
 ```ts
 nodeAppendChild(parentNode, createReactiveContentNode(observable));
 ``` 
-
 
 #### Conditional boolean template injection: rx-if or *if
 
@@ -342,7 +341,6 @@ Which is equivalent to:
   true="uuid"
 ></rx-if>
 ```
-
 
 #### Conditional switch template injection: rx-switch
 
@@ -471,7 +469,6 @@ Which is equivalent to:
 
 #### For loop template injection: rx-for-loop or *for
 
-
 ```html
 <rx-for-loop
   items="itemsObservable"
@@ -492,7 +489,6 @@ Attributes:
 - `items`: the SubscribeFunction to listen to
 - `template`: the name of the template to inject for each values
 - `track-by` (optional): a trackByFunction to known which nodes may be re-used
-
 
 It compiles to something similar to this:
 

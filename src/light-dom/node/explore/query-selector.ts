@@ -1,5 +1,3 @@
-
-
 export function querySelector<GElement extends Element>(
   parentNode: ParentNode,
   selector: string,

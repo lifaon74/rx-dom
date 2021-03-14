@@ -1,11 +1,11 @@
 import { IHTMLTemplate } from '../../../light-dom/template/template.type';
-import { compileReactiveHTMLAsComponentTemplate } from '../compile/compile-reactive-html-as-component-template';
+import { compileAndEvaluateReactiveHTMLAsComponentTemplate } from '../compile/with-evaluation/compile-and-evaluate-reactive-html-as-component-template';
 import { createNetworkErrorFromResponse } from '@lifaon/rx-js-light';
 
 
-export function loadAndCompileReactiveHTMLAsComponentTemplate<GData extends object>(
+export function loadCompileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends object>(
   url: string,
-  constantsToImport?: object,
+  constantsToImport: object,
   dataName?: string,
 ): Promise<IHTMLTemplate<GData>> {
   return fetch(url)
@@ -17,6 +17,6 @@ export function loadAndCompileReactiveHTMLAsComponentTemplate<GData extends obje
       }
     })
     .then((content: string) => {
-      return compileReactiveHTMLAsComponentTemplate(content, constantsToImport, dataName);
+      return compileAndEvaluateReactiveHTMLAsComponentTemplate(content, constantsToImport, dataName);
     });
 }

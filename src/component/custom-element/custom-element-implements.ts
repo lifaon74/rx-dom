@@ -1,4 +1,3 @@
-
 /** IMPLEMENTS **/
 
 export interface ConnectedCallBack {

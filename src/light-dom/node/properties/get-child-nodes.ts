@@ -1,4 +1,3 @@
-
 export function getChildNodes<GChild extends ChildNode>(
   node: Node,
 ): GChild[] {

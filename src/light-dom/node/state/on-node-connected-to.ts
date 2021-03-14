@@ -3,7 +3,7 @@ import { onNodeAttachedListener } from '../move/node/with-event/attach-node-with
 import { getParentNode } from '../properties/get-parent-node';
 import { isDocumentFragment } from '../type/is-document-fragment';
 import {
-  IEmitFunction, ISubscribeFunction, IUnsubscribeFunction, pipeSubscribeFunction, shareSubscribePipe, noop
+  IEmitFunction, ISubscribeFunction, IUnsubscribeFunction, noop, pipeSubscribeFunction, shareSubscribePipe
 } from '@lifaon/rx-js-light';
 
 

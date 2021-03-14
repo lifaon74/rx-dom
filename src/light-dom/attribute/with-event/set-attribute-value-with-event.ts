@@ -19,6 +19,7 @@ export function generateAttributeReference(
     map = ATTRIBUTE_REFERENCE_STORE.get(element) as Map<string, IAttributeReference>;
   } else {
     map = new Map<string, IAttributeReference>();
+    ATTRIBUTE_REFERENCE_STORE.set(element, map);
   }
 
   if (map.has(name)) {
@@ -34,7 +35,6 @@ export function generateAttributeReference(
 }
 
 /*---*/
-
 
 
 const ON_ATTRIBUTE_CHANGE_LISTENERS = createListenerMap<IAttributeReference, IAttributeValue>();

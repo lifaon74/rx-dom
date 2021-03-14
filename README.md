@@ -29,7 +29,7 @@ yarn add @lifaon/rx-dom
 npm install @lifaon/rx-dom --save
 ```
 
-**seed coming soon**
+**[seed coming soon](https://github.com/lifaon74/rx-js-light-debug-vite)**
 
 This library supports:
 
@@ -52,13 +52,14 @@ or directly using [skypack](https://www.skypack.dev/):
 Feature | Angular | Virtual DOM | rx-dom
 ---     |--- |---          | ---
 **Semantics**| html with special flavour | `jsx` or `hyperscript` | html with special flavour
-**Memory** | **low**: data are directly reflected on the nodes | **high** a lot of virtual DOM elements are created every time the DOM updates, and the number of virtual nodes is also linearly proportional to size of the DOM tree. | **very low**: once the data pipeline is set, on every update the data is directly reflected on the node.
+**Memory** | **medium**: data are directly reflected on the nodes, but the framework itself is heavy | **high** a lot of virtual DOM elements are created every time the DOM updates, and the number of virtual nodes is also linearly proportional to size of the DOM tree. | **very low**: once the data pipeline is set, on every update the data is directly reflected on the node.
 **CPU** | **medium**: when zoneJs triggers, all expressions in the html are evaluated and reflected on the nodes | **high** because a lot of time is spent regenerating the Virtual DOM, calculating the diff and figuring out what changed. | **low**: the nodes subscribe only to the part of the data that is needed for rendering / updating them. It's almost unbeatable, because when the data changes, it directly updates the nodes.
-**Size** | ~50KB | ~10KB (preact) | ~10KB (including the jit compiler)
+**Size** | ~50KB | ~10KB (preact) | ~10KB (with jit compiler), <4KB (aot)
 
 *size is calculated for: 'hello world' project, compiled, minified and gzipped.
 
-**rx-dom** anticipated aot (compiled when bundling, instead of doing it in the browser): this would remove almost 8KB (coming from the jit compiler).
+**rx-dom** anticipated aot (compiled when bundling, instead of doing it in the browser):
+this would remove a few bytes coming from the jit compiler, and fasten the execution.
 It currently lacks of its own cli, so AOT will be available in a future release.
 
 We may conclude that current frameworks are pretty efficient, but are not as optimized as they could be.

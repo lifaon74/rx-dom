@@ -1,4 +1,3 @@
-
 /**
  * An HTMLTemplate is a function which returns a DocumentFragment
  */
@@ -16,7 +15,6 @@ export type IHTMLTemplateNodeList = readonly ChildNode[];
 
 export type IGenericHTMLTemplate = IHTMLTemplate<object>;
 export type IGenericHTMLTemplateOrNull = IGenericHTMLTemplate | null;
-
 
 
 // export type ITemplateNodeList = ArrayLike<IStandardNode>;

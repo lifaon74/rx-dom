@@ -44,7 +44,7 @@ export function compileRXSwitch(
         if (result === null) {
            const result: ILines | null = compileRXSwitchDefault(childNode, SWITCH_DEFAULT_NAME);
           if (result === null) {
-            throw new Error(`Fond invalid element '${ childNode.tagName.toLowerCase() }'`);
+            throw new Error(`Found invalid element '${ childNode.tagName.toLowerCase() }'`);
           } else {
             if (switchDefaultFound) {
               throw new Error(`Switch - default already defined`);

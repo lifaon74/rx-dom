@@ -1,6 +1,4 @@
-import {
-  createListenerBuilderFunctions, createListenerMap
-} from '@lifaon/rx-js-light';
+import { createListenerBuilderFunctions, createListenerMap } from '@lifaon/rx-js-light';
 import { detachNode } from '../detach-node';
 
 

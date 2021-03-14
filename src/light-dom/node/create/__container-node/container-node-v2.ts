@@ -1,7 +1,6 @@
 import { uuid } from '../../../../../misc/helpers/uuid';
 import { onNodeAttachedListener } from '../../move/node/with-event/attach-node-with-event';
 import { detachNodeWithEvent, onNodeDetachedListener } from '../../move/node/with-event/detach-node-with-event';
-import { nodeInsertBefore } from '../../move/devired/dom-like/node/node-insert-before';
 import { attachNode } from '../../move/node/attach-node';
 import { detachNode } from '../../move/node/detach-node';
 import { attachDocumentFragmentWithAttachEvent } from '../../move/node/with-event/bulk/fragment/attach-document-fragment-with-event';

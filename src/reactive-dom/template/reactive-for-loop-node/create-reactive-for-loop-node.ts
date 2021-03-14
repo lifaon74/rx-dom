@@ -108,7 +108,7 @@ function generateNodesForReactiveForLoopNode<GItem>(
     } else {
 
       // create index source
-      const indexSource: ISource<number> = createMulticastReplayLastSource<number>({ disableDuplicateSubscribeVerification: true });
+      const indexSource: ISource<number> = createMulticastReplayLastSource<number>();
 
       // create current nodes from the fragment and the index source
       nodesAndIndex = {

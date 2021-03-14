@@ -1,4 +1,3 @@
-
 /**
  * Converts an CSSStyleSheet to a css string
  */

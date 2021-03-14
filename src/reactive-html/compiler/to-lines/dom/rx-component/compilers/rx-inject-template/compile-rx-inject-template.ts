@@ -52,7 +52,7 @@ export function compileRXInjectTemplate(
       `attachTemplate(`,
       ...indentLines([
         `${ referenceName },`,
-        // `getTemplateReference(${ JSON.stringify(referenceName) }),`,
+        `getTemplateReference(${ JSON.stringify(referenceName) }),`,
         `{`,
         ...indentLines(letProperties.map((letProperty: ILetProperty) => {
           return `${ letProperty.name }: (${ letProperty.value }),`;
