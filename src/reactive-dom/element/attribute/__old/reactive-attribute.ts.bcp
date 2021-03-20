@@ -1,0 +1,18 @@
+import { ISource } from '@lifaon/rx-js-light';
+import { IReactiveAttributeValue } from './reactive-attribute-value.type';
+import { getReactiveAttribute, IGetReactiveAttributeOptions } from './get-reactive-attribute.ts.bcp';
+import { setReactiveAttribute } from './set-reactive-attribute';
+
+export interface IReactiveAttributeOptions extends IGetReactiveAttributeOptions {
+
+}
+
+export function reactiveAttribute(
+  source: ISource<IReactiveAttributeValue>,
+  element: Element,
+  name: string,
+  options?: IReactiveAttributeOptions,
+): void {
+  getReactiveAttribute(source.emit, element, name, options);
+  setReactiveAttribute(source.subscribe, element, name);
+}

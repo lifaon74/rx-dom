@@ -29,7 +29,7 @@ const REFERENCE_ATTRIBUTE_BRACKET_PATTERN: string = '\\#([^\\)]+)';
 const REFERENCE_ATTRIBUTE_PREFIX_PATTERN: string = 'ref-(.+)';
 const REFERENCE_ATTRIBUTE_PATTERN: string = `(?:${ REFERENCE_ATTRIBUTE_BRACKET_PATTERN })`
   + `|(?:${ REFERENCE_ATTRIBUTE_PREFIX_PATTERN })`;
-const REFERENCE_ATTRIBUTE_REGEXP: RegExp = new RegExp(`^${REFERENCE_ATTRIBUTE_PATTERN}$`);
+const REFERENCE_ATTRIBUTE_REGEXP: RegExp = new RegExp(`^${ REFERENCE_ATTRIBUTE_PATTERN }$`);
 
 export function extractReferenceProperty(
   attribute: Attr,

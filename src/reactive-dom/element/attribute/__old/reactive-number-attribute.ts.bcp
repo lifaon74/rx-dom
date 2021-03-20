@@ -1,0 +1,23 @@
+import {
+  composeEmitFunction, ISource, mapToNumberEmitPipe, mapToStringSubscribePipe, pipeSubscribeFunction
+} from '@lifaon/rx-js-light';
+import { reactiveAttribute } from './reactive-attribute.ts.bcp';
+
+export function reactiveNumberAttribute(
+  source: ISource<number>,
+  element: Element,
+  name: string,
+): void {
+  reactiveAttribute(
+    {
+      subscribe: pipeSubscribeFunction(source.subscribe, [
+        mapToStringSubscribePipe(),
+      ]),
+      emit: composeEmitFunction([
+        mapToNumberEmitPipe(),
+      ], source.emit),
+    },
+    element,
+    name,
+  );
+}

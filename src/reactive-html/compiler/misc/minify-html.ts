@@ -58,7 +58,7 @@ export function importHTMLMinifier(): Promise<IHTMLMinify> {
         //     debugger;
         //   }
         // });
-        return require('html-minifier')['minify'] as IHTMLMinify;
+        return (globalThis.require)('html-minifier')['minify'] as IHTMLMinify;
       });
   }
   return IMPORT_HTML_MINIFIER_PROMISE;

@@ -5,11 +5,12 @@ import { isDocumentFragment } from '../type/is-document-fragment';
 import {
   IEmitFunction, ISubscribeFunction, IUnsubscribeFunction, noop, pipeSubscribeFunction, shareSubscribePipe
 } from '@lifaon/rx-js-light';
+import { getDocument } from '../explore';
 
 
 export function onNodeConnectedTo(
   node: Node,
-  parentNode: Node = document,
+  parentNode: Node = getDocument(),
   triggerOnMove: boolean = false,
 ): ISubscribeFunction<boolean> {
   return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
@@ -99,7 +100,7 @@ export function onNodeConnectedTo(
 
 export function onNodeConnectedToWithImmediate(
   node: Node,
-  parentNode: Node = document,
+  parentNode: Node = getDocument(),
   triggerOnMove?: boolean,
 ): ISubscribeFunction<boolean> {
   const listener: ISubscribeFunction<boolean> = onNodeConnectedTo(node, parentNode, triggerOnMove);
@@ -116,7 +117,7 @@ const ON_NODE_CONNECTED_TO_CACHE = new WeakMap<Node, WeakMap<Node, Map<boolean, 
 
 export function onNodeConnectedToCached(
   node: Node,
-  parentNode: Node = document,
+  parentNode: Node = getDocument(),
   triggerOnMove: boolean = false,
 ): ISubscribeFunction<boolean> {
   let map1 = ON_NODE_CONNECTED_TO_CACHE.get(node);
@@ -145,7 +146,7 @@ export function onNodeConnectedToCached(
 
 export function onNodeConnectedToWithImmediateCached(
   node: Node,
-  parentNode: Node = document,
+  parentNode: Node = getDocument(),
   triggerOnMove?: boolean,
 ): ISubscribeFunction<boolean> {
   const listener: ISubscribeFunction<boolean> = onNodeConnectedToCached(node, parentNode, triggerOnMove);

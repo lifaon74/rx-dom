@@ -9,7 +9,7 @@ import {
   createReferenceNode, IReferenceNode
 } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { distinctEmitPipe, ISubscribeFunction } from '@lifaon/rx-js-light';
-import { uuid } from '../../../misc';
+import { incrementalUUID } from '../../../misc';
 
 
 export function createReactiveSwitchNode<GValue>(
@@ -18,7 +18,7 @@ export function createReactiveSwitchNode<GValue>(
   defaultTemplate: IGenericHTMLTemplateOrNull = null,
   transparent?: boolean,
 ): IReferenceNode {
-  const referenceNode: IReferenceNode = createReferenceNode(`SWITCH - ${ uuid() }`, transparent);
+  const referenceNode: IReferenceNode = createReferenceNode(incrementalUUID('SWITCH'), transparent);
 
   let nodes: IHTMLTemplateNodeList = [];
 

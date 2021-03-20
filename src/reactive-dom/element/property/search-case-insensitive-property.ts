@@ -8,9 +8,9 @@ export function searchCaseInsensitiveProperty(
   if (name in object) {
     return name;
   } else {
-    const _name: string = name.toLowerCase();
+    const lowerCaseName: string = name.toLowerCase();
     for (const prop in object) {
-      if (prop.toLowerCase() === _name) {
+      if (prop.toLowerCase() === lowerCaseName) {
         return prop;
       }
     }

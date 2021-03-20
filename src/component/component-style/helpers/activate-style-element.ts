@@ -5,7 +5,8 @@ import { setAttributeValue } from '../../../light-dom/attribute/set-attribute-va
  */
 export function activateStyleElement(
   styleElement: HTMLStyleElement,
+  activate: boolean,
 ): void {
-  (styleElement.sheet as StyleSheet).disabled = false;
-  setAttributeValue(styleElement, 'disabled', null);
+  (styleElement.sheet as StyleSheet).disabled = !activate;
+  setAttributeValue(styleElement, 'disabled', activate ? null : '');
 }

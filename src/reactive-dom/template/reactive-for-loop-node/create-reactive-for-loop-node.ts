@@ -16,7 +16,7 @@ import {
 import {
   createMulticastReplayLastSource, distinctEmitPipe, IEmitFunction, ISource, ISubscribeFunction
 } from '@lifaon/rx-js-light';
-import { uuid } from '../../../misc';
+import { incrementalUUID } from '../../../misc';
 
 interface INodesAndIndex {
   nodes: IHTMLTemplateNodeList | DocumentFragment;
@@ -298,7 +298,7 @@ export function createReactiveForLoopNode<GItem, GTrackByValue>(
     transparent,
   }: ICreateReactiveForLoopNodeOptions<GItem> = {},
 ): IReferenceNode {
-  const referenceNode: IReferenceNode = createReferenceNode(`FOR LOOP - ${ uuid() }`, transparent);
+  const referenceNode: IReferenceNode = createReferenceNode(incrementalUUID('FOR-LOOP'), transparent);
 
   let previousTrackByMap: ITrackByMap = createTrackByMap();
   let nodes: IHTMLTemplateNodeList = [];

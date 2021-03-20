@@ -1,4 +1,4 @@
-import { TOP_PARENT_NODE } from './top-parent-node-constant';
+import { TOP_PARENT_NODE } from './top-parent-node.constant';
 import { onNodeConnectedToWithImmediateCached } from '../light-dom/node/state/on-node-connected-to';
 import { IEmitFunction, ISubscribeFunction, IUnsubscribeFunction } from '@lifaon/rx-js-light';
 

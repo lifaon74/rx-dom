@@ -1,8 +1,8 @@
-import { nodeInsertBefore } from '../light-dom';
+import { getDocumentBody, nodeInsertBefore } from '../light-dom';
 
 export function bootstrap(
   node: Element,
-  parentNode: Element = document.body,
+  parentNode: Element = getDocumentBody(),
   referenceNode: Node | null = null,
 ) {
   nodeInsertBefore(parentNode, node, referenceNode);

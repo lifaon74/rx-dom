@@ -326,10 +326,11 @@ nodeAppendChild(parentNode, createReactiveIfNode(conditionObservable, templateRe
 Which is equivalent to:
 
 ```html
+
 <rx-template
   name="uuid"
 >
-  <tag-mame 
+  <tag-mame
     ...otherAttributes
   >
     ...content
@@ -510,6 +511,7 @@ nodeAppendChild(parentNode, createReactiveForLoopNode(itemsObservable, templateR
 Which is equivalent to:
 
 ```html
+
 <rx-template
   name="uuid"
   let-index="i"

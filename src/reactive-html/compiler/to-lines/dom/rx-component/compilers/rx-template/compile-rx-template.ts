@@ -45,7 +45,7 @@ export function compileRXTemplate(
                 value: attribute.value,
                 name: '',
                 prefixMode: false,
-              }
+              };
             } else {
               throw new Error(`Found duplicate template's name through attribute 'name'`);
             }

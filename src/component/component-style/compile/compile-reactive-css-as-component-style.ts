@@ -5,7 +5,7 @@ import { prepareStyleElementForComponent } from '../prepare-style-element-for-co
 export function compileReactiveCSSAsComponentStyle(
   css: string,
 ): HTMLStyleElement {
-  const htmlStyleElement: HTMLStyleElement = createStyleElement(css, true);
+  const htmlStyleElement: HTMLStyleElement = createStyleElement(css, false);
   prepareStyleElementForComponent(htmlStyleElement);
   return htmlStyleElement;
 }

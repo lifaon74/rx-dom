@@ -17,7 +17,7 @@ const BIND_PROPERTY_BRACKET_PATTERN: string = '\\[([^\\]]+)\\]';
 const BIND_PROPERTY_PREFIX_PATTERN: string = 'bind-(.+)';
 const BIND_PROPERTY_PATTERN: string = `(?:${ BIND_PROPERTY_BRACKET_PATTERN })`
   + `|(?:${ BIND_PROPERTY_PREFIX_PATTERN })`;
-const BIND_PROPERTY_REGEXP: RegExp = new RegExp(`^${BIND_PROPERTY_PATTERN}$`);
+const BIND_PROPERTY_REGEXP: RegExp = new RegExp(`^${ BIND_PROPERTY_PATTERN }$`);
 
 export function extractBindProperty(
   attribute: Attr,

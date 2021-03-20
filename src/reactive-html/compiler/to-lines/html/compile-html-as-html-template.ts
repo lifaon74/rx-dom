@@ -5,7 +5,6 @@ import { optionalLines } from '../helpers/lines-formating-helpers';
 import { IObjectProperties } from '../helpers/generate-object-properties-lines';
 
 
-
 export function compileHTMLAsHTMLTemplate(
   html: string,
   constantsToImport?: IObjectProperties,

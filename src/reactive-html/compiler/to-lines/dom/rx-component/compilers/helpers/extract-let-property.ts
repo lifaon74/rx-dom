@@ -1,4 +1,6 @@
-import { generateObjectPropertyEntry, IObjectPropertyEntry } from '../../../../helpers/generate-object-properties-lines';
+import {
+  generateObjectPropertyEntry, IObjectPropertyEntry
+} from '../../../../helpers/generate-object-properties-lines';
 
 /**
  * Syntax:
@@ -14,7 +16,7 @@ export interface ILetProperty {
 /*--------*/
 
 const LET_PROPERTY_PATTERN: string = 'let-(.+)';
-const LET_PROPERTY_REGEXP: RegExp = new RegExp(`^${LET_PROPERTY_PATTERN}$`);
+const LET_PROPERTY_REGEXP: RegExp = new RegExp(`^${ LET_PROPERTY_PATTERN }$`);
 
 export function extractLetProperty(
   attribute: Attr,

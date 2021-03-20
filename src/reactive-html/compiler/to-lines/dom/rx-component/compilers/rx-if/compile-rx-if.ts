@@ -4,11 +4,7 @@ import { hasAttribute } from '../../../../../../../light-dom/attribute/has-attri
 import { scopeLines } from '../../../../helpers/lines-formating-helpers';
 import { getAttributeValue } from '../../../../../../../light-dom/attribute/get-attribute-value';
 import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-attribute-value';
-import { generateLocalTemplateLinesFromElement } from '../helpers/generate-local-template-lines-from-element';
 import { extractRXAttributes, IMappedAttributes } from '../helpers/extract-rx-attributes';
-import { isRXContainer } from '../rx-container/compile-rx-container';
-import { generateLocalTemplateLinesFromNodes } from '../helpers/generate-local-template-lines-from-nodes';
-import { getChildNodes } from '../../../../../../../light-dom/node/properties/get-child-nodes';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
 
 /*

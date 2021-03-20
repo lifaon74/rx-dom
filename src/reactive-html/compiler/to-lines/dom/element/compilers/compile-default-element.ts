@@ -11,7 +11,7 @@ export function compileDefaultElement(
   const name: string = node.tagName.toLowerCase();
   const lines: ILines = [
     `// element '${ name }'`,
-    `const node = createElementNode(${ JSON.stringify(name) });`,
+    `const node = createElement(${ JSON.stringify(name) });`,
     `nodeAppendChild(parentNode, node);`,
   ];
 

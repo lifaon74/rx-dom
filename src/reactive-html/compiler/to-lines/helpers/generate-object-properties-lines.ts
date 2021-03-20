@@ -20,7 +20,7 @@ export function generateObjectPropertiesLines(
             || (propertyValue.trim() === '')
           )
             ? `${ propertyName },`
-            : `${ propertyName }: ${ propertyValue },`
+            : `${ propertyName }: ${ propertyValue },`;
         })
       ),
       `}`,

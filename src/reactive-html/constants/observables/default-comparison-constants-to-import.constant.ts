@@ -1,6 +1,6 @@
 import {
-  reactiveEqual,
-  reactiveGreaterThan, reactiveGreaterThanOrEqual, reactiveLowerThan, reactiveLowerThanOrEqual, reactiveNotEqual
+  reactiveEqual, reactiveGreaterThan, reactiveGreaterThanOrEqual, reactiveLowerThan, reactiveLowerThanOrEqual,
+  reactiveNotEqual
 } from '@lifaon/rx-js-light';
 
 export const DEFAULT_COMPARISON_CONSTANTS_TO_IMPORT = {

@@ -1,4 +1,3 @@
-
 export type IMappedAttributes = Map<string, string>;
 
 export function extractRXAttributes(

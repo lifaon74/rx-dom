@@ -1,3 +1,6 @@
+import { createElementNode, nodeAppendChild } from '../../../light-dom';
+import { getDocumentHead } from '../../../light-dom/node/explore/get-document-head';
+
 export function loadScript(
   url: string,
 ): Promise<void> {
@@ -5,7 +8,7 @@ export function loadScript(
     resolve: (value: void | PromiseLike<void>) => void,
     reject: (reason?: any) => void,
   ): void => {
-    const scriptElement: HTMLScriptElement = document.createElement('script');
+    const scriptElement: HTMLScriptElement = createElementNode('script');
 
     const clear = () => {
       // document.head.removeChild(scriptElement);
@@ -23,6 +26,6 @@ export function loadScript(
 
     scriptElement.src = url;
 
-    document.head.appendChild(scriptElement);
+    nodeAppendChild(getDocumentHead(), scriptElement);
   });
 }

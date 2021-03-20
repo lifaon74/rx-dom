@@ -3,7 +3,7 @@ import { attachTemplate } from '../../light-dom/template/attach-template';
 import { createDocumentFragment } from '../../light-dom/node/create/create-document-fragment';
 import { createTextNode } from '../../light-dom/node/create/create-text-node';
 import { createReactiveTextNode } from '../../reactive-dom/text/create-reactive-text-node';
-import { createElementNode } from '../../light-dom/node/create/create-element-node';
+import { createElementNode } from '../../light-dom/node/create/element-node/create-element-node';
 import { setAttributeValueWithEvent } from '../../light-dom/attribute/with-event/set-attribute-value-with-event';
 import { setReactiveProperty } from '../../reactive-dom/element/property/set-reactive-property';
 import { setReactiveAttribute } from '../../reactive-dom/element/attribute/set-reactive-attribute';
@@ -16,6 +16,7 @@ import { createReactiveIfNode } from '../../reactive-dom/template/reactive-if-no
 import { createReactiveForLoopNode } from '../../reactive-dom/template/reactive-for-loop-node/create-reactive-for-loop-node';
 import { createReactiveContentNode } from '../../reactive-dom/template/reactive-content-node/create-reactive-content-node';
 import { createReactiveSwitchNode } from '../../reactive-dom/template/reactive-switch-node/create-reactive-switch-node';
+import { createElement } from '../../light-dom/node/create/element-node/create-element';
 
 /**
  * Mandatory constants to import for reactiveHTML
@@ -29,7 +30,7 @@ export const DEFAULT_CONSTANTS_TO_IMPORT = {
   createDocumentFragment,
   createTextNode,
   createReactiveTextNode,
-  createElementNode,
+  createElement,
 
   // attribute / property settings
   setAttributeValue: setAttributeValueWithEvent,

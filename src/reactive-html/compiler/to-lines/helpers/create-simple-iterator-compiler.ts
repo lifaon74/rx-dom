@@ -28,7 +28,6 @@ export function createSimpleIteratorCompiler<GValue>(
 /*-----------------------*/
 
 
-
 export interface ISimpleIteratorCompilerExtractor<GIn, GOut> {
   (value: GIn): GOut | null;
 }

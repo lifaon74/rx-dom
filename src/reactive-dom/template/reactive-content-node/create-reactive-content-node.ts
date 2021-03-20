@@ -9,7 +9,7 @@ import {
   createReferenceNode, IReferenceNode
 } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { ISubscribeFunction } from '@lifaon/rx-js-light';
-import { uuid } from '../../../misc';
+import { incrementalUUID } from '../../../misc';
 
 export type IReactiveContent = ISubscribeFunction<IDocumentFragmentOrNull>;
 
@@ -17,7 +17,7 @@ export function createReactiveContentNode(
   subscribe: IReactiveContent,
   transparent?: boolean,
 ): IReferenceNode {
-  const referenceNode: IReferenceNode = createReferenceNode(`REACTIVE CONTENT - ${ uuid() }`, transparent);
+  const referenceNode: IReferenceNode = createReferenceNode(incrementalUUID('REACTIVE-CONTENT'), transparent);
 
   let nodes: IHTMLTemplateNodeList = [];
 

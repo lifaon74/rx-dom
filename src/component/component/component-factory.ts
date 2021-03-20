@@ -1,4 +1,3 @@
-import { HTMLElementConstructor } from '../custom-element/elements-list';
 import { IComponent } from './component.type';
 import { IComponentOptions } from './component-options.type';
 import { IComponentTemplate } from '../component-template/component-template.type';
@@ -6,7 +5,7 @@ import { attachDocumentFragmentWithAttachEvent } from '../../light-dom/node/move
 import {
   onNodeConnectedToCached, onNodeConnectedToWithImmediateCached
 } from '../../light-dom/node/state/on-node-connected-to';
-import { TOP_PARENT_NODE } from '../../misc/top-parent-node-constant';
+import { TOP_PARENT_NODE } from '../../misc/top-parent-node.constant';
 import { registerCustomElement } from '../custom-element/custom-element-functions';
 import { IHTMLTemplate } from '../../light-dom/template/template.type';
 import { IComponentStyle } from '../component-style/component-style.type';
@@ -14,9 +13,9 @@ import {
   decrementStyleElementUsageCount, incrementStyleElementUsageCount
 } from '../component-style/style-element-usage-count';
 import { activateStyleElement } from '../component-style/helpers/activate-style-element';
-import { deactivateStyleElement } from '../component-style/helpers/deactivate-style-element';
 import { applyStyleElementForComponent } from '../component-style/prepare-style-element-for-component';
 import { freeze } from '@lifaon/rx-js-light';
+import { HTMLElementConstructor } from '../../light-dom/types';
 
 function loadComponentTemplate<GData extends object>(
   instance: IComponent<GData>,
@@ -46,11 +45,11 @@ function loadComponentStyle<GData extends object>(
         onNodeConnectedToWithImmediateCached(instance, TOP_PARENT_NODE)((connected: boolean) => {
           if (connected) {
             if (incrementStyleElementUsageCount(htmlStyleElement) === 1) {
-              activateStyleElement(htmlStyleElement);
+              activateStyleElement(htmlStyleElement, true);
             }
           } else {
             if (decrementStyleElementUsageCount(htmlStyleElement) === 0) {
-              deactivateStyleElement(htmlStyleElement);
+              activateStyleElement(htmlStyleElement, false);
             }
           }
         });

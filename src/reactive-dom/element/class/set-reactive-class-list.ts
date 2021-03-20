@@ -1,19 +1,17 @@
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
-import { extractClassNamesFromAny, IExtractClassNamesFromAny } from './extract-class-names';
-import { differClassNames } from './differ-class-names';
+import { IClassNamesList } from './functions/extract-class-names';
+import { differClassNames } from './functions/differ-class-names';
 import { ISubscribeFunction } from '@lifaon/rx-js-light';
 
-export type IReactiveClassListValue = IExtractClassNamesFromAny;
-
+export type IReactiveClassListValue = IClassNamesList;
 
 export function setReactiveClassList(
   subscribe: ISubscribeFunction<IReactiveClassListValue>,
   element: Element,
 ): void {
-  let previousClassNames: Set<string> = new Set<string>();
+  let previousClassNames: IClassNamesList = new Set<string>();
 
-  subscribeOnNodeConnectedTo(element, subscribe, (value: IReactiveClassListValue) => {
-    const classNames: Set<string> = extractClassNamesFromAny(value);
+  subscribeOnNodeConnectedTo(element, subscribe, (classNames: IReactiveClassListValue) => {
     const nextClassNames: string[] = differClassNames(previousClassNames, classNames);
 
     const iterator: IterableIterator<string> = previousClassNames.values();
@@ -26,7 +24,7 @@ export function setReactiveClassList(
       element.classList.add(nextClassNames[i]);
     }
 
-    previousClassNames = classNames;
+    previousClassNames = new Set<string>(classNames);
   });
 }
 

@@ -42,7 +42,7 @@ export function compileRXSwitch(
       if (isElementNode(childNode)) {
         const result: ILines | null = compileRXSwitchCase(childNode, SWITCH_MAP_NAME, existingSwitchCaseValues);
         if (result === null) {
-           const result: ILines | null = compileRXSwitchDefault(childNode, SWITCH_DEFAULT_NAME);
+          const result: ILines | null = compileRXSwitchDefault(childNode, SWITCH_DEFAULT_NAME);
           if (result === null) {
             throw new Error(`Found invalid element '${ childNode.tagName.toLowerCase() }'`);
           } else {

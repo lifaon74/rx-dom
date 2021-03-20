@@ -1,6 +1,7 @@
 import {
-  HTML_ELEMENT_CONSTRUCTORS, HTML_ELEMENT_CONSTRUCTORS_TO_TAG_NAMES_MAP, HTMLElementConstructor, registerHTMLElement
+  HTML_ELEMENT_CONSTRUCTORS, HTML_ELEMENT_CONSTRUCTORS_TO_TAG_NAMES_MAP, registerHTMLElement
 } from './elements-list';
+import { HTMLElementConstructor } from '../../light-dom/types';
 
 /**
  * Returns the main HTMLElement constructor of a class (ex: HTMLInputElement)

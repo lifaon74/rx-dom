@@ -1,12 +1,8 @@
+import { HTMLElementConstructor } from '../../light-dom/types';
+
 /**
  * HELPERS: reference all elements: tag names, constructors, etc...
  */
-
-// export type HTMLElementConstructor = typeof HTMLElement;
-export interface HTMLElementConstructor {
-  new(...args: any[]): HTMLElement;
-}
-
 
 // RegExp used to detect if a property name is an HTMLElement's constructor
 const HTML_ELEMENT_CONSTRUCTOR_REG_EXP: RegExp = new RegExp('^HTML(.+)Element$');

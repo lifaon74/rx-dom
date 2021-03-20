@@ -1,3 +1,11 @@
+export function querySelector<GKey extends keyof HTMLElementTagNameMap>(
+  parentNode: ParentNode,
+  selector: GKey,
+): HTMLElementTagNameMap[GKey] | null;
+export function querySelector<GElement extends Element>(
+  parentNode: ParentNode,
+  selector: string,
+): GElement | null;
 export function querySelector<GElement extends Element>(
   parentNode: ParentNode,
   selector: string,

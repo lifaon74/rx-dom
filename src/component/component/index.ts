@@ -1,3 +1,4 @@
+export * from './decorators/index';
 export * from './component.type';
 export * from './component-decorator';
 export * from './component-factory';

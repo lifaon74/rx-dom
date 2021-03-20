@@ -5,11 +5,7 @@ import { extractRXAttributes, IMappedAttributes } from '../helpers/extract-rx-at
 import { getAttributeValue } from '../../../../../../../light-dom/attribute/get-attribute-value';
 import { generateObjectPropertiesLines, IObjectProperties } from '../../../../helpers/generate-object-properties-lines';
 import { indentLines, scopeLines } from '../../../../helpers/lines-formating-helpers';
-import { generateLocalTemplateLinesFromElement } from '../helpers/generate-local-template-lines-from-element';
 import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-attribute-value';
-import { isRXContainer } from '../rx-container/compile-rx-container';
-import { generateLocalTemplateLinesFromNodes } from '../helpers/generate-local-template-lines-from-nodes';
-import { getChildNodes } from '../../../../../../../light-dom/node/properties/get-child-nodes';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
 
 /*

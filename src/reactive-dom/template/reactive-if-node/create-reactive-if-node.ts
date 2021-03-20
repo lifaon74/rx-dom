@@ -9,7 +9,7 @@ import {
   createReferenceNode, IReferenceNode
 } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { distinctEmitPipe, ISubscribeFunction } from '@lifaon/rx-js-light';
-import { uuid } from '../../../misc';
+import { incrementalUUID } from '../../../misc';
 
 
 export function createReactiveIfNode(
@@ -18,7 +18,7 @@ export function createReactiveIfNode(
   templateFalse: IGenericHTMLTemplateOrNull = null,
   transparent?: boolean,
 ): IReferenceNode {
-  const referenceNode: IReferenceNode = createReferenceNode(`IF - ${ uuid() }`, transparent);
+  const referenceNode: IReferenceNode = createReferenceNode(incrementalUUID('IF'), transparent);
 
   let nodes: IHTMLTemplateNodeList = [];
 

@@ -1,6 +1,6 @@
 import { IComponentOptions } from './component-options.type';
-import { HTMLElementConstructor } from '../custom-element/elements-list';
 import { componentFactory } from './component-factory';
+import { HTMLElementConstructor } from '../../light-dom/types';
 
 
 /**

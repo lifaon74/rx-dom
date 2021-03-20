@@ -1,19 +1,18 @@
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
-import { extractStylesFromAny, IExtractStylesFromAny } from './extract-styles';
-import { differStyleMap } from './differ-style-map';
+import { IStylePropertyAndValueTuple, IStylesMap } from './functions/extract-styles';
+import { differStyleMap } from './functions/differ-style-map';
 import { ISubscribeFunction } from '@lifaon/rx-js-light';
 
-export type IDynamicStyleListValue = IExtractStylesFromAny;
+export type IDynamicStyleListValue = IStylesMap;
 
 export function setReactiveStyleList(
   subscribe: ISubscribeFunction<IDynamicStyleListValue>,
   element: HTMLElement,
 ): void {
-  let previousStyles = new Map<string, string>();
+  let previousStyles: IDynamicStyleListValue = new Map<string, string>();
 
-  subscribeOnNodeConnectedTo(element, subscribe, (value: IDynamicStyleListValue) => {
-    const styles: Map<string, string> = extractStylesFromAny(value);
-    const nextStyles: [string, string][] = differStyleMap(previousStyles, styles);
+  subscribeOnNodeConnectedTo(element, subscribe, (styles: IDynamicStyleListValue) => {
+    const nextStyles: IStylePropertyAndValueTuple[] = differStyleMap(previousStyles, styles);
 
     const iterator: IterableIterator<string> = previousStyles.values();
     let result: IteratorResult<string>;
@@ -26,7 +25,7 @@ export function setReactiveStyleList(
       element.style.setProperty(style[0], style[1]);
     }
 
-    previousStyles = styles;
+    previousStyles = new Map<string, string>(styles);
   });
 }
 

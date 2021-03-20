@@ -2,12 +2,12 @@ import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-conn
 import { searchCaseInsensitiveProperty } from './search-case-insensitive-property';
 import { ISubscribeFunction } from '@lifaon/rx-js-light';
 
-export function setReactiveProperty(
-  subscribe: ISubscribeFunction<any>,
+export function setReactiveProperty<GPropertyValue>(
+  subscribe: ISubscribeFunction<GPropertyValue>,
   node: Node,
   name: string,
 ): void {
-  subscribeOnNodeConnectedTo(node, subscribe, (value: any) => {
+  subscribeOnNodeConnectedTo(node, subscribe, (value: GPropertyValue) => {
     node[name] = value;
   });
 }
