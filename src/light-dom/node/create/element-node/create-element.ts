@@ -3,6 +3,7 @@ import { isSVGElementTagName } from '../../../tags/is/is-svg-element-tag-name';
 import { createElementNodeNS } from './create-element-node-ns';
 import { isCustomElementTagName } from '../../../tags/is/is-custom-element-tag-name';
 import { getCustomElementConstructorFromTagName } from '../../../custom-element';
+import { isHTMLElementTagName } from '../../../tags/is/is-html-element-tag-name';
 
 export interface ICreateElementOptions extends ICreateElementNodeOptions {
 }
@@ -27,7 +28,9 @@ export function createElement(
   tagName: string,
   options?: ICreateElementOptions,
 ): Element {
-  if (isSVGElementTagName(tagName)) {
+  if (isHTMLElementTagName(tagName)) {
+    return createElementNode(tagName, options);
+  } else if (isSVGElementTagName(tagName)) {
     return createElementNodeNS('http://www.w3.org/2000/svg', tagName, options);
   } else if (isCustomElementTagName(tagName)) {
     if (getCustomElementConstructorFromTagName(tagName) === void 0) {

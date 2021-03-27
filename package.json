@@ -1,12 +1,17 @@
 {
   "name": "@lifaon/rx-dom",
-  "version": "1.0.0-alpha.2",
-  "description": "Description",
+  "version": "1.0.0",
+  "description": "Extremely fast framework to build web application",
   "repository": {
     "type": "git",
     "url": "https://github.com/lifaon74/rx-dom"
   },
-  "keywords": [],
+  "keywords": [
+    "front-end",
+    "framework",
+    "components",
+    "webapp"
+  ],
   "author": "Valentin Richard",
   "license": "MIT",
   "access": "public",
@@ -15,6 +20,6 @@
     "@lifaon/rx-js-light": "1.0.0-beta.2"
   },
   "dependencies": {
-    "@lifaon/rx-js-light": "1.0.0-beta.2"
+    "@lifaon/rx-js-light": "1.0.0"
   }
 }

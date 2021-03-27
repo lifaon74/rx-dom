@@ -9,15 +9,22 @@ export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends 
   constantsToImport: object,
   dataName?: string,
 ): IHTMLTemplate<GData> {
-  const fnc: ICompiledComponentTemplateFunction<GData> = eval(
-    linesToString(
-      compileReactiveHTMLAsComponentTemplateFunction(
-        html,
-        generateConstantsToImportForComponentTemplateFromObject(constantsToImport),
-        dataName
-      )
+  const code: string = linesToString(
+    compileReactiveHTMLAsComponentTemplateFunction(
+      html,
+      generateConstantsToImportForComponentTemplateFromObject(constantsToImport),
+      dataName
     )
   );
+
+  // const fnc: ICompiledComponentTemplateFunction<GData> = eval(code);
+
+  const fnc: ICompiledComponentTemplateFunction<GData> = new Function(
+    'a',
+    'b',
+    `return (${ code })(a, b);`,
+  ) as ICompiledComponentTemplateFunction<GData>;
+
   return (data: GData): DocumentFragment => {
     return fnc(data, constantsToImport);
   };
