@@ -1,4 +1,4 @@
-## Syntax
+## Reactive HTML syntax
 
 ### Text: {{ observable }}
 
@@ -18,7 +18,7 @@ observable((value) => text.value = value);
 
 #### Bind: []
 
-##### Bind property: [property]
+##### Bind property: \[property\]
 
 ```html
 <input
@@ -40,7 +40,7 @@ observable((value) => input.value = value);
 />
 ```
 
-##### Bind class: [class.class-name]
+##### Bind class: \[class.class-name\]
 
 ```html
 <div
@@ -62,7 +62,7 @@ observable((value) => div.classList.toggle('my-class', value));
 />
 ```
 
-##### Bind class list: [class...]
+##### Bind class list: \[class...\]
 
 ```html
 <div
@@ -84,7 +84,7 @@ observable((classes) => div.className = classes);
 ></div>
 ```
 
-##### Bind style: [style.style-property]
+##### Bind style: \[style.style-property\]
 
 ```html
 <div
@@ -106,7 +106,7 @@ observable((value) => div.style.setProperty('font-size', value));
 />
 ```
 
-##### Bind style list: [style...]
+##### Bind style list: \[style...\]
 
 ```html
 <div
@@ -128,7 +128,7 @@ observable((styles) => div.setAttribute('style', styles));
 ></div>
 ```
 
-##### Bind attribute: [attr.name]
+##### Bind attribute: \[attr.name\]
 
 ```html
 <div
