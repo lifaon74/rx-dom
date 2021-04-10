@@ -1,22 +1,5 @@
-import {
-  HTML_ELEMENT_CONSTRUCTORS, HTML_ELEMENT_CONSTRUCTORS_TO_TAG_NAMES_MAP, registerHTMLElement
-} from './elements-list';
 import { HTMLElementConstructor } from '../../light-dom/types';
-
-/**
- * Returns the main HTMLElement constructor of a class (ex: HTMLInputElement)
- */
-export function getCustomElementHTMLElementConstructor<GHTMLElementConstructor extends HTMLElementConstructor>(
-  target: GHTMLElementConstructor | null,
-): GHTMLElementConstructor | null {
-  while (target !== null) {
-    if ((target === HTMLElement) || HTML_ELEMENT_CONSTRUCTORS.has(target)) {
-      return target;
-    }
-    target = Object.getPrototypeOf(target);
-  }
-  return null;
-}
+import { defineCustomElement } from '../../light-dom/custom-element/define-custom-element';
 
 
 /**
@@ -56,9 +39,28 @@ export function getCustomElementObservedAttributes(
 }
 
 
-export interface ICustomElementOptions {
+export function updateObservedAttributes(
+  target: HTMLElementConstructor,
+  newObservedAttributes: Iterable<string>,
+): void {
+  const observedAttributes: Set<string> = getCustomElementObservedAttributes(target);
+
+  const iterator: Iterator<string> = newObservedAttributes[Symbol.iterator]();
+  let result: IteratorResult<string>;
+  while (!(result = iterator.next()).done) {
+    observedAttributes.add(result.value);
+  }
+
+  Object.defineProperty(target, 'observedAttributes', {
+    value: Array.from(observedAttributes),
+    writable: false,
+    configurable: true,
+    enumerable: true,
+  });
+}
+
+export interface ICustomElementOptions extends ElementDefinitionOptions {
   name: string; // tag name
-  extends?: string; // optional extended tag names
   observedAttributes?: Iterable<string>; // optional list of observed attributes
 }
 
@@ -74,52 +76,9 @@ export function registerCustomElement(
 ): void {
   // if observedAttributes is present, extracts static observedAttributes and remap the function
   if (options.observedAttributes !== void 0) {
-    const observedAttributes: Set<string> = getCustomElementObservedAttributes(target);
-
-    const iterator: Iterator<string> = options.observedAttributes[Symbol.iterator]();
-    let result: IteratorResult<string>;
-    while (!(result = iterator.next()).done) {
-      observedAttributes.add(result.value);
-    }
-
-    Object.defineProperty(target, 'observedAttributes', {
-      value: Array.from(observedAttributes),
-      writable: false,
-      configurable: true,
-      enumerable: true,
-    });
+    updateObservedAttributes(target, options.observedAttributes);
   }
-
-
-  let _extends: string | null = null;
-
-  // ensure target is an HTMLElement
-  const elementConstructor: HTMLElementConstructor | null = getCustomElementHTMLElementConstructor<HTMLElementConstructor>(target);
-  if (elementConstructor === null) {
-    throw new TypeError(`The class '${ target.name }' must extend an HTMLElement.`);
-  } else if (elementConstructor !== HTMLElement) { // child class of HTMLElement => must set the proper 'extends'
-    const tagNames: Set<string> | undefined = HTML_ELEMENT_CONSTRUCTORS_TO_TAG_NAMES_MAP.get(elementConstructor);
-
-    if (tagNames === void 0) {
-      throw new Error(`Cannot infer extended tag name of '${ target.name }'`);
-    }
-
-    if (options.extends === void 0) {
-      if (tagNames.size === 0) {
-        throw new Error(`No tag (options.extends) found for the element '${ elementConstructor.name }'`);
-      } else if (tagNames.size > 1) {
-        throw new Error(`More than one tag (options.extends) found for the element '${ elementConstructor.name }'`);
-      } else {
-        _extends = tagNames.values().next().value;
-      }
-    } else if (!tagNames.has(options.extends)) {
-      throw new Error(`Tag '${ options.extends }' is no part of '${ elementConstructor.name }'`);
-    }
-  }
-
-  globalThis.customElements.define(options.name, target, (_extends === null) ? void 0 : { extends: _extends });
-
-  registerHTMLElement(options.name, target);
+  defineCustomElement(options.name, target, options);
 }
 
 

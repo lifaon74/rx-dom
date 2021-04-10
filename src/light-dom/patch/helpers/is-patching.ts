@@ -1,4 +1,3 @@
-
 let IS_PATCHING: boolean = false;
 
 export function isPatching(): boolean {

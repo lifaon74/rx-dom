@@ -3,7 +3,6 @@ import { attachTemplate } from '../../light-dom/template/attach-template';
 import { createDocumentFragment } from '../../light-dom/node/create/create-document-fragment';
 import { createTextNode } from '../../light-dom/node/create/create-text-node';
 import { createReactiveTextNode } from '../../reactive-dom/text/create-reactive-text-node';
-import { createElementNode } from '../../light-dom/node/create/element-node/create-element-node';
 import { setAttributeValueWithEvent } from '../../light-dom/attribute/with-event/set-attribute-value-with-event';
 import { setReactiveProperty } from '../../reactive-dom/element/property/set-reactive-property';
 import { setReactiveAttribute } from '../../reactive-dom/element/attribute/set-reactive-attribute';

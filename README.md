@@ -124,9 +124,9 @@ Feature | Angular | Virtual DOM | rx-dom
 **Semantics**| html with special flavour | `jsx` or `hyperscript` | html with special flavour
 **Memory** | **medium**: data are directly reflected on the nodes, but the framework itself is heavy | **high** a lot of virtual DOM elements are created every time the DOM updates, and the number of virtual nodes is also linearly proportional to the size of the DOM tree. | **very low**: once the data pipeline is set, on every update the data is directly reflected on the node.
 **CPU** | **medium**: when zoneJs triggers, all expressions in the html are evaluated and reflected on the nodes | **high** because a lot of time is spent regenerating the Virtual DOM, calculating the diff and figuring out what changed. | **low**: the nodes subscribe only to the part of the data that is needed for rendering / updating them. It's almost unbeatable, because when the data changes, it directly updates the nodes.
-**Size** | ~50KB | ~10KB (preact) | ~10KB (with jit compiler), <4KB (aot)
+**Size** | ~50KB | ~10KB (preact) | <8KB (with jit compiler), <3KB (aot)
 
-*size is calculated for: 'hello world' project, compiled, minified and gzipped.
+*size is calculated for similar 'hello world' projects, compiled, minified and gzipped.
 
 **rx-dom** anticipated aot (compiled when bundling, instead of doing it in the browser):
 this would remove a few bytes coming from the jit compiler, and fasten the execution.

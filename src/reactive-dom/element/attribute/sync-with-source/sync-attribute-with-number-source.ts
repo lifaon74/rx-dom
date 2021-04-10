@@ -1,8 +1,8 @@
 import {
-  composeEmitFunction, filterSubscribePipe, ISource, mapEmitPipe, mapSubscribePipe, pipeSubscribeFunction
+  composeEmitFunction, ISource, mapEmitPipe, mapSubscribePipe, pipeSubscribeFunction
 } from '@lifaon/rx-js-light';
 import { ISyncAttributeWithSourceOptions, syncAttributeWithSource } from './sync-attribute-with-source';
-import { getAttributeValue, IAttributeValue } from '../../../../light-dom';
+import { IAttributeValue } from '../../../../light-dom';
 
 export function syncAttributeWithNumberSource(
   source: ISource<number>,

@@ -1,4 +1,4 @@
-import { IHTMLElementTagName, HTML_ELEMENT_TAG_NAMES_SET } from '../constants/html-element-tag-names-set.constant';
+import { HTML_ELEMENT_TAG_NAMES_SET, IHTMLElementTagName } from '../constants/html-element-tag-names-set.constant';
 
 export function isHTMLElementTagName<GName extends IHTMLElementTagName>(
   value: string,

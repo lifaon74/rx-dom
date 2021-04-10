@@ -3,7 +3,7 @@
 
 export type ISVGElementTagName = keyof SVGElementTagNameMap;
 
-export const SVG_ELEMENT_TAG_NAMES_SET = new Set<ISVGElementTagName>( [
+export const SVG_ELEMENT_TAG_NAMES_SET = new Set<ISVGElementTagName>([
   'a',
   'circle',
   'clipPath',

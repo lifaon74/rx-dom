@@ -100,20 +100,14 @@ export function componentFactory<GBaseClass extends HTMLElementConstructor, GDat
   baseClass: GBaseClass,
   options: IComponentOptions<GData>,
 ) {
-  let initEnabled: boolean = false;
-
   const _class = class extends baseClass {
     constructor(...args: any[]) {
       super(...args);
-      if (initEnabled) {
-        initComponent<GData>(this, options);
-      }
+      initComponent<GData>(this, options);
     }
   };
 
-  // registerCustomElement may create an instance of the component, so we need to disabled the init
   registerCustomElement(_class, options);
-  initEnabled = true;
 
   return _class;
 }
