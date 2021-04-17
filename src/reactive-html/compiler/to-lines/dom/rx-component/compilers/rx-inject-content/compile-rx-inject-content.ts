@@ -1,6 +1,7 @@
 import { ILines } from '../../../../compiler.types';
 import { hasChildNodes } from '../../../../../../../light-dom/node/state/has-child-nodes';
 import { extractRXAttributes, IMappedAttributes } from '../helpers/extract-rx-attributes';
+import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
 
 /*
 Syntax:
@@ -22,7 +23,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 export function compileRXInjectContent(
   node: Element,
 ): ILines | null {
-  const name: string = node.tagName.toLowerCase();
+  const name: string = getTagName(node);
   if (name === TAG_NAME) {
     const attributes: IMappedAttributes = extractRXAttributes(node.attributes, ATTRIBUTE_NAMES);
     const template: string | undefined = attributes.get(CONTENT_ATTRIBUTE_NAME);

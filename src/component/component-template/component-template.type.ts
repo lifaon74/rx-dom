@@ -1,9 +1,15 @@
-import { IHTMLTemplate } from '../../light-dom/template/template.type';
+export interface IComponentTemplateCompileOptions {
+  dataName?: string;
+  contentName?: string;
+}
 
+export interface IComponentTemplate<GData extends object> {
+  (data: GData, content: DocumentFragment): DocumentFragment;
+}
 
-export type IComponentTemplate<GData extends object> =
-  IHTMLTemplate<GData>
-  | Promise<IHTMLTemplate<GData>>
+export type IComponentTemplateAsync<GData extends object> =
+  IComponentTemplate<GData>
+  | Promise<IComponentTemplate<GData>>
   ;
 
 

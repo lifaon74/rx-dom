@@ -1,5 +1,5 @@
-import { onNodeDetachedListener } from '../move/node/with-event/detach-node-with-event';
-import { onNodeAttachedListener } from '../move/node/with-event/attach-node-with-event';
+import { onNodeDetachedListener } from '../move/node/__with-event/detach-node-with-event';
+import { onNodeAttachedListener } from '../move/node/__with-event/attach-node-with-event';
 import { getParentNode } from '../properties/get-parent-node';
 import { isDocumentFragment } from '../type/is-document-fragment';
 import {

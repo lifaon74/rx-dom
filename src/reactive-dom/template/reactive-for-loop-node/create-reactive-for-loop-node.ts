@@ -1,14 +1,14 @@
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
 import { IHTMLTemplate, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
 import { trackByIdentity } from './track-by-identity';
-import { detachNodeWithEvent } from '../../../light-dom/node/move/node/with-event/detach-node-with-event';
-import { attachDocumentFragmentWithAttachEvent } from '../../../light-dom/node/move/node/with-event/bulk/fragment/attach-document-fragment-with-event';
+import { detachNodeWithEvent } from '../../../light-dom/node/move/node/__with-event/detach-node-with-event';
+import { attachDocumentFragmentToStandardNode } from '../../../light-dom/node/move/node/__with-event/derived/attach-document-fragment-to-standard-node';
 import { getChildNodes } from '../../../light-dom/node/properties/get-child-nodes';
 import { createDocumentFragment } from '../../../light-dom/node/create/create-document-fragment';
 import { attachNode } from '../../../light-dom/node/move/node/attach-node';
 import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
 import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
-import { moveManyNodesWithEvent } from '../../../light-dom/node/move/node/with-event/bulk/move-many-nodes-with-event';
+import { moveManyNodesWithEvent } from '../../../light-dom/node/move/node/__with-event/bulk/move-many-nodes-with-event';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import {
   createReferenceNode, IReferenceNode
@@ -182,7 +182,7 @@ function attachNodesForReactiveForLoopNode(
     }
   }
 
-  attachDocumentFragmentWithAttachEvent(
+  attachDocumentFragmentToStandardNode(
     fragmentContainer,
     getParentNode(referenceNode) as IParentNode,
     getNextSibling(referenceNode),
@@ -220,7 +220,7 @@ function moveNodesForReactiveForLoopNode(
       nodesAndIndex.nodes = nodes;
       const length: number = nodes.length;
       if (length > 0) {
-        attachDocumentFragmentWithAttachEvent(fragment, parentNode, getNextSibling(referenceNode));
+        attachDocumentFragmentToStandardNode(fragment, parentNode, getNextSibling(referenceNode));
         referenceNode = nodes[length - 1];
         allNodes.push(...nodes);
       }

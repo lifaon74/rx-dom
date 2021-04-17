@@ -1,9 +1,13 @@
 import { isDocumentFragment } from '../../../../type/is-document-fragment';
-import { attachNodeWithEvent } from '../../../node/with-event/attach-node-with-event';
-import { attachDocumentFragmentWithAttachEvent } from '../../../node/with-event/bulk/fragment/attach-document-fragment-with-event';
-import { moveNodeWithEvent } from '../../../node/with-event/move-node-with-event';
+import { attachNodeWithEvent } from '../../../node/__with-event/attach-node-with-event';
+import { attachDocumentFragmentToStandardNode } from '../../../node/__with-event/derived/attach-document-fragment-to-standard-node';
+import { moveNodeWithEvent } from '../../../node/__with-event/move-node-with-event';
 import { isChildNode } from '../../../../state/is-child-node';
 import { attachNode } from '../../../node/attach-node';
+import { detachNodeWithEvent } from '../../../node';
+import { getParentNode } from '../../../../properties';
+import { attachDocumentFragment } from '../../../node/__with-event/derived/attach-document-fragment';
+import { attachStandardNode } from '../../../node/__with-event/derived/attach-standard-node';
 
 /**
  * Equivalent of:
@@ -14,18 +18,10 @@ export function nodeInsertBefore<GNode extends Node>(
   node: GNode,
   referenceNode: Node | null,
 ): GNode {
-  if (isDocumentFragment(parentNode)) {
-    attachNode(node, parentNode, referenceNode);
-  } else {
-    if (isDocumentFragment(node)) {
-      attachDocumentFragmentWithAttachEvent(node, parentNode, referenceNode);
-    } else {
-      if (isChildNode(node)) {
-        moveNodeWithEvent(node, parentNode, referenceNode);
-      } else {
-        attachNodeWithEvent(node, parentNode, referenceNode);
-      }
-    }
+  if (isDocumentFragment(node)) { // (frag#none# -> X)
+    attachDocumentFragment(node, parentNode, referenceNode);
+  } else { // (standard#parent# -> X)
+    attachStandardNode(node, parentNode, referenceNode);
   }
   return node;
 }

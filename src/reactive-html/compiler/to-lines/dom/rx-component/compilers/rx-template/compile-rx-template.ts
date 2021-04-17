@@ -9,6 +9,7 @@ import {
 import { compileNodes } from '../../../nodes/compile-nodes';
 import { getChildNodes } from '../../../../../../../light-dom/node/properties/get-child-nodes';
 import { generateObjectPropertiesLines, IObjectProperties } from '../../../../helpers/generate-object-properties-lines';
+import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
 
 /*
 Syntax:
@@ -26,7 +27,7 @@ Syntax:
 export function compileRXTemplate(
   node: Element,
 ): ILines | null {
-  const name: string = node.tagName.toLowerCase();
+  const name: string = getTagName(node);
   if (name === 'rx-template') {
     // let referenceName: string | undefined;
     let referenceProperty!: IReferenceProperty;

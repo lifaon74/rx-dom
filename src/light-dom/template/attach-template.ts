@@ -1,6 +1,6 @@
 import { IHTMLTemplate, IHTMLTemplateNodeList } from './template.type';
 import { getChildNodes } from '../node/properties/get-child-nodes';
-import { attachDocumentFragmentWithAttachEvent } from '../node/move/node/with-event/bulk/fragment/attach-document-fragment-with-event';
+import { attachDocumentFragmentToStandardNode } from '../node/move/node/__with-event/derived/attach-document-fragment-to-standard-node';
 import { isDocumentFragment } from '../node/type/is-document-fragment';
 import { attachNode } from '../node/move/node/attach-node';
 
@@ -39,7 +39,7 @@ export function attachTemplateFragment(
   if (isDocumentFragment(parentNode)) {
     attachNode(fragment, parentNode, referenceNode);
   } else {
-    attachDocumentFragmentWithAttachEvent(fragment, parentNode, referenceNode);
+    attachDocumentFragmentToStandardNode(fragment, parentNode, referenceNode);
   }
   return nodes;
 }

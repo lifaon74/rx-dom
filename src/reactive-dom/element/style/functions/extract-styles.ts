@@ -1,4 +1,4 @@
-import { createStyleElement } from '../../../../component';
+import { createStyleElement, getCSSStyleSheetOfStyleElement } from '../../../../component';
 import { nodeRemoveChild } from '../../../../light-dom';
 import { getDocumentHead } from '../../../../light-dom/node/explore/get-document-head';
 import { INullish, ISubscribePipeFunction, mapSubscribePipe } from '@lifaon/rx-js-light';
@@ -144,9 +144,11 @@ export function extractStylesFromString(
     input += ';';
   }
 
-  const styleElement: HTMLStyleElement = createStyleElement(`[elt] { ${ input } }`, false);
+  const styleElement: HTMLStyleElement = createStyleElement(`[elt] { ${ input } }`);
 
-  const sheet: CSSStyleSheet = styleElement.sheet as CSSStyleSheet;
+  const sheet: CSSStyleSheet = getCSSStyleSheetOfStyleElement(styleElement);
+  sheet.disabled = true;
+
   for (let i = 0, rulesLength = sheet.cssRules.length; i < rulesLength; i++) {
     const rule: CSSRule = sheet.cssRules[i];
     if (rule.type === CSSRule.STYLE_RULE) {
@@ -157,8 +159,6 @@ export function extractStylesFromString(
       }
     }
   }
-
-  nodeRemoveChild(getDocumentHead(), styleElement);
 
   return styles;
 }

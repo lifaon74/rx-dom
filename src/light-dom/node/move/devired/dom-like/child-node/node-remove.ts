@@ -1,4 +1,4 @@
-import { detachNodeWithEvent } from '../../../node/with-event/detach-node-with-event';
+import { detachNodeWithEvent } from '../../../node/__with-event/detach-node-with-event';
 import { getParentNode, IParentNode } from '../../../../properties/get-parent-node';
 import { isDocumentFragment } from '../../../../type/is-document-fragment';
 import { detachNode } from '../../../node/detach-node';

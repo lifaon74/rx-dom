@@ -2,6 +2,7 @@ import { ILines } from '../../../../compiler.types';
 import { indentLines } from '../../../../helpers/lines-formating-helpers';
 import { hasChildNodes } from '../../../../../../../light-dom/node/state/has-child-nodes';
 import { extractLetProperty, ILetProperty } from '../helpers/extract-let-property';
+import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
 
 /*
 Syntax:
@@ -19,7 +20,7 @@ const TAG_NAME: string = 'rx-inject-template';
 export function compileRXInjectTemplate(
   node: Element,
 ): ILines | null {
-  const name: string = node.tagName.toLowerCase();
+  const name: string = getTagName(node);
   if (name === TAG_NAME) {
     let referenceName!: string;
     const letProperties: ILetProperty[] = [];

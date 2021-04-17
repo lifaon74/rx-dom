@@ -1,19 +1,19 @@
-import { IHTMLTemplate } from '../../../../light-dom/template/template.type';
 import { generateConstantsToImportForComponentTemplateFromObject } from '../../misc/generate-constants-to-import-for-component-template-from-object';
 import { linesToString } from '../../../../reactive-html';
 import { compileReactiveHTMLAsComponentTemplateFunction, ICompiledComponentTemplateFunction } from '../to-lines';
+import { IComponentTemplate, IComponentTemplateCompileOptions } from '../../component-template.type';
 
 
 export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends object>(
   html: string,
   constantsToImport: object,
-  dataName?: string,
-): IHTMLTemplate<GData> {
+  options?: IComponentTemplateCompileOptions,
+): IComponentTemplate<GData> {
   const code: string = linesToString(
     compileReactiveHTMLAsComponentTemplateFunction(
       html,
       generateConstantsToImportForComponentTemplateFromObject(constantsToImport),
-      dataName
+      options
     )
   );
 
@@ -22,10 +22,11 @@ export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends 
   const fnc: ICompiledComponentTemplateFunction<GData> = new Function(
     'a',
     'b',
-    `return (${ code })(a, b);`,
+    'c',
+    `return (${ code })(a, b, c);`,
   ) as ICompiledComponentTemplateFunction<GData>;
 
-  return (data: GData): DocumentFragment => {
-    return fnc(data, constantsToImport);
+  return (data: GData, content: DocumentFragment): DocumentFragment => {
+    return fnc(data, content, constantsToImport);
   };
 }

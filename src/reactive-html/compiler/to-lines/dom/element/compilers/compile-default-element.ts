@@ -3,15 +3,27 @@ import { scopeLines } from '../../../helpers/lines-formating-helpers';
 import { compileAttributes } from '../../attributes/compile-attributes';
 import { compileNodes } from '../../nodes/compile-nodes';
 import { getChildNodes } from '../../../../../../light-dom/node/properties/get-child-nodes';
+import { getAttributeValue, IAttributeValue, ICreateElementOptions } from '../../../../../../light-dom';
+import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 
 
 export function compileDefaultElement(
   node: Element,
 ): ILines | null {
-  const name: string = node.tagName.toLowerCase();
+  const name: string = getTagName(node);
+  const isAttribute: IAttributeValue = getAttributeValue(node, 'is');
+
+  const elementOptions: ICreateElementOptions | null = (isAttribute === null)
+    ? null
+    : {
+      elementOptions: {
+        is: isAttribute,
+      }
+    };
+
   const lines: ILines = [
     `// element '${ name }'`,
-    `const node = createElement(${ JSON.stringify(name) });`,
+    `const node = createElement(${ JSON.stringify(name) }${ (elementOptions === null) ? '' : `, ${ JSON.stringify(elementOptions) }` });`,
     `nodeAppendChild(parentNode, node);`,
   ];
 

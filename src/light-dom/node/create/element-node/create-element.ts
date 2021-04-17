@@ -29,7 +29,16 @@ export function createElement(
   options?: ICreateElementOptions,
 ): Element {
   if (isHTMLElementTagName(tagName)) {
-    return createElementNode(tagName, options);
+    const is: string | undefined = options?.elementOptions?.is;
+    if (is === void 0) {
+      return createElementNode(tagName, options);
+    } else {
+      if (getCustomElementConstructorFromTagName(is) === void 0) {
+        throw new Error(`'${ is }' is not defined`);
+      } else {
+        return createElementNode(tagName, options);
+      }
+    }
   } else if (isSVGElementTagName(tagName)) {
     return createElementNodeNS('http://www.w3.org/2000/svg', tagName, options);
   } else if (isCustomElementTagName(tagName)) {
@@ -43,3 +52,5 @@ export function createElement(
   }
 }
 
+
+export type ICreateElementFunction = typeof createElement;

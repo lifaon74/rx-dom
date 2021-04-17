@@ -7,6 +7,8 @@ export function activateStyleElement(
   styleElement: HTMLStyleElement,
   activate: boolean,
 ): void {
-  (styleElement.sheet as StyleSheet).disabled = !activate;
   setAttributeValue(styleElement, 'disabled', activate ? null : '');
+  if (styleElement.sheet !== null) {
+    styleElement.sheet.disabled = !activate;
+  }
 }

@@ -6,6 +6,7 @@ import { getAttributeValue } from '../../../../../../../light-dom/attribute/get-
 import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-attribute-value';
 import { extractRXAttributes, IMappedAttributes } from '../helpers/extract-rx-attributes';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
+import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
 
 /*
 Syntax:
@@ -60,7 +61,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 export function compileRXIf(
   node: Element,
 ): ILines | null {
-  const name: string = node.tagName.toLowerCase();
+  const name: string = getTagName(node);
   if (name === TAG_NAME) {
     const attributes: IMappedAttributes = extractRXAttributes(node.attributes, ATTRIBUTE_NAMES);
     const condition: string | undefined = attributes.get(CONDITION_ATTRIBUTE_NAME);

@@ -1,4 +1,4 @@
-export type IComponentStyle = HTMLStyleElement | Promise<HTMLStyleElement>;
+export type IComponentStyle = HTMLStyleElement;
 
-
+export type IComponentStyleAsync = IComponentStyle | Promise<IComponentStyle>;
 

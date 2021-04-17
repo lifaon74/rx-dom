@@ -1,6 +1,7 @@
 import { ILines } from '../../../../compiler.types';
 import { compileNodes } from '../../../nodes/compile-nodes';
 import { getChildNodes } from '../../../../../../../light-dom/node/properties/get-child-nodes';
+import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
 
 /*
 Syntax:
@@ -27,6 +28,6 @@ export function compileRXContainer(
 export function isRXContainer(
   node: Element,
 ): boolean {
-  return node.tagName.toLowerCase() === TAG_NAME;
+  return getTagName(node) === TAG_NAME;
 }
 

@@ -1,33 +1,33 @@
 const STYLE_ELEMENT_USAGE_COUNT = new WeakMap<HTMLStyleElement, number>();
 
 export function getStyleElementUsageCount(
-  htmlStyleElement: HTMLStyleElement,
+  styleElement: HTMLStyleElement,
 ): number {
-  const value: number | undefined = STYLE_ELEMENT_USAGE_COUNT.get(htmlStyleElement);
+  const value: number | undefined = STYLE_ELEMENT_USAGE_COUNT.get(styleElement);
   return (value == void 0)
     ? 0
     : value;
 }
 
 export function setStyleElementUsageCount(
-  htmlStyleElement: HTMLStyleElement,
+  styleElement: HTMLStyleElement,
   value: number
 ): void {
-  STYLE_ELEMENT_USAGE_COUNT.set(htmlStyleElement, value);
+  STYLE_ELEMENT_USAGE_COUNT.set(styleElement, value);
 }
 
 export function incrementStyleElementUsageCount(
-  htmlStyleElement: HTMLStyleElement,
+  styleElement: HTMLStyleElement,
 ): number {
-  const value: number = getStyleElementUsageCount(htmlStyleElement) + 1;
-  setStyleElementUsageCount(htmlStyleElement, value);
+  const value: number = getStyleElementUsageCount(styleElement) + 1;
+  setStyleElementUsageCount(styleElement, value);
   return value;
 }
 
 export function decrementStyleElementUsageCount(
-  htmlStyleElement: HTMLStyleElement,
+  styleElement: HTMLStyleElement,
 ): number {
-  const value: number = Math.max(getStyleElementUsageCount(htmlStyleElement) - 1, 0);
-  setStyleElementUsageCount(htmlStyleElement, value);
+  const value: number = Math.max(getStyleElementUsageCount(styleElement) - 1, 0);
+  setStyleElementUsageCount(styleElement, value);
   return value;
 }

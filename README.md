@@ -1,5 +1,4 @@
 [![npm (scoped)](https://img.shields.io/npm/v/@lifaon/rx-dom.svg)](https://www.npmjs.com/package/@lifaon/rx-dom)
-![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@lifaon/rx-dom.svg)
 ![npm](https://img.shields.io/npm/dm/@lifaon/rx-dom.svg)
 ![NPM](https://img.shields.io/npm/l/@lifaon/rx-dom.svg)
 ![npm type definitions](https://img.shields.io/npm/types/@lifaon/rx-dom.svg)
@@ -15,7 +14,9 @@ It binds for you the DOM nodes with observables to automatically update only the
 
 It's light, fast, and simple ! Give it a try !
 
-[SYNTAX](./src/syntax.md)
+- [tutorial](./examples/tutoral.md)
+- [how it works](./examples/how-rx-dom-works.md)
+- [syntax](./src/syntax.md)
 
 ## 📑 Example
 

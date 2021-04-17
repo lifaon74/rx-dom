@@ -1,9 +1,9 @@
-## How RX-DOM works
+## How rx-dom works
 
-When you compile some `reactive html` with `compileAndEvaluateReactiveHTMLAsComponentTemplate` for example, it generates
-javascript code to build the DOM nodes, and link them with the observables you've provided. When the nodes are connected
-to the DOM, rx-dom subscribes to these observables, and updates the nodes. Then, when they are no more connected, rx-dom
-unsubscribes to release resources.
+When you compile some `reactive html` with the function `compileAndEvaluateReactiveHTMLAsComponentTemplate` for example, it generates
+a bunch of javascript code to build the DOM nodes, and links them with the observables you've provided. When the nodes are connected
+to the DOM, `rx-dom` subscribes to these observables, and updates the nodes according to the received values.
+Then, when they are no more connected, rx-dom unsubscribes to release resources.
 
 So updating one observable will only affect the nodes that are bound to it.
 
@@ -34,7 +34,7 @@ console.log((await compileReactiveHTMLAsComponentTemplateFunctionOptimized(templ
 You'll end up with this result:
 
 ```ts
-export default ($: any, constantsToImport: any) => {
+export default ($: any, $content: any, constantsToImport: any) => {
   return (
     (
       {
@@ -48,6 +48,7 @@ export default ($: any, constantsToImport: any) => {
         setReactiveClass,
         setReactiveEventListener,
         $,
+        $content,
       }
     ) => {
       const parentNode = createDocumentFragment();
@@ -83,6 +84,7 @@ export default ($: any, constantsToImport: any) => {
   )({
     ...constantsToImport,
     $,
+    $content,
   });
 };
 ```

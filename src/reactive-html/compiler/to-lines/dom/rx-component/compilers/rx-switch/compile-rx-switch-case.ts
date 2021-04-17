@@ -6,6 +6,7 @@ import { getAttributeValue } from '../../../../../../../light-dom/attribute/get-
 import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-attribute-value';
 import { scopeLines } from '../../../../helpers/lines-formating-helpers';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
+import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
 
 
 const TAG_NAME: string = 'rx-switch-case';
@@ -27,7 +28,7 @@ export function compileRXSwitchCase(
   switchMapName: string,
   existingSwitchCaseValues: Set<string>,
 ): ILines | null {
-  const name: string = node.tagName.toLowerCase();
+  const name: string = getTagName(node);
   if (name === TAG_NAME) {
     const attributes: IMappedAttributes = extractRXAttributes(node.attributes, ATTRIBUTE_NAMES);
     const caseValue: string | undefined = attributes.get(SWITCH_CASE_ATTRIBUTE_NAME);

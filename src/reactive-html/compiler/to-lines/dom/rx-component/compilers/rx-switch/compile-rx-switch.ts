@@ -5,6 +5,7 @@ import { getChildNodes } from '../../../../../../../light-dom/node/properties/ge
 import { scopeLines } from '../../../../helpers/lines-formating-helpers';
 import { isElementNode } from '../../../../../../../light-dom/node/type/is-element-node';
 import { compileRXSwitchDefault } from './compile-rx-switch-default';
+import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
 
 
 const TAG_NAME: string = 'rx-switch';
@@ -22,7 +23,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 export function compileRXSwitch(
   node: Element,
 ): ILines | null {
-  const name: string = node.tagName.toLowerCase();
+  const name: string = getTagName(node);
   if (name === TAG_NAME) {
     const attributes: IMappedAttributes = extractRXAttributes(node.attributes, ATTRIBUTE_NAMES);
     const expression: string | undefined = attributes.get(EXPRESSION_ATTRIBUTE_NAME);
@@ -44,7 +45,7 @@ export function compileRXSwitch(
         if (result === null) {
           const result: ILines | null = compileRXSwitchDefault(childNode, SWITCH_DEFAULT_NAME);
           if (result === null) {
-            throw new Error(`Found invalid element '${ childNode.tagName.toLowerCase() }'`);
+            throw new Error(`Found invalid element '${ getTagName(childNode) }'`);
           } else {
             if (switchDefaultFound) {
               throw new Error(`Switch - default already defined`);

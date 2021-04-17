@@ -1,9 +1,10 @@
 import { ICustomElementOptions } from '../custom-element/custom-element-functions';
-import { IComponentTemplate } from '../component-template/component-template.type';
-import { IComponentStyle } from '../component-style/component-style.type';
+import { IComponentTemplateAsync } from '../component-template/component-template.type';
+import { IComponentStyleAsync } from '../component-style/component-style.type';
 
 export interface IComponentOptions<GData extends object> extends ICustomElementOptions {
-  template?: IComponentTemplate<GData>;
-  style?: IComponentStyle;
+  template?: IComponentTemplateAsync<GData>;
+  style?: IComponentStyleAsync;
+  useShadowDOM?: boolean;
   // host?: IHostBinding<any>[];
 }

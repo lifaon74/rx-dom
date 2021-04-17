@@ -1,10 +1,10 @@
-import { onNodeAttachedListener } from '../../move/node/with-event/attach-node-with-event';
+import { onNodeAttachedListener } from '../../move/node/__with-event/attach-node-with-event';
 import { getParentNode, IParentNode } from '../../properties/get-parent-node';
 import { getNextSibling } from '../../properties/get-next-sibling';
-import { moveManyNodesWithEvent } from '../../move/node/with-event/bulk/move-many-nodes-with-event';
-import { attachManyNodesWithEvent } from '../../move/node/with-event/bulk/attach-many-nodes-with-event';
-import { onNodeDetachedListener } from '../../move/node/with-event/detach-node-with-event';
-import { detachManyNodesWithEvent } from '../../move/node/with-event/bulk/detach-many-nodes-with-event';
+import { moveManyNodesWithEvent } from '../../move/node/__with-event/bulk/move-many-nodes-with-event';
+import { attachManyNodesWithEvent } from '../../move/node/__with-event/bulk/attach-many-nodes-with-event';
+import { onNodeDetachedListener } from '../../move/node/__with-event/detach-node-with-event';
+import { detachManyNodesWithEvent } from '../../move/node/__with-event/bulk/detach-many-nodes-with-event';
 
 export function moveNodesWithReferenceNode(
   referenceNode: Node,

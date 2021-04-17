@@ -7,6 +7,7 @@ import { generateObjectPropertiesLines, IObjectProperties } from '../../../../he
 import { indentLines, scopeLines } from '../../../../helpers/lines-formating-helpers';
 import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-attribute-value';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
+import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
 
 /*
 Syntax:
@@ -61,7 +62,7 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
 export function compileRXForLoop(
   node: Element,
 ): ILines | null {
-  const name: string = node.tagName.toLowerCase();
+  const name: string = getTagName(node);
   if (name === TAG_NAME) {
     const attributes: IMappedAttributes = extractRXAttributes(node.attributes, ATTRIBUTE_NAMES);
     const items: string | undefined = attributes.get(ITEMS_ATTRIBUTE_NAME);
