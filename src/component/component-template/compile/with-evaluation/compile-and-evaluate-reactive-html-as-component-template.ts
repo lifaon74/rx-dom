@@ -1,7 +1,10 @@
 import { generateConstantsToImportForComponentTemplateFromObject } from '../../misc/generate-constants-to-import-for-component-template-from-object';
 import { linesToString } from '../../../../reactive-html';
-import { compileReactiveHTMLAsComponentTemplateFunction, ICompiledComponentTemplateFunction } from '../to-lines';
-import { IComponentTemplate, IComponentTemplateCompileOptions } from '../../component-template.type';
+import { compileReactiveHTMLAsComponentTemplateFunction } from '../to-lines';
+import {
+  ICompiledComponentTemplateFunction, ICompiledComponentTemplateFunctionVariables, IComponentTemplate,
+  IComponentTemplateCompileOptions
+} from '../../component-template.type';
 
 
 export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends object>(
@@ -12,8 +15,8 @@ export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends 
   const code: string = linesToString(
     compileReactiveHTMLAsComponentTemplateFunction(
       html,
-      generateConstantsToImportForComponentTemplateFromObject(constantsToImport),
-      options
+      generateConstantsToImportForComponentTemplateFromObject(constantsToImport, options),
+      options,
     )
   );
 
@@ -22,11 +25,13 @@ export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends 
   const fnc: ICompiledComponentTemplateFunction<GData> = new Function(
     'a',
     'b',
-    'c',
-    `return (${ code })(a, b, c);`,
+    `return (${ code })(a, b);`,
   ) as ICompiledComponentTemplateFunction<GData>;
 
-  return (data: GData, content: DocumentFragment): DocumentFragment => {
-    return fnc(data, content, constantsToImport);
+  return (variables: ICompiledComponentTemplateFunctionVariables<GData>): DocumentFragment => {
+    return fnc(
+      variables,
+      constantsToImport,
+    );
   };
 }

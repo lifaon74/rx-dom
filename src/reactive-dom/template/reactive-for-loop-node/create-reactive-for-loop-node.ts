@@ -1,14 +1,10 @@
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
 import { IHTMLTemplate, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
 import { trackByIdentity } from './track-by-identity';
-import { detachNodeWithEvent } from '../../../light-dom/node/move/node/__with-event/detach-node-with-event';
-import { attachDocumentFragmentToStandardNode } from '../../../light-dom/node/move/node/__with-event/derived/attach-document-fragment-to-standard-node';
 import { getChildNodes } from '../../../light-dom/node/properties/get-child-nodes';
 import { createDocumentFragment } from '../../../light-dom/node/create/create-document-fragment';
-import { attachNode } from '../../../light-dom/node/move/node/attach-node';
 import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
 import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
-import { moveManyNodesWithEvent } from '../../../light-dom/node/move/node/__with-event/bulk/move-many-nodes-with-event';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import {
   createReferenceNode, IReferenceNode
@@ -17,6 +13,8 @@ import {
   createMulticastReplayLastSource, distinctEmitPipe, IEmitFunction, ISource, ISubscribeFunction
 } from '@lifaon/rx-js-light';
 import { incrementalUUID } from '../../../misc';
+import { attachNode, detachNodeHavingParent } from '../../../light-dom';
+import { attachManyNodes } from '../../../light-dom/node/move/devired/batch/attach-many-nodes';
 
 interface INodesAndIndex {
   nodes: IHTMLTemplateNodeList | DocumentFragment;
@@ -132,7 +130,6 @@ function generateNodesForReactiveForLoopNode<GItem>(
 /**
  * Detaches all nodes present in 'trackByMap',
  * and returns the number of detached nodes
- * INFO: Assumes parent node is not a document fragment
  */
 function detachNodesOfTrackByMap(
   trackByMap: ITrackByMap,
@@ -146,7 +143,7 @@ function detachNodesOfTrackByMap(
     for (let i = 0, li = nodeList.length; i < li; i++) {
       const nodes: IHTMLTemplateNodeList = nodeList[i].nodes as IHTMLTemplateNodeList;
       for (let j = 0, lj = nodes.length; j < lj; j++) {
-        detachNodeWithEvent(nodes[j]);
+        detachNodeHavingParent(nodes[j]);
         // console.log('detach node', nodes[j]);
         detached++;
       }
@@ -182,7 +179,7 @@ function attachNodesForReactiveForLoopNode(
     }
   }
 
-  attachDocumentFragmentToStandardNode(
+  attachNode(
     fragmentContainer,
     getParentNode(referenceNode) as IParentNode,
     getNextSibling(referenceNode),
@@ -210,7 +207,7 @@ function moveNodesForReactiveForLoopNode(
     if (Array.isArray(nodes)) {
       const length: number = nodes.length;
       if (length > 0) {
-        moveManyNodesWithEvent(nodes, parentNode, getNextSibling(referenceNode));
+        attachManyNodes(nodes, parentNode, getNextSibling(referenceNode));
         referenceNode = nodes[length - 1];
         allNodes.push(...nodes);
       }
@@ -220,7 +217,7 @@ function moveNodesForReactiveForLoopNode(
       nodesAndIndex.nodes = nodes;
       const length: number = nodes.length;
       if (length > 0) {
-        attachDocumentFragmentToStandardNode(fragment, parentNode, getNextSibling(referenceNode));
+        attachNode(fragment, parentNode, getNextSibling(referenceNode));
         referenceNode = nodes[length - 1];
         allNodes.push(...nodes);
       }

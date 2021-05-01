@@ -7,6 +7,7 @@ import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-
 import { scopeLines } from '../../../../helpers/lines-formating-helpers';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
 import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
+import { generateGetOptionalTemplateReferenceCode } from '../../../../helpers/generate-get-template-reference-code';
 
 
 const TAG_NAME: string = 'rx-switch-case';
@@ -15,7 +16,6 @@ const COMMAND_NAME: string = '*switch-case';
 const SWITCH_CASE_ATTRIBUTE_NAME: string = 'case';
 
 const LOCAL_TEMPLATE_NAME: string = 'template';
-const NULL_TEMPLATE: string = 'null';
 
 const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   SWITCH_CASE_ATTRIBUTE_NAME,
@@ -48,7 +48,7 @@ export function compileRXSwitchCase(
       throw new Error(`Should not have any children`);
     }
 
-    return generateRXSwitchCaseLines(switchMapName, caseValue, template);
+    return generateRXSwitchCaseLines(switchMapName, caseValue, generateGetOptionalTemplateReferenceCode(template));
   } else if (hasAttribute(node, COMMAND_NAME)) {
     const caseValue: string = getAttributeValue(node, COMMAND_NAME) as string;
     setAttributeValue(node, COMMAND_NAME, null);
@@ -66,7 +66,7 @@ export function compileRXSwitchCase(
 export function generateRXSwitchCaseLines(
   switchMapName: string,
   caseValue: string,
-  template: string = NULL_TEMPLATE,
+  template: string,
 ): ILines {
   return [
     `// switch case`,

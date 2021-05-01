@@ -1,0 +1,29 @@
+import { IHTMLTemplate } from '../../light-dom';
+
+/** COMPILE **/
+
+export interface IComponentTemplateCompileOptions {
+  dataName?: string;
+  contentName?: string;
+}
+
+export interface ICompiledComponentTemplateFunctionOptions<GData extends object> {
+  data: GData;
+  content: DocumentFragment;
+  constantsToImport: object;
+}
+
+export type ICompiledComponentTemplateFunction<GData extends object> = IHTMLTemplate<ICompiledComponentTemplateFunctionOptions<GData>>
+
+
+/** RUN **/
+
+export type IComponentTemplateOptions<GData extends object> = Omit<ICompiledComponentTemplateFunctionOptions<GData>, 'constantsToImport'>;
+
+export type IComponentTemplate<GData extends object> = IHTMLTemplate<IComponentTemplateOptions<GData>>
+
+export type IComponentTemplateAsync<GData extends object> =
+  IComponentTemplate<GData>
+  | Promise<IComponentTemplate<GData>>
+  ;
+

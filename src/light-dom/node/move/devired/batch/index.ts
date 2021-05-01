@@ -1,2 +1,4 @@
-export * from './node-remove-children';
-export * from './node-move-children-to-document-fragment';
+export * from './attach-many-nodes';
+export * from './attach-node-children-to-new-document-fragment';
+export * from './detach-many-nodes';
+export * from './remove-node-children';

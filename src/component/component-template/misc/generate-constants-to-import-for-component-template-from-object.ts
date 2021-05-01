@@ -3,7 +3,10 @@ import {
   generateObjectPropertiesFromLinearProperties, IObjectProperties
 } from '../../../reactive-html/compiler/to-lines/helpers/generate-object-properties-lines';
 import { DEFAULT_CONTENT_NAME } from '../../../reactive-html/constants/default-content-name.constant';
-import { IComponentTemplateCompileOptions } from '../component-template.type';
+import {
+  IComponentTemplateCompileOptions, IGetNodeReferenceFunction, IGetTemplateReferenceFunction, ISetNodeReferenceFunction,
+  ISetTemplateReferenceFunction
+} from '../component-template.type';
 
 export function generateConstantsToImportForComponentTemplateFromObject(
   constantsToImport: object,
@@ -14,6 +17,10 @@ export function generateConstantsToImportForComponentTemplateFromObject(
 ): IObjectProperties {
   return generateObjectPropertiesFromLinearProperties([
     ...Object.keys(constantsToImport),
+    'getNodeReference',
+    'setNodeReference',
+    'getTemplateReference',
+    'setTemplateReference',
     dataName,
     contentName,
   ]);

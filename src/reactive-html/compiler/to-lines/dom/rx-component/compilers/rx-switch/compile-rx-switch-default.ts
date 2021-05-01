@@ -6,6 +6,7 @@ import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-
 import { scopeLines } from '../../../../helpers/lines-formating-helpers';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
 import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
+import { generateGetTemplateReferenceCode } from '../../../../helpers/generate-get-template-reference-code';
 
 
 const TAG_NAME: string = 'rx-switch-default';
@@ -35,7 +36,7 @@ export function compileRXSwitchDefault(
       throw new Error(`Should not have any children`);
     }
 
-    return generateRXSwitchDefaultLines(switchDefaultName, template);
+    return generateRXSwitchDefaultLines(switchDefaultName, generateGetTemplateReferenceCode(template));
   } else if (hasAttribute(node, COMMAND_NAME)) {
     setAttributeValue(node, COMMAND_NAME, null);
 

@@ -7,3 +7,6 @@ export * from './get-next-sibling';
 export * from './get-node-type';
 export * from './get-parent-node';
 export * from './get-previous-sibling';
+export * from './get-shadow-root';
+export * from './get-shadow-root-host';
+export * from './get-tag-name';

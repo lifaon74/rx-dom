@@ -4,7 +4,7 @@ import {
 } from '../helpers/extract-let-property';
 import { indentLines } from '../../../../helpers/lines-formating-helpers';
 import {
-  extractReferenceProperty, getReferencePropertyJSName, IReferenceProperty
+  extractReferenceProperty, getReferencePropertyName, IReferenceProperty
 } from '../../../attribute/compilers/reference/extract-reference-property';
 import { compileNodes } from '../../../nodes/compile-nodes';
 import { getChildNodes } from '../../../../../../../light-dom/node/properties/get-child-nodes';
@@ -74,22 +74,16 @@ export function compileRXTemplate(
       compiledChildren = [];
     }
 
-    const variableName: string = getReferencePropertyJSName(referenceProperty);
+    const referenceName: string = getReferencePropertyName(referenceProperty);
 
-    const lines: ILines = [
+    return [
       `// template`,
-      `var ${ variableName } = (`,
+      `setTemplateReference(${ JSON.stringify(referenceName) }, `,
       ...indentLines(
         generateRXTemplateFunctionLines(compiledChildren, constantsToImports),
       ),
       `);`,
     ];
-
-    // if (referenceProperty.value !== '') {
-    //   lines.push(`setTemplateReference(${ JSON.stringify(referenceProperty.value) }, ${ variableName });`);
-    // }
-
-    return lines;
   } else {
     return null;
   }

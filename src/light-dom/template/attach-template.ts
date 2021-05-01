@@ -1,8 +1,6 @@
 import { IHTMLTemplate, IHTMLTemplateNodeList } from './template.type';
 import { getChildNodes } from '../node/properties/get-child-nodes';
-import { attachDocumentFragmentToStandardNode } from '../node/move/node/__with-event/derived/attach-document-fragment-to-standard-node';
-import { isDocumentFragment } from '../node/type/is-document-fragment';
-import { attachNode } from '../node/move/node/attach-node';
+import { attachNode } from '../node';
 
 
 export function attachTemplate<GArgument extends object>(
@@ -36,11 +34,7 @@ export function attachTemplateFragment(
   referenceNode?: Node | null,
 ): IHTMLTemplateNodeList {
   const nodes: IHTMLTemplateNodeList = getChildNodes(fragment) as IHTMLTemplateNodeList;
-  if (isDocumentFragment(parentNode)) {
-    attachNode(fragment, parentNode, referenceNode);
-  } else {
-    attachDocumentFragmentToStandardNode(fragment, parentNode, referenceNode);
-  }
+  attachNode(fragment, parentNode, referenceNode);
   return nodes;
 }
 

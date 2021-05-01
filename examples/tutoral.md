@@ -24,9 +24,11 @@ The complete syntax for `reactive html` may be found [HERE](../src/syntax.md)
 
 ### Component
 
+Let's create `hello-world.component.ts` in its own folder.
+
 #### Step 1 - define what you want to import into your component
 
-The compiled `reactive html` is completely isolated: it doesn't import any functions, constants, or uses global
+The compiled `reactive html` is completely isolated: it doesn't import any functions, constants, or use global
 variables. Instead, everything must come from the caller of the function.
 
 So the first step, is to define what will be required into your component: 
@@ -37,10 +39,10 @@ const CONSTANTS_TO_IMPORT = {
 };
 ```
 
-`DEFAULT_CONSTANTS_TO_IMPORT`: is the 'minimal' list of functions used by `rx-dom` when compiling some `reactive html`,
-  you probably want to use them in each of your component.
+`DEFAULT_CONSTANTS_TO_IMPORT`: is the *'minimal'* list of functions used by `rx-dom`, when compiling some `reactive html`.
+You probably want to use them in each of your components.
 
-⚠️ If your component is using custom elements (or other `rx-dom` elements), you'll need to define them too:
+⚠️ If your component is using custom elements (or other `rx-dom` elements), you'll need to import them too:
 
 ```ts
 export const MY_COMPONENT_CUSTOM_ELEMENTS = [
@@ -54,6 +56,7 @@ const CONSTANTS_TO_IMPORT = {
 ```
 
 This ensures that every custom element is properly included into your application, and you didn't forget anyone.
+This is only a security restriction, but it will avoid you many problems in big applications.
 
 
 #### Step 2 - write your reactive html
@@ -66,7 +69,7 @@ const reactiveHTML = `
     <input
       #input
       [value]="$.input.subscribe"
-      (input)="() => $.input.emit(input.value)"
+      (input)="() => $.input.emit(getNodeReference('input').value)"
     >
   </div>
   <div
@@ -82,7 +85,7 @@ const compiledTemplate = compileAndEvaluateReactiveHTMLAsComponentTemplate(react
 
 In your `reactive html`, you have access to many variables:
 
-- everything present in CONSTANTS_TO_IMPORT
+- everything present in `CONSTANTS_TO_IMPORT`
 - `$content`: a document fragment, containing the nodes that was present into your component before the template is injected
   (ak: `ng-content` for angular or `children` for react)
 - `$`: the data coming from your component. It's an object containing some observables that you'll use to update the DOM.
@@ -98,7 +101,7 @@ interface IData {
 }
 ```
 
-These data comes from the return of `onCreate` when your component is instantiated.
+These data comes from the return of the method `onCreate` when your component is instantiated (seen in a short moment).
 
 #### Step 3 - write your scoped css
 
@@ -125,9 +128,9 @@ The style of a component **SHOULD ALWAYS** keeps its css encapsulated as much as
 - use `>`, or your css may leak on child components
 - avoid applying style to other components (like `body`)
 
-ℹ️ by choice `rx-dom` doesn't use the shadow DOM (we may easily activate this feature later, if the community asks for it).
+ℹ️ `rx-dom` supports partially the shadow DOM, but we strongly discourage its usage now.
 Indeed, the shadow DOM forces encapsulation, but we often encounter the need to style child components from a
-parent component.
+parent component. We're awaiting on [Constructable Stylesheets](https://developers.google.com/web/updates/2019/02/constructable-stylesheets) to go further.
 
 #### Step 4 - create your component
 
@@ -163,7 +166,7 @@ const CONSTANTS_TO_IMPORT = {
       <input
         #input
         [value]="$.input.subscribe"
-        (input)="() => $.input.emit(input.value)"
+        (input)="() => $.input.emit(getNodeReference('input').value)"
       >
     </div>
     <div
@@ -189,18 +192,14 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
   constructor() {
     super();
     // 'input' is an source which contains and emits the value of our input
-    const input = createMulticastReplayLastSource<string>({ initialValue: '' });
-
+    const input = let$$('');
+    
     // 'remaining' is an observable whose value is computed from the length of 'input'
-    const remaining = pipeSubscribeFunction(input.subscribe, [
-      mapSubscribePipe((value: string) => value.length)
-    ]);
-
+    const remaining = map$$(input.subscribe, (value: string) => value.length);
+    
     // 'valid' is an observable whose value is true if 'remaining' is less than 10
-    const valid = pipeSubscribeFunction(remaining, [
-      mapSubscribePipe((value: number) => (value <= 10)),
-    ]);
-
+    const valid = map$$(remaining, (value: number) => (value <= 10));
+    
     this.data = {
       input,
       remaining,
@@ -214,6 +213,61 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
   }
 }
 ```
+
+
+[comment]: <> (```ts)
+
+[comment]: <> (export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IData> {)
+
+[comment]: <> (  protected readonly data: IData;)
+
+[comment]: <> (  constructor&#40;&#41; {)
+
+[comment]: <> (    super&#40;&#41;;)
+
+[comment]: <> (    // 'input' is an source which contains and emits the value of our input)
+
+[comment]: <> (    const input = createMulticastReplayLastSource<string>&#40;{ initialValue: '' }&#41;;)
+    
+[comment]: <> (    // 'remaining' is an observable whose value is computed from the length of 'input')
+
+[comment]: <> (    const remaining = pipeSubscribeFunction&#40;input.subscribe, [)
+
+[comment]: <> (      mapSubscribePipe&#40;&#40;value: string&#41; => value.length&#41;)
+
+[comment]: <> (    ]&#41;;)
+
+[comment]: <> (    // 'valid' is an observable whose value is true if 'remaining' is less than 10)
+
+[comment]: <> (    const valid = pipeSubscribeFunction&#40;remaining, [)
+
+[comment]: <> (      mapSubscribePipe&#40;&#40;value: number&#41; => &#40;value <= 10&#41;&#41;,)
+
+[comment]: <> (    ]&#41;;)
+
+[comment]: <> (    this.data = {)
+
+[comment]: <> (      input,)
+
+[comment]: <> (      remaining,)
+
+[comment]: <> (      valid,)
+
+[comment]: <> (    };)
+
+[comment]: <> (  })
+
+[comment]: <> (  // onCreate is called when the component is created to retrieve the data to inject into the template )
+
+[comment]: <> (  public onCreate&#40;&#41;: IData {)
+
+[comment]: <> (    return this.data;)
+
+[comment]: <> (  })
+
+[comment]: <> (})
+
+[comment]: <> (```)
 
 #### Step 5 - boostrap your application
 
@@ -257,10 +311,10 @@ window.onload = run;
 However, this won't work for 2 reasons:
 
 - `rx-dom` is intended to be tree-shacked and minified. If you don't explicitly boostrap or inject your main component,
-  you'll end up with an app of 0KB of javascript. That's the exact same reason we use `generateCreateElementFunctionWithCustomElements`:
+  you'll end up with an app of 0KB of javascript. For the same reason we use `generateCreateElementFunctionWithCustomElements`:
   to properly import every required components, else we may miss some custom elements
-  (meaning a tag acting like a div for example, because the component is not defined).
-- `rx-dom` doesn't use `document.body.appendChild` or any native DOM functions, because it tries to be context independent
+  (meaning a custom tag acting like a div for example, because the component is not defined).
+- `rx-dom` doesn't use `document.body.appendChild` or any native DOM functions: it tries to be context independent
   (may run on node and browser), and uses a faster *'connected'* detection algorithm that the `connectedCallback`.
   So, you must use `rx-dom` functions instead of native ones.
 

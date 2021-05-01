@@ -3,6 +3,8 @@ import { indentLines } from '../../../../helpers/lines-formating-helpers';
 import { hasChildNodes } from '../../../../../../../light-dom/node/state/has-child-nodes';
 import { extractLetProperty, ILetProperty } from '../helpers/extract-let-property';
 import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
+import { dashCaseToCamelCase } from '../../../../../../../misc/case-converters';
+import { generateGetTemplateReferenceCode } from '../../../../helpers/generate-get-template-reference-code';
 
 /*
 Syntax:
@@ -52,11 +54,10 @@ export function compileRXInjectTemplate(
       `// inject template`,
       `attachTemplate(`,
       ...indentLines([
-        `${ referenceName },`,
-        `getTemplateReference(${ JSON.stringify(referenceName) }),`,
+        `${ generateGetTemplateReferenceCode(referenceName) },`,
         `{`,
         ...indentLines(letProperties.map((letProperty: ILetProperty) => {
-          return `${ letProperty.name }: (${ letProperty.value }),`;
+          return `${ dashCaseToCamelCase(letProperty.name) }: (${ letProperty.value }),`;
         })),
         `},`,
         `parentNode,`,
@@ -67,5 +68,4 @@ export function compileRXInjectTemplate(
     return null;
   }
 }
-
 

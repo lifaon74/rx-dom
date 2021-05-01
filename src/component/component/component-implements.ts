@@ -1,4 +1,7 @@
+import { IInjectComponentTemplateReturn } from '../component-template/misc/inject-component-template';
+
 /** IMPLEMENTS **/
+
 
 /**
  * Called immediately when a new Component is created,
@@ -10,13 +13,15 @@ export interface OnCreate<GData extends object> {
   onCreate(): GData;
 }
 
+export type IOnInitOptions = IInjectComponentTemplateReturn;
+
 /**
  * Called right after the Component's style and template have finished to load and render
  *  - INFO: perfect time to access the rendered components style or template (but use with caution)
  *  - WARN: doesnt guaranty that the component is actually into the DOM !
  */
 export interface OnInit {
-  onInit(): void;
+  onInit(options: IOnInitOptions): void;
 }
 
 /**

@@ -1,6 +1,7 @@
 import {
   generateObjectPropertyEntry, IObjectPropertyEntry
 } from '../../../../helpers/generate-object-properties-lines';
+import { dashCaseToCamelCase } from '../../../../../../../misc/case-converters';
 
 /**
  * Syntax:
@@ -11,7 +12,6 @@ export interface ILetProperty {
   readonly name: string;
   readonly value: string;
 }
-
 
 /*--------*/
 
@@ -35,7 +35,7 @@ export function extractLetProperty(
 export function convertLetPropertyToObjectPropertyEntry(
   letProperty: ILetProperty,
 ): IObjectPropertyEntry {
-  return generateObjectPropertyEntry(letProperty.name, letProperty.value);
+  return generateObjectPropertyEntry(dashCaseToCamelCase(letProperty.name), letProperty.value);
 }
 
 

@@ -7,6 +7,9 @@ import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-
 import { extractRXAttributes, IMappedAttributes } from '../helpers/extract-rx-attributes';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
 import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
+import {
+  generateGetOptionalTemplateReferenceCode, generateGetTemplateReferenceCode
+} from '../../../../helpers/generate-get-template-reference-code';
 
 /*
 Syntax:
@@ -50,7 +53,6 @@ const TEMPLATE_TRUE_ATTRIBUTE_NAME: string = 'true';
 const TEMPLATE_FALSE_ATTRIBUTE_NAME: string = 'false';
 
 const LOCAL_TEMPLATE_NAME: string = 'template';
-const NULL_TEMPLATE: string = 'null';
 
 const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   CONDITION_ATTRIBUTE_NAME,
@@ -83,14 +85,18 @@ export function compileRXIf(
       throw new Error(`Should not have any children`);
     }
 
-    return generateRXIfLines(condition, templateTrue, templateFalse);
+    return generateRXIfLines(
+      condition,
+      generateGetOptionalTemplateReferenceCode(templateTrue),
+      generateGetOptionalTemplateReferenceCode(templateFalse),
+    );
   } else if (hasAttribute(node, COMMAND_NAME)) {
     const condition: string = getAttributeValue(node, COMMAND_NAME) as string;
     setAttributeValue(node, COMMAND_NAME, null);
 
     return scopeLines([
       ...generateLocalTemplateLinesFromRXContainerOrElement(node, LOCAL_TEMPLATE_NAME),
-      ...generateRXIfLines(condition, LOCAL_TEMPLATE_NAME, NULL_TEMPLATE),
+      ...generateRXIfLines(condition, LOCAL_TEMPLATE_NAME, 'null'),
     ]);
   } else {
     return null;
@@ -100,8 +106,8 @@ export function compileRXIf(
 
 export function generateRXIfLines(
   condition: string,
-  templateTrue: string = NULL_TEMPLATE,
-  templateFalse: string = NULL_TEMPLATE,
+  templateTrue: string,
+  templateFalse: string,
 ): ILines {
   return [
     `// reactive if`,

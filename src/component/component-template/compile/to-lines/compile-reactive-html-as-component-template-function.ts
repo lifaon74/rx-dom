@@ -1,12 +1,18 @@
 import {
-  compileHTMLAsHTMLTemplate, DEFAULT_DATA_NAME, ILines, indentLines, IObjectProperties
+  compileHTMLAsHTMLTemplate, DEFAULT_DATA_NAME, ILines, indentLines, IObjectProperties, IObjectPropertyEntry
 } from '../../../../reactive-html';
 import { DEFAULT_CONTENT_NAME } from '../../../../reactive-html/constants/default-content-name.constant';
-import { IComponentTemplateCompileOptions } from '../../component-template.type';
+import {
+  ICompiledComponentTemplateFunctionVariables, IComponentTemplateCompileOptions
+} from '../../component-template.type';
 
-export interface ICompiledComponentTemplateFunction<GData extends object = object> {
-  (data: GData, content: DocumentFragment, constantsToImport: object): DocumentFragment;
-}
+type IKeyOfCompiledComponentTemplateFunctionVariables = keyof ICompiledComponentTemplateFunctionVariables<object>;
+
+const DATA_KEY: IKeyOfCompiledComponentTemplateFunctionVariables = 'data';
+const CONTENT_KEY: IKeyOfCompiledComponentTemplateFunctionVariables = 'content';
+
+const CONSTANTS_NAME: string = 'constants';
+const VARIABLES_NAME: string = 'variables';
 
 export function compileReactiveHTMLAsComponentTemplateFunction(
   html: string,
@@ -16,8 +22,18 @@ export function compileReactiveHTMLAsComponentTemplateFunction(
     contentName = DEFAULT_CONTENT_NAME,
   }: IComponentTemplateCompileOptions = {},
 ): ILines {
+  const variablesToRemap: IObjectProperties = [];
+
+  if (dataName !== DATA_KEY) {
+    variablesToRemap.push([dataName, `${ VARIABLES_NAME }.${ DATA_KEY }`]);
+  }
+
+  if (contentName !== CONTENT_KEY) {
+    variablesToRemap.push([contentName, `${ VARIABLES_NAME }.${ CONTENT_KEY }`]);
+  }
+
   return [
-    `(${ dataName }, ${ contentName }, constantsToImport) => {`,
+    `(${ VARIABLES_NAME }, ${ CONSTANTS_NAME }) => {`,
     ...indentLines([
       `return (`,
       ...indentLines(compileHTMLAsHTMLTemplate(
@@ -26,9 +42,11 @@ export function compileReactiveHTMLAsComponentTemplateFunction(
       )),
       `)({`,
       ...indentLines([
-        `...constantsToImport,`,
-        `${ dataName },`,
-        `${ contentName },`,
+        `...${ CONSTANTS_NAME },`,
+        `...${ VARIABLES_NAME },`,
+        ...variablesToRemap.map(([propertyName, propertyValue]: IObjectPropertyEntry) => {
+          return `${ propertyName }: ${ propertyValue },`;
+        })
       ]),
       `});`,
     ]),

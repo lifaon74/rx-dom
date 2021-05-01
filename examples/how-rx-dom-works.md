@@ -31,7 +31,7 @@ const templateString = `
 console.log((await compileReactiveHTMLAsComponentTemplateFunctionOptimized(templateString, generateConstantsToImportForComponentTemplateFromObject(CONSTANTS_TO_IMPORT))).join('\n'));
 ```
 
-You'll end up with this result:
+You'll end up with something similar to this:
 
 ```ts
 export default ($: any, $content: any, constantsToImport: any) => {

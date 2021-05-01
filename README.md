@@ -91,8 +91,8 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
 
 ## 📦 Installation
 
-**BETA**: the lib is currently in beta, meaning it's stable enough for 90% of its functions,
-but some may evolve in the future. It's ready for small or individual projects. Feel free to test and give feedback.
+**BETA**: the lib is currently in beta, meaning it's stable enough for most of its functions,
+however some may evolve in the future. It's ready for small or individual projects. Feel free to test and give feedback.
 
 ```bash
 yarn add @lifaon/rx-dom
@@ -125,7 +125,7 @@ Feature | Angular | Virtual DOM | rx-dom
 **Semantics**| html with special flavour | `jsx` or `hyperscript` | html with special flavour
 **Memory** | **medium**: data are directly reflected on the nodes, but the framework itself is heavy | **high** a lot of virtual DOM elements are created every time the DOM updates, and the number of virtual nodes is also linearly proportional to the size of the DOM tree. | **very low**: once the data pipeline is set, on every update the data is directly reflected on the node.
 **CPU** | **medium**: when zoneJs triggers, all expressions in the html are evaluated and reflected on the nodes | **high** because a lot of time is spent regenerating the Virtual DOM, calculating the diff and figuring out what changed. | **low**: the nodes subscribe only to the part of the data that is needed for rendering / updating them. It's almost unbeatable, because when the data changes, it directly updates the nodes.
-**Size** | ~50KB | ~10KB (preact) | <8KB (with jit compiler), <3KB (aot)
+**Size** | ~50KB | ~10KB (preact) | ~8KB (with jit compiler), ~4KB (aot)
 
 *size is calculated for similar 'hello world' projects, compiled, minified and gzipped.
 
@@ -136,8 +136,8 @@ It currently lacks of its own cli, so AOT will be available in a future release.
 We may conclude that current frameworks are pretty efficient, but are not as optimized as they could be.
 **rx-dom** tries to do better by conciliating an elegant syntax with maximal performances.
 
-The learning curve about [observables](https://github.com/lifaon74/rx-js-light) is a little longer,
-and may seems tricky or unnecessary,
+For new incomers, learning [observables](https://github.com/lifaon74/rx-js-light) may be discouraging,
+as it is a totally different manner to think your code,
 but once you're comfortable with this principle, you'll fully enjoy the potential, and the performances they provide:
 
 - fewer errors, especially on computed properties

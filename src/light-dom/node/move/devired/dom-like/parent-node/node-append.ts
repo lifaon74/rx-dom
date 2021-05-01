@@ -1,4 +1,4 @@
-import { INodeOrString, nodeOrStringAsNode } from '../../../../create/node-or-string-as-node';
+import { INodeOrString, nodeOrStringAsNode } from '../../../../create/derived/node-or-string-as-node';
 import { nodeInsertBefore } from '../node/node-insert-before';
 
 /**

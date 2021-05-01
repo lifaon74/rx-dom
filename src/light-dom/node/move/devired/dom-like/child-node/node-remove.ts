@@ -1,7 +1,4 @@
-import { detachNodeWithEvent } from '../../../node/__with-event/detach-node-with-event';
-import { getParentNode, IParentNode } from '../../../../properties/get-parent-node';
-import { isDocumentFragment } from '../../../../type/is-document-fragment';
-import { detachNode } from '../../../node/detach-node';
+import { detachNode } from '../../../node';
 
 /**
  * Equivalent of:
@@ -10,12 +7,6 @@ import { detachNode } from '../../../node/detach-node';
 export function nodeRemove(
   node: ChildNode,
 ): void {
-  const parentNode: IParentNode | null = getParentNode(node);
-  if (parentNode !== null) {
-    if (isDocumentFragment(parentNode)) {
-      detachNode(node);
-    } else {
-      detachNodeWithEvent(node);
-    }
-  }
+  detachNode(node);
 }
+

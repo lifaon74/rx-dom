@@ -185,18 +185,16 @@ div.addEventListener('click', observer);
 It compiles to something similar to this:
 
 ```ts
-var myDiv = div;
+setNodeReference('my-div', div);
 ```
 
-ℹ️ the `var` instead of `let` or `const` is intentional: it allows the reference to be available on the whole component.
+ℹ️ You can retrieve a reference to a Node with `getNodeReference('my-div')`.
 
-⚠️ html attributes are case-insensitive, so the reference is converted from `dash-case` to `camelCase`.
-
-ℹ️ you may set a value to this ref attribute. In this case, the value will define the name of the javascript variable:
+ℹ️ you may set a value to this ref attribute. In this case, the value will be used as the reference's name:
 
 ```html
 <div
-  #div="myDiv"
+  #ref="my-div"
 ></div>
 ```
 
@@ -234,8 +232,17 @@ Attributes:
 It compiles to something similar to this:
 
 ```ts
-var templateReference = ({ var1, var2 }): DocumentFragment => content;
+setTemplateReference(
+  'templateReference',
+  ({ var1, var2 }): DocumentFragment => content,
+);
 ```
+
+ℹ️ You can retrieve a reference to a Template with `getTemplateReference('templateReference')`.
+
+⚠️ html attribute's names are case-insensitive, so the `let` properties are converted from `dash-case` to `camelCase`.
+Example: `let-my-var="myNewVar"` => `{ myVar: myNewVar }`
+
 
 #### Template injection: rx-inject-template
 
@@ -257,7 +264,11 @@ Attributes:
 It compiles to something similar to this:
 
 ```ts
-attachTemplate(templateReference, { var1: data1, var2: data2 }, parentNode);
+attachTemplate(
+  getTemplateReference('templateReference'),
+  { var1: data1, var2: data2 },
+  parentNode,
+);
 ``` 
 
 #### Dynamic content injection: rx-inject-content
@@ -309,7 +320,14 @@ Attributes:
 It compiles to something similar to this:
 
 ```ts
-nodeAppendChild(parentNode, createReactiveIfNode(conditionObservable, templateReferenceTrue, templateReferenceFalse));
+nodeAppendChild(
+  parentNode,
+  createReactiveIfNode(
+    conditionObservable,
+    getTemplateReference('templateReferenceTrue'),
+    getTemplateReference('templateReferenceFalse'),
+  )
+);
 ```
 
 ###### alternative syntax
@@ -386,8 +404,8 @@ It compiles to something similar to this:
 
 ```ts
 nodeAppendChild(parentNode, createReactiveSwitchNode(observable, new Map([
-  [valueA, templateReferenceA],
-  [valueB, templateReferenceB],
+  [valueA, getTemplateReference('templateReferenceA')],
+  [valueB, getTemplateReference('templateReferenceB')],
 ]), templateReferenceC));
 ```
 
@@ -494,7 +512,14 @@ Attributes:
 It compiles to something similar to this:
 
 ```ts
-nodeAppendChild(parentNode, createReactiveForLoopNode(itemsObservable, templateReference, { tackBy: trackByFunction }));
+nodeAppendChild(
+  parentNode,
+  createReactiveForLoopNode(
+    itemsObservable,
+    getTemplateReference('templateReference'),
+    { tackBy: trackByFunction },
+  ),
+);
 ```
 
 ###### alternative syntax

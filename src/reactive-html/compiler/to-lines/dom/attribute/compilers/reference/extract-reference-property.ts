@@ -1,6 +1,3 @@
-import { dashCaseToCamelCase } from '../../../../../../../misc/case-converters/dash-case';
-
-
 /**
  * Syntax:
  *  - standard: #name
@@ -14,14 +11,21 @@ export interface IReferenceProperty {
 
 /*--------*/
 
-export function getReferencePropertyJSName(
+// export function getReferencePropertyJSName(
+//   referenceProperty: IReferenceProperty
+// ): string {
+//   return (referenceProperty.value === '')
+//     ? dashCaseToCamelCase(referenceProperty.name)
+//     : referenceProperty.value;
+// }
+
+export function getReferencePropertyName(
   referenceProperty: IReferenceProperty
 ): string {
   return (referenceProperty.value === '')
-    ? dashCaseToCamelCase(referenceProperty.name)
+    ? referenceProperty.name
     : referenceProperty.value;
 }
-
 
 /*--------*/
 

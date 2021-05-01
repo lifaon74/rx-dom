@@ -8,6 +8,9 @@ import { indentLines, scopeLines } from '../../../../helpers/lines-formating-hel
 import { setAttributeValue } from '../../../../../../../light-dom/attribute/set-attribute-value';
 import { generateLocalTemplateLinesFromRXContainerOrElement } from '../helpers/generate-local-template-lines-from-node';
 import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
+import {
+  generateGetOptionalTemplateReferenceCode, generateGetTemplateReferenceCode
+} from '../../../../helpers/generate-get-template-reference-code';
 
 /*
 Syntax:
@@ -87,7 +90,11 @@ export function compileRXForLoop(
       throw new Error(`Should not have any children`);
     }
 
-    return generateRXForLoopLines(items, template, generateObjectPropertiesLines(options));
+    return generateRXForLoopLines(
+      items,
+      generateGetTemplateReferenceCode(template),
+      generateObjectPropertiesLines(options),
+    );
   } else if (hasAttribute(node, COMMAND_NAME)) {
     const command: IRXForLoopCommand = extractRXForLoopCommand(getAttributeValue(node, COMMAND_NAME) as string);
     setAttributeValue(node, COMMAND_NAME, null);

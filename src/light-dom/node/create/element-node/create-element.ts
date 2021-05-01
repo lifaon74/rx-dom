@@ -2,8 +2,11 @@ import { createElementNode, ICreateElementNodeOptions } from './create-element-n
 import { isSVGElementTagName } from '../../../tags/is/is-svg-element-tag-name';
 import { createElementNodeNS } from './create-element-node-ns';
 import { isCustomElementTagName } from '../../../tags/is/is-custom-element-tag-name';
-import { getCustomElementConstructorFromTagName } from '../../../custom-element';
 import { isHTMLElementTagName } from '../../../tags/is/is-html-element-tag-name';
+import {
+  createCustomElementNodeWithIs, createCustomElementNodeWithoutIs,
+  ICreateCustomElementNodeWithIsOptions
+} from './create-custom-element-node';
 
 export interface ICreateElementOptions extends ICreateElementNodeOptions {
 }
@@ -33,20 +36,12 @@ export function createElement(
     if (is === void 0) {
       return createElementNode(tagName, options);
     } else {
-      if (getCustomElementConstructorFromTagName(is) === void 0) {
-        throw new Error(`'${ is }' is not defined`);
-      } else {
-        return createElementNode(tagName, options);
-      }
+      return createCustomElementNodeWithIs(tagName, options as ICreateCustomElementNodeWithIsOptions);
     }
   } else if (isSVGElementTagName(tagName)) {
     return createElementNodeNS('http://www.w3.org/2000/svg', tagName, options);
   } else if (isCustomElementTagName(tagName)) {
-    if (getCustomElementConstructorFromTagName(tagName) === void 0) {
-      throw new Error(`'${ tagName }' is not defined`);
-    } else {
-      return createElementNode(tagName, options);
-    }
+    return createCustomElementNodeWithoutIs(tagName, options);
   } else {
     return createElementNode(tagName, options);
   }

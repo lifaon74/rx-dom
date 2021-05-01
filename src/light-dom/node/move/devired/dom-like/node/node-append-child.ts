@@ -8,6 +8,5 @@ export function nodeAppendChild<GNode extends Node>(
   parentNode: Node,
   node: GNode,
 ): GNode {
-  nodeInsertBefore(parentNode, node, null);
-  return node;
+  return nodeInsertBefore<GNode>(parentNode, node, null);
 }

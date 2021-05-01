@@ -17,59 +17,12 @@ import {
 import { freeze } from '@lifaon/rx-js-light';
 import { HTMLElementConstructor } from '../../light-dom/types';
 import { attachShadow } from '../../light-dom/node/shadow/attach-shadow';
-import {
-  attachDocumentFragment, detachStandardParentNodeChildrenIntoDocumentFragment, nodeAppendChild
-} from '../../light-dom';
 import { importNode } from '../../light-dom/others/import-node';
-
-// function loadComponentTemplate<GData extends object>(
-//   instance: IComponent<GData>,
-//   data: GData,
-//   template?: IComponentTemplateAsync<GData>,
-// ): Promise<void> {
-//   if (template === void 0) {
-//     return Promise.resolve();
-//   } else {
-//     return Promise.resolve(template)
-//       .then((template: IComponentTemplate<GData>) => {
-//         // attachDocumentFragment(
-//         //   template(data, detachStandardParentNodeChildrenIntoDocumentFragment(instance)),
-//         // )
-//         // const fragment: DocumentFragment = template(data, detachStandardParentNodeChildrenIntoDocumentFragment(instance));
-//         // if (useShadowDOM) {
-//         //   // const shadowRoot: ShadowRoot = attachShadow(instance);
-//         //   attachNode(fragment, attachShadow(instance));
-//         // } else {
-//         //   attachDocumentFragmentToStandardNode(fragment, instance);
-//         // }
-//       });
-//   }
-// }
-//
-// function loadComponentStyle<GData extends object>(
-//   instance: IComponent<GData>,
-//   style?: IComponentStyleAsync,
-// ): Promise<void> {
-//   if (style === void 0) {
-//     return Promise.resolve();
-//   } else {
-//     return Promise.resolve(style)
-//       .then((htmlStyleElement: HTMLStyleElement) => {
-//         applyStyleElementForComponent(htmlStyleElement, instance);
-//         onNodeConnectedToWithImmediateCached(instance, TOP_PARENT_NODE)((connected: boolean) => {
-//           if (connected) {
-//             if (incrementStyleElementUsageCount(htmlStyleElement) === 1) {
-//               activateStyleElement(htmlStyleElement, true);
-//             }
-//           } else {
-//             if (decrementStyleElementUsageCount(htmlStyleElement) === 0) {
-//               activateStyleElement(htmlStyleElement, false);
-//             }
-//           }
-//         });
-//       });
-//   }
-// }
+import { nodeAppendChild } from '../../light-dom';
+import { attachNodeChildrenToNewDocumentFragment } from '../../light-dom/node/move/devired/batch/attach-node-children-to-new-document-fragment';
+import {
+  DEFAULT_INJECT_COMPONENT_TEMPLATE_RETURN, IInjectComponentTemplateReturn, injectComponentTemplate
+} from '../component-template/misc/inject-component-template';
 
 type IOptionalComponentTemplateAsync<GData extends object> = IComponentTemplateAsync<GData> | undefined;
 type IOptionalComponentStyleAsync = IComponentStyleAsync | undefined;
@@ -79,16 +32,16 @@ type IOptionalComponentStyle = IComponentStyle | undefined;
 
 type ILoadedComponentAndStyle<GData extends object> = [IOptionalComponentTemplate<GData>, IOptionalComponentStyle];
 
+
 function loadComponentTemplateAndStyle<GData extends object>(
   template: IOptionalComponentTemplateAsync<GData>,
   style: IOptionalComponentStyleAsync,
 ): Promise<ILoadedComponentAndStyle<GData>> {
-  return  Promise.all([
+  return Promise.all([
     Promise.resolve<IOptionalComponentTemplate<GData>>(template),
     Promise.resolve<IOptionalComponentStyle>(style),
   ]);
 }
-
 
 function injectComponentTemplateAndStyle<GData extends object>(
   instance: IComponent<GData>,
@@ -96,7 +49,7 @@ function injectComponentTemplateAndStyle<GData extends object>(
   template: IOptionalComponentTemplate<GData>,
   style: IOptionalComponentStyle,
   useShadowDOM: boolean,
-): void {
+): IInjectComponentTemplateReturn {
   const container: Node = useShadowDOM
     ? attachShadow(instance)
     : instance
@@ -122,10 +75,14 @@ function injectComponentTemplateAndStyle<GData extends object>(
     }
   }
 
-  if (template !== void 0) {
-    nodeAppendChild(
+  if (template === void 0) {
+    return DEFAULT_INJECT_COMPONENT_TEMPLATE_RETURN;
+  } else {
+    return injectComponentTemplate(
+      template,
       container,
-      template(data, detachStandardParentNodeChildrenIntoDocumentFragment(instance)),
+      data,
+      attachNodeChildrenToNewDocumentFragment(instance),
     );
   }
 }
@@ -150,7 +107,7 @@ function initComponent<GData extends object>(
     options.style,
   )
     .then(([template, style]: ILoadedComponentAndStyle<GData>) => {
-      injectComponentTemplateAndStyle(
+      return injectComponentTemplateAndStyle(
         instance,
         data,
         template,
@@ -158,9 +115,9 @@ function initComponent<GData extends object>(
         useShadowDOM,
       );
     })
-    .then(() => {
+    .then((options: IInjectComponentTemplateReturn) => {
       if (typeof instance.onInit === 'function') {
-        instance.onInit.call(instance);
+        instance.onInit.call(instance, options);
       }
     });
 
@@ -188,6 +145,8 @@ export function componentFactory<GBaseClass extends HTMLElementConstructor, GDat
   options: IComponentOptions<GData>,
 ) {
   const _class = class extends baseClass {
+    static TAG_NAME: string = options.name;
+
     constructor(...args: any[]) {
       super(...args);
       initComponent<GData>(this, options);

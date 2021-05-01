@@ -2,7 +2,6 @@ import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-conn
 import { IGenericHTMLTemplateOrNull, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
 import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
 import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
-import { detachManyNodesWithEvent } from '../../../light-dom/node/move/node/__with-event/bulk/detach-many-nodes-with-event';
 import { attachOptionalTemplate } from '../../../light-dom/template/attach-template';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import {
@@ -10,6 +9,7 @@ import {
 } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { distinctEmitPipe, ISubscribeFunction } from '@lifaon/rx-js-light';
 import { incrementalUUID } from '../../../misc';
+import { detachManyNodes } from '../../../light-dom/node/move/devired/batch/detach-many-nodes';
 
 
 export function createReactiveSwitchNode<GValue>(
@@ -28,7 +28,7 @@ export function createReactiveSwitchNode<GValue>(
   );
 
   subscribeOnNodeConnectedTo<GValue>(referenceNode, subscribe, distinctEmitPipe<GValue>()((value: GValue) => {
-    detachManyNodesWithEvent(nodes); // with events fine because we are connected, so parent cannot be a document fragment
+    detachManyNodes(nodes); // with events fine because we are connected, so parent cannot be a document fragment
     nodes = attachOptionalTemplate(
       templates.has(value)
         ? templates.get(value) as IGenericHTMLTemplateOrNull
