@@ -102,9 +102,12 @@ observables. Example:
 - `createReactiveTextNode($.remaining)`: creates a Text node which content comes from the observable `$.remaining`
 
 Moreover, the nodes are not directly injected into the DOM using the well known `document.appendChild` but
-using `nodeAppendChild` instead. This provides a faster *connected* / *disconnected* detection for the different nodes,
-than a more traditional `connectedCallback` for example.
+using `nodeAppendChild` instead:
 
+- faster *connected* / *disconnected* detection for the different nodes,
+than the more traditional `connectedCallback`.
+- better minification (object's properties cannot be mangled, but function's names can)
+- independent of the context (may work on nodejs without touching the compiled code)
 
 
 

@@ -120,8 +120,8 @@ or directly using [skypack](https://www.skypack.dev/):
 
 #### Differences with other popular frameworks:
 
-Feature | Angular | Virtual DOM | rx-dom
----     |--- |---          | ---
+Feature | Angular | Virtual DOM (React, Vue) | rx-dom
+---     | --- | ---          | ---
 **Semantics**| html with special flavour | `jsx` or `hyperscript` | html with special flavour
 **Memory** | **medium**: data are directly reflected on the nodes, but the framework itself is heavy | **high** a lot of virtual DOM elements are created every time the DOM updates, and the number of virtual nodes is also linearly proportional to the size of the DOM tree. | **very low**: once the data pipeline is set, on every update the data is directly reflected on the node.
 **CPU** | **medium**: when zoneJs triggers, all expressions in the html are evaluated and reflected on the nodes | **high** because a lot of time is spent regenerating the Virtual DOM, calculating the diff and figuring out what changed. | **low**: the nodes subscribe only to the part of the data that is needed for rendering / updating them. It's almost unbeatable, because when the data changes, it directly updates the nodes.

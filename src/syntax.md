@@ -586,5 +586,32 @@ List of names: Alice, Bob, Carol
 
 **NOTE:** as you may see there's no element around the text nodes.
 
+#### Inject some javascript: rx-script
 
+```html
+<rx-script
+>
+  ...js code
+</rx-script>
+```
+
+Injects some javascript code into the compiled javascript output
+
+*Example:*
+
+```html
+<rx-script>
+  const isLoading$ = map$$($.state$, state => (state === 'loading'));
+</rx-script>
+```
+
+It compiles directly to this:
+
+```ts
+const isLoading$ = map$$($.state$, state => (state === 'loading'));
+```
+
+The DOM is untouched.
+
+**NOTE:** when possible, always prefer to write your javascript code into your component's `typescript file` instead of using `rx-script` 
 

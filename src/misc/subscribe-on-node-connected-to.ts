@@ -7,13 +7,25 @@ export function subscribeOnNodeConnectedTo<GValue>(
   subscribe: ISubscribeFunction<GValue>,
   emit: IEmitFunction<GValue>,
   topParentNode: Node = TOP_PARENT_NODE,
-): void {
+): IUnsubscribeFunction {
   let unsubscribe: IUnsubscribeFunction;
-  onNodeConnectedToWithImmediateCached(node, topParentNode)((connected: boolean) => {
-    if (connected) {
-      unsubscribe = subscribe(emit);
-    } else if (unsubscribe !== void 0) {
+
+  const unsubscribeOfSubscription: IUnsubscribeFunction = (): void => {
+    if (unsubscribe !== void 0) {
       unsubscribe();
     }
+  };
+
+  const unsubscribeOfOnNodeConnectedTo: IUnsubscribeFunction = onNodeConnectedToWithImmediateCached(node, topParentNode)((connected: boolean): void => {
+    if (connected) {
+      unsubscribe = subscribe(emit);
+    } else {
+      unsubscribeOfSubscription();
+    }
   });
+
+  return (): void => {
+    unsubscribeOfOnNodeConnectedTo();
+    unsubscribeOfSubscription();
+  };
 }

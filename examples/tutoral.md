@@ -18,20 +18,22 @@ may write:
 ></div>
 ```
 
-And use `compileAndEvaluateReactiveHTMLAsComponentTemplate` to compile and evaluate this *reactive html* to javascript.
+And use the function `compileAndEvaluateReactiveHTMLAsComponentTemplate` to compile
+and evaluate this *reactive html* into javascript.
 
 The complete syntax for `reactive html` may be found [HERE](../src/syntax.md)
 
 ### Component
 
-Let's create `hello-world.component.ts` in its own folder.
+Let's create a file `hello-world.component.ts` in its own folder.
 
 #### Step 1 - define what you want to import into your component
 
 The compiled `reactive html` is completely isolated: it doesn't import any functions, constants, or use global
 variables. Instead, everything must come from the caller of the function.
+This level of encapsulation allows `rx-dom` to strongly minify you component and run then at extreme speed.
 
-So the first step, is to define what will be required into your component: 
+So, the first step is to define what will be required into your component: 
 
 ```ts
 const CONSTANTS_TO_IMPORT = {
@@ -56,7 +58,7 @@ const CONSTANTS_TO_IMPORT = {
 ```
 
 This ensures that every custom element is properly included into your application, and you didn't forget anyone.
-This is only a security restriction, but it will avoid you many problems in big applications.
+This is only a security restriction, but it will avoid you many problems in large applications.
 
 
 #### Step 2 - write your reactive html
@@ -135,7 +137,7 @@ parent component. We're awaiting on [Constructable Stylesheets](https://develope
 #### Step 4 - create your component
 
 `rx-dom` components are simply [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
-with a decorator to initialize them properly:
+with a decorator to initialize them:
 
 - it registers the component (tag-name)
 - it awaits on the component template and style, and then injects them

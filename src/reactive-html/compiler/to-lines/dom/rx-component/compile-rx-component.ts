@@ -6,6 +6,7 @@ import { compileRXForLoop } from './compilers/rx-for-loop/compile-rx-for-loop';
 import { compileRXContainer } from './compilers/rx-container/compile-rx-container';
 import { compileRXInjectTemplate } from './compilers/rx-inject-template/compile-rx-inject-template';
 import { compileRXSwitch } from './compilers/rx-switch/compile-rx-switch';
+import { compileRXScript } from './compilers';
 
 export interface IRXComponentCompiler extends ISimpleIteratorCompiler<Element> {
 }
@@ -16,6 +17,7 @@ export const DEFAULT_RX_COMPONENT_COMPILERS: IRXComponentCompiler[] = [
   compileRXIf,
   compileRXForLoop,
   compileRXContainer,
+  compileRXScript,
   compileRXInjectContent,
   compileRXInjectTemplate,
 ];
