@@ -4,7 +4,9 @@ import { createDocumentFragment } from '../../light-dom/node/create/create-docum
 import { createTextNode } from '../../light-dom/node/create/create-text-node';
 import { createReactiveTextNode } from '../../reactive-dom/text/create-reactive-text-node';
 import { setAttributeValueWithEvent } from '../../light-dom/attribute/with-event/set-attribute-value-with-event';
-import { setReactiveProperty } from '../../reactive-dom/element/property/set-reactive-property';
+import {
+  setCaseInsensitiveReactiveProperty, setReactiveProperty
+} from '../../reactive-dom/element/property/set-reactive-property';
 import { setReactiveAttribute } from '../../reactive-dom/element/attribute/set-reactive-attribute';
 import { setReactiveClass } from '../../reactive-dom/element/class/set-reactive-class';
 import { setReactiveClassList } from '../../reactive-dom/element/class/set-reactive-class-list';
@@ -33,7 +35,7 @@ export const DEFAULT_CONSTANTS_TO_IMPORT = {
 
   // attribute / property settings
   setAttributeValue: setAttributeValueWithEvent,
-  setReactiveProperty,
+  setReactiveProperty: setCaseInsensitiveReactiveProperty,
   setReactiveAttribute,
   setReactiveClass,
   setReactiveClassList,
