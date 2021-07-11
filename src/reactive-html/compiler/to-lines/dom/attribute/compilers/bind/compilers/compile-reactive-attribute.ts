@@ -45,7 +45,7 @@ export function generateReactiveAttributeLines(
 ): ILines {
   return [
     `// reactive attribute '${ name }'`,
-    `setReactiveAttribute(${ value }, node, ${ JSON.stringify(name) });`,
+    `setReactiveAttribute(toSubscribeFunction(${ value }), node, ${ JSON.stringify(name) });`,
   ];
 }
 

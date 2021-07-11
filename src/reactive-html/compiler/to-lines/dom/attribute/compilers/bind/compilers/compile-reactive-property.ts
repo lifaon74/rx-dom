@@ -11,7 +11,7 @@ export function compileReactiveProperty(
 ): ILines {
   return [
     `// reactive property '${ bindProperty.name }'`,
-    `setReactiveProperty(${ bindProperty.value }, node, ${ JSON.stringify(bindProperty.name) });`,
+    `setReactiveProperty(toSubscribeFunction(${ bindProperty.value }), node, ${ JSON.stringify(bindProperty.name) });`,
   ];
 }
 

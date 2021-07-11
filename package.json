@@ -1,6 +1,6 @@
 {
   "name": "@lifaon/rx-dom",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Extremely fast framework to build web application",
   "repository": {
     "type": "git",
@@ -20,6 +20,6 @@
     "@lifaon/rx-js-light": "1.0.0-beta.2"
   },
   "dependencies": {
-    "@lifaon/rx-js-light": "1.1.0"
+    "@lifaon/rx-js-light": "1.1.2"
   }
 }

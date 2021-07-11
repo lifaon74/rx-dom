@@ -48,6 +48,6 @@ export function generateRXInjectContentLines(
 ): ILines {
   return [
     `// reactive content`,
-    `nodeAppendChild(parentNode, createReactiveContentNode(${ content }));`,
+    `nodeAppendChild(parentNode, createReactiveContentNode(toSubscribeFunction(${ content })));`,
   ];
 }

@@ -52,10 +52,10 @@ export function generateReactiveClassLines(
 }
 
 export function generateReactiveClassListLines(
-  value: string
+  value: string,
 ): ILines {
   return [
     `// reactive class list`,
-    `setReactiveClassList(${ value }, node);`,
+    `setReactiveClassList(toSubscribeFunction(${ value }), node);`,
   ];
 }

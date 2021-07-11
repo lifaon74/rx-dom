@@ -30,7 +30,7 @@ export function compileReactiveText(
       lines.push(...generateStaticTextNodeLines(text.substring(index, match.index)));
     }
 
-    lines.push(...generateReactiveTextNodeLines(match[1]));
+    lines.push(...generateReactiveTextNodeLines(match[1].trim()));
     index = match.index + match[0].length;
   }
 
@@ -42,10 +42,10 @@ export function compileReactiveText(
 }
 
 export function generateReactiveTextNodeLines(
-  code: string,
+  value: string,
 ): ILines {
   return [
     `// reactive text node`,
-    `nodeAppendChild(parentNode, createReactiveTextNode(${ code.trim() }));`,
+    `nodeAppendChild(parentNode, createReactiveTextNode(toSubscribeFunction(${ value })));`,
   ];
 }

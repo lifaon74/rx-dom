@@ -40,6 +40,7 @@ function prepareGlobalStyleElementForComponent(
       case CSSRule.STYLE_RULE:
         // console.log(rule);
         // debugger;
+        // https://blog.angular-university.io/angular-host-context/
         (rule as CSSStyleRule).selectorText = (rule as CSSStyleRule).selectorText
           .replace(/:host/g, `[${ id }]`)
         ;

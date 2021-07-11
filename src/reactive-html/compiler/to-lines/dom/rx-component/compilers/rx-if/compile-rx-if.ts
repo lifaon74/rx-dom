@@ -111,6 +111,6 @@ export function generateRXIfLines(
 ): ILines {
   return [
     `// reactive if`,
-    `nodeAppendChild(parentNode, createReactiveIfNode(${ condition }, ${ templateTrue }, ${ templateFalse }));`,
+    `nodeAppendChild(parentNode, createReactiveIfNode(toSubscribeFunction(${ condition }), ${ templateTrue }, ${ templateFalse }));`,
   ];
 }

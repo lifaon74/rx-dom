@@ -148,7 +148,7 @@ export function generateRXForLoopLines(
       `parentNode,`,
       `createReactiveForLoopNode(`,
       ...indentLines([
-        `${ items },`,
+        `toSubscribeFunction(${ items }),`,
         `${ template },`,
         ...options,
       ]),

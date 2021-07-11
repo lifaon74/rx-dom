@@ -2,7 +2,7 @@ import { generateConstantsToImportForComponentTemplateFromObject } from '../../m
 import { linesToString } from '../../../../reactive-html';
 import { compileReactiveHTMLAsComponentTemplateFunction } from '../to-lines';
 import { IComponentTemplate, IComponentTemplateCompileOptions } from '../../component-template.type';
-import { evaluateCompiledReactiveHtmlAsComponentTemplate } from './evaluate-compiled-reactive-html-as-component-template';
+import { evaluateAndDebugCompiledReactiveHtmlAsComponentTemplate } from './evaluate-and-debug-compiled-reactive-html-as-component-template';
 
 
 export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends object>(
@@ -10,7 +10,7 @@ export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends 
   constantsToImport: object,
   options?: IComponentTemplateCompileOptions,
 ): IComponentTemplate<GData> {
-  return evaluateCompiledReactiveHtmlAsComponentTemplate<GData>(
+  return evaluateAndDebugCompiledReactiveHtmlAsComponentTemplate<GData>(
     linesToString(
       compileReactiveHTMLAsComponentTemplateFunction(
         html,

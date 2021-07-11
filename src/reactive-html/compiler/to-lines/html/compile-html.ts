@@ -8,7 +8,14 @@ export function compileHTML(
 ): ICompilerReturn {
   const document: Document = new DOMParser()
     .parseFromString(
-      html,
+      // html,
+      `
+        <!DOCTYPE html>
+        <html>
+          <head></head>
+          <body>${html}</body>
+        </html>
+        `,
       'text/html',
       // 'application/xhtml+xml'
     );

@@ -589,8 +589,7 @@ List of names: Alice, Bob, Carol
 #### Inject some javascript: rx-script
 
 ```html
-<rx-script
->
+<rx-script>
   ...js code
 </rx-script>
 ```
@@ -614,4 +613,12 @@ const isLoading$ = map$$($.state$, state => (state === 'loading'));
 The DOM is untouched.
 
 **NOTE:** when possible, always prefer to write your javascript code into your component's `typescript file` instead of using `rx-script` 
+
+###### alternative syntax
+
+```html
+<script rx>
+  ...js code
+</script>
+```
 

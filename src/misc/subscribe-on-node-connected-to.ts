@@ -9,7 +9,6 @@ export function subscribeOnNodeConnectedTo<GValue>(
   topParentNode: Node = TOP_PARENT_NODE,
 ): IUnsubscribeFunction {
   let unsubscribe: IUnsubscribeFunction;
-
   const unsubscribeOfSubscription: IUnsubscribeFunction = (): void => {
     if (unsubscribe !== void 0) {
       unsubscribe();

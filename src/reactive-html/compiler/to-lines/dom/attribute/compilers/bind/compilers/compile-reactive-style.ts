@@ -51,6 +51,6 @@ export function generateReactiveStyleListLines(
 ): ILines {
   return [
     `// reactive style list`,
-    `setReactiveStyleList(${ value }, node);`,
+    `setReactiveStyleList(toSubscribeFunction(${ value }), node);`,
   ];
 }

@@ -1,4 +1,4 @@
-import { ISubscription, IUnsubscribeFunction } from '../../../rx-js-light/dist';
+import { ISubscription, IUnsubscribeFunction } from '@lifaon/rx-js-light';
 import { onNodeConnectedToWithImmediateCached } from '../light-dom';
 import { TOP_PARENT_NODE } from './top-parent-node.constant';
 

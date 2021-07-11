@@ -1,6 +1,7 @@
 import { ILines } from '../../../../compiler.types';
 import { getTagName } from '../../../../../../../light-dom/node/properties/get-tag-name';
-import { indentLines, stringToLines } from '../../../../helpers';
+import { stringToLines } from '../../../../helpers';
+import { hasAttribute } from '../../../../../../../light-dom';
 
 /*
 Syntax:
@@ -13,6 +14,7 @@ Syntax:
  */
 
 const TAG_NAME: string = 'rx-script';
+const ATTRIBUTE_NAME: string = 'rx';
 
 export function compileRXScript(
   node: Element,
@@ -33,6 +35,20 @@ export function compileRXScript(
 export function isRXScript(
   node: Element,
 ): boolean {
-  return getTagName(node) === TAG_NAME;
+  return isRXScriptTagName(node)
+    || isRXScriptHavingRxAttribute(node);
+}
+
+export function isRXScriptTagName(
+  node: Element,
+): boolean {
+  return (getTagName(node) === TAG_NAME);
+}
+
+export function isRXScriptHavingRxAttribute(
+  node: Element,
+): boolean {
+  return (getTagName(node) === 'script')
+    && hasAttribute(node, ATTRIBUTE_NAME);
 }
 
