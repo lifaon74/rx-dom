@@ -1,4 +1,4 @@
-## How rx-dom works
+# How rx-dom works
 
 When you compile some `reactive html` with the function `compileAndEvaluateReactiveHTMLAsComponentTemplate` for example, it generates
 a bunch of javascript code to build the DOM nodes, and links them with the observables you've provided. When the nodes are connected
@@ -7,7 +7,7 @@ Then, when they are no more connected, rx-dom unsubscribes to release resources.
 
 So updating one observable will only affect the nodes that are bound to it.
 
-### Example:
+## Example:
 
 For example, if you compile this `reactive html`:
 

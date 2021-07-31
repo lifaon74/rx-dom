@@ -1,5 +1,5 @@
 import {
-  ISource, ISubscribeFunction, mergeAllSingleSubscribePipe, noop, pipeSubscribeFunction, single
+  ISource, ISubscribeFunction, mergeAllSingleSubscribePipe, noop, pipeSubscribeFunction, single, readSubscribeFunctionValue
 } from '@lifaon/rx-js-light';
 
 export type IHavingSubscribeFunctionProperties<GName extends string, GValue> =
@@ -66,19 +66,10 @@ export function setComponentSubscribeFunctionProperties<GTarget extends object, 
     configurable: true,
     enumerable: true,
     get: (): GValue => {
-      let cachedValueReceived: boolean = false;
-      let cachedValue!: GValue;
-
-      source$((value: GValue): void => {
-        cachedValueReceived = true;
-        cachedValue = value;
-      })();
-
-      if (!cachedValueReceived) {
+      return readSubscribeFunctionValue(source$, (): GValue => {
         console.warn(`The source did not send immediately a value`);
-      }
-
-      return cachedValue;
+        return (void 0) as unknown as GValue;
+      });
     },
     set: createPropertySetFunction<GValue>((value: GValue): void => {
       $source$.emit(single(value));

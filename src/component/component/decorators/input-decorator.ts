@@ -10,6 +10,7 @@ export interface IInputDecoratorOptions {
 
 /**
  * DECORATOR (Property)
+ * @deprecated
  */
 export function Input<GValue>(
   getSource: IInputDecoratorGetSource<GValue>,

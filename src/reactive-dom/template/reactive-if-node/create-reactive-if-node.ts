@@ -1,16 +1,15 @@
-import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
-import { IGenericHTMLTemplateOrNull, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
-import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
-import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
-import { attachOptionalTemplate } from '../../../light-dom/template/attach-template';
-import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
-import {
-  createReferenceNode, IReferenceNode
-} from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { distinctEmitPipe, ISubscribeFunction } from '@lifaon/rx-js-light';
-import { incrementalUUID } from '../../../misc';
+import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
+import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import { detachManyNodes } from '../../../light-dom/node/move/devired/batch/detach-many-nodes';
+import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
+import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
+import { attachOptionalTemplate } from '../../../light-dom/template/attach-template';
+import { IGenericHTMLTemplateOrNull, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
+import { createIncrementalUUID } from '../../../misc';
+import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 
+const INCREMENTAL_IF_UUID = createIncrementalUUID('IF');
 
 export function createReactiveIfNode(
   subscribe: ISubscribeFunction<boolean>,
@@ -18,7 +17,7 @@ export function createReactiveIfNode(
   templateFalse: IGenericHTMLTemplateOrNull = null,
   transparent?: boolean,
 ): IReferenceNode {
-  const referenceNode: IReferenceNode = createReferenceNode(incrementalUUID('IF'), transparent);
+  const referenceNode: IReferenceNode = createReferenceNode(INCREMENTAL_IF_UUID(), transparent);
 
   let nodes: IHTMLTemplateNodeList = [];
 
@@ -37,13 +36,12 @@ export function createReactiveIfNode(
       ),
       {},
       getParentNode(referenceNode) as IParentNode,
-      getNextSibling(referenceNode)
+      getNextSibling(referenceNode),
     );
   }));
 
   return referenceNode;
 }
-
 
 // export function createReactiveIfNode(
 //   subscribe: ISubscribeFunction<boolean>,
@@ -70,7 +68,6 @@ export function createReactiveIfNode(
 //
 //   return containerNode;
 // }
-
 
 // export function attachReactiveIf(
 //   subscribe: ISubscribeFunction<boolean>,

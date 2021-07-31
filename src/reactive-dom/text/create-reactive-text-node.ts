@@ -1,4 +1,4 @@
-import { subscribeOnNodeConnectedTo } from '../../misc/subscribe-on-node-connected-to';
+import { subscribeOnNodeConnectedTo } from '../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { ISubscribeFunction } from '@lifaon/rx-js-light';
 
 

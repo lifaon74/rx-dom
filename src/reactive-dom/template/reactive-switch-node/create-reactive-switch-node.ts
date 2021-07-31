@@ -1,16 +1,15 @@
-import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
-import { IGenericHTMLTemplateOrNull, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
-import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
-import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
-import { attachOptionalTemplate } from '../../../light-dom/template/attach-template';
-import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
-import {
-  createReferenceNode, IReferenceNode
-} from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { distinctEmitPipe, ISubscribeFunction } from '@lifaon/rx-js-light';
-import { incrementalUUID } from '../../../misc';
+import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
+import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import { detachManyNodes } from '../../../light-dom/node/move/devired/batch/detach-many-nodes';
+import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
+import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
+import { attachOptionalTemplate } from '../../../light-dom/template/attach-template';
+import { IGenericHTMLTemplateOrNull, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
+import { createIncrementalUUID } from '../../../misc';
+import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 
+const INCREMENTAL_SWITCH_UUID = createIncrementalUUID('SWITCH');
 
 export function createReactiveSwitchNode<GValue>(
   subscribe: ISubscribeFunction<GValue>,
@@ -18,7 +17,7 @@ export function createReactiveSwitchNode<GValue>(
   defaultTemplate: IGenericHTMLTemplateOrNull = null,
   transparent?: boolean,
 ): IReferenceNode {
-  const referenceNode: IReferenceNode = createReferenceNode(incrementalUUID('SWITCH'), transparent);
+  const referenceNode: IReferenceNode = createReferenceNode(INCREMENTAL_SWITCH_UUID(), transparent);
 
   let nodes: IHTMLTemplateNodeList = [];
 
@@ -35,7 +34,7 @@ export function createReactiveSwitchNode<GValue>(
         : defaultTemplate,
       {},
       getParentNode(referenceNode) as IParentNode,
-      getNextSibling(referenceNode)
+      getNextSibling(referenceNode),
     );
   }));
 

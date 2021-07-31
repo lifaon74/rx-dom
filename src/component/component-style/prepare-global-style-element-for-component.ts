@@ -1,4 +1,5 @@
 import { setAttributeValue } from '../../light-dom/attribute/set-attribute-value';
+import { compileGlobalStyleElementForComponent } from './compile/global/compile-global-style-element-for-component';
 import { reflectCSSStyleSheetOnOwnStyleElement } from './helpers/reflect-css-style-sheet-on-own-style-element';
 import { getAttributeValue } from '../../light-dom/attribute/get-attribute-value';
 import { activateStyleElement, getCSSStyleSheetOfStyleElement } from './helpers';
@@ -17,43 +18,12 @@ export function getGlobalStyleElementForComponent(
   if (globalHTMLStyleElement === void 0) {
     globalHTMLStyleElement = cloneNode(styleElement, true);
     GLOBAL_STYLE_ELEMENTS_MAP.set(styleElement, globalHTMLStyleElement);
-    prepareGlobalStyleElementForComponent(globalHTMLStyleElement, false);
+    compileGlobalStyleElementForComponent(globalHTMLStyleElement);
   }
   return globalHTMLStyleElement;
 }
 
-function prepareGlobalStyleElementForComponent(
-  styleElement: HTMLStyleElement,
-  refreshCSS: boolean = false,
-): void {
-  const id: string = generateComponentStyleUUID();
-  setAttributeValue(styleElement, HOST_ATTRIBUTE_NAME, id);
 
-  appendStyleElementToHead(styleElement);
-
-  const sheet: CSSStyleSheet = styleElement.sheet as CSSStyleSheet;
-  sheet.disabled = true;
-
-  for (let i = 0, l = sheet.cssRules.length; i < l; i++) {
-    const rule: CSSRule = sheet.cssRules[i];
-    switch (rule.type) {
-      case CSSRule.STYLE_RULE:
-        // console.log(rule);
-        // debugger;
-        // https://blog.angular-university.io/angular-host-context/
-        (rule as CSSStyleRule).selectorText = (rule as CSSStyleRule).selectorText
-          .replace(/:host/g, `[${ id }]`)
-        ;
-        break;
-      case CSSRule.SUPPORTS_RULE:
-        break;
-    }
-  }
-
-  if (refreshCSS) {
-    reflectCSSStyleSheetOnOwnStyleElement(sheet, styleElement);
-  }
-}
 
 export function applyGlobalStyleElementForComponent(
   styleElement: HTMLStyleElement,

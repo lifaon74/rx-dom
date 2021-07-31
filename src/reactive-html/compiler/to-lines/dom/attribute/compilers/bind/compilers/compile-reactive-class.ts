@@ -47,7 +47,7 @@ export function generateReactiveClassLines(
 ): ILines {
   return [
     `// reactive class '${ name }'`,
-    `setReactiveClass(${ value }, node, ${ JSON.stringify(name) });`,
+    `setReactiveClass(toSubscribeFunction(${ value }), node, ${ JSON.stringify(name) });`,
   ];
 }
 

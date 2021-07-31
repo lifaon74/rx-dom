@@ -1,28 +1,20 @@
-import { IComponent } from './component.type';
-import { IComponentOptions } from './component-options.type';
+import { freeze } from '@lifaon/rx-js-light';
+import { attachNodeChildrenToNewDocumentFragment } from '../../light-dom/node/move/devired/batch/attach-node-children-to-new-document-fragment';
+import { attachShadow } from '../../light-dom/node/shadow/attach-shadow';
+import { onNodeConnectedToCached } from '../../light-dom/node/state/on-node-connected-to/on-node-connected-to';
+import { HTMLElementConstructor } from '../../light-dom/types';
+import { TOP_PARENT_NODE } from '../../misc/top-parent-node.constant';
+import { IComponentStyle, IComponentStyleAsync } from '../component-style/component-style.type';
+import { injectComponentStyle, injectComponentStyleUsingShadowDOM } from '../component-style/misc/inject-component-style';
 import { IComponentTemplate, IComponentTemplateAsync } from '../component-template/component-template.type';
 import {
-  onNodeConnectedToCached, onNodeConnectedToWithImmediateCached
-} from '../../light-dom/node/state/on-node-connected-to';
-import { TOP_PARENT_NODE } from '../../misc/top-parent-node.constant';
-import { registerCustomElement } from '../custom-element/custom-element-functions';
-import { IComponentStyle, IComponentStyleAsync } from '../component-style/component-style.type';
-import {
-  decrementStyleElementUsageCount, incrementStyleElementUsageCount
-} from '../component-style/style-element-usage-count';
-import { activateStyleElement } from '../component-style/helpers/activate-style-element';
-import {
-  applyGlobalStyleElementForComponent, getGlobalStyleElementForComponent
-} from '../component-style/prepare-global-style-element-for-component';
-import { freeze } from '@lifaon/rx-js-light';
-import { HTMLElementConstructor } from '../../light-dom/types';
-import { attachShadow } from '../../light-dom/node/shadow/attach-shadow';
-import { importNode } from '../../light-dom/others/import-node';
-import { nodeAppendChild } from '../../light-dom';
-import { attachNodeChildrenToNewDocumentFragment } from '../../light-dom/node/move/devired/batch/attach-node-children-to-new-document-fragment';
-import {
-  DEFAULT_INJECT_COMPONENT_TEMPLATE_RETURN, IInjectComponentTemplateReturn, injectComponentTemplate
+  DEFAULT_INJECT_COMPONENT_TEMPLATE_RETURN,
+  IInjectComponentTemplateReturn,
+  injectComponentTemplate,
 } from '../component-template/misc/inject-component-template';
+import { registerCustomElement } from '../custom-element/custom-element-functions';
+import { IComponentOptions } from './component-options.type';
+import { IComponent } from './component.type';
 
 type IOptionalComponentTemplateAsync<GData extends object> = IComponentTemplateAsync<GData> | undefined;
 type IOptionalComponentStyleAsync = IComponentStyleAsync | undefined;
@@ -31,7 +23,6 @@ type IOptionalComponentTemplate<GData extends object> = IComponentTemplate<GData
 type IOptionalComponentStyle = IComponentStyle | undefined;
 
 type ILoadedComponentAndStyle<GData extends object> = [IOptionalComponentTemplate<GData>, IOptionalComponentStyle];
-
 
 function loadComponentTemplateAndStyle<GData extends object>(
   template: IOptionalComponentTemplateAsync<GData>,
@@ -57,21 +48,9 @@ function injectComponentTemplateAndStyle<GData extends object>(
 
   if (style !== void 0) {
     if (useShadowDOM) {
-      nodeAppendChild(container, importNode(style, true));
+      injectComponentStyleUsingShadowDOM(style, instance);
     } else {
-      const globalHTMLStyleElement: HTMLStyleElement = getGlobalStyleElementForComponent(style);
-      applyGlobalStyleElementForComponent(globalHTMLStyleElement, instance);
-      onNodeConnectedToWithImmediateCached(instance, TOP_PARENT_NODE)((connected: boolean) => {
-        if (connected) {
-          if (incrementStyleElementUsageCount(globalHTMLStyleElement) === 1) {
-            activateStyleElement(globalHTMLStyleElement, true);
-          }
-        } else {
-          if (decrementStyleElementUsageCount(globalHTMLStyleElement) === 0) {
-            activateStyleElement(globalHTMLStyleElement, false);
-          }
-        }
-      });
+      injectComponentStyle(style, instance);
     }
   }
 
@@ -99,7 +78,7 @@ function initComponent<GData extends object>(
   const data: GData = freeze(
     (typeof instance.onCreate === 'function')
       ? instance.onCreate()
-      : Object.create(null)
+      : Object.create(null),
   ) as GData;
 
   loadComponentTemplateAndStyle(
@@ -138,7 +117,6 @@ function initComponent<GData extends object>(
     });
   }
 }
-
 
 export function componentFactory<GBaseClass extends HTMLElementConstructor, GData extends object>(
   baseClass: GBaseClass,

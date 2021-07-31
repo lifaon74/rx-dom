@@ -1,9 +1,13 @@
-const UUIDS = new Map<string, number>();
 
-export function incrementalUUID(
+export interface IIncrementalUUID {
+  (): string;
+}
+
+export function createIncrementalUUID(
   prefix: string,
-): string {
-  let count: number = UUIDS.get(prefix) ?? 0;
-  UUIDS.set(prefix, count + 1);
-  return `${ prefix }-${ count.toString(16) }`;
+): IIncrementalUUID {
+  let count: number = 0;
+  return (): string => {
+    return `${ prefix }-${ (count++).toString(16) }`;
+  };
 }

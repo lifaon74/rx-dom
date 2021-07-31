@@ -1,6 +1,7 @@
 export * from './create/index';
 export * from './explore/index';
 export * from './misc/index';
+export * from './modify/index';
 export * from './move/index';
 export * from './properties/index';
 export * from './shadow/index';

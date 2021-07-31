@@ -18,7 +18,7 @@ import { createReactiveForLoopNode } from '../../reactive-dom/template/reactive-
 import { createReactiveContentNode } from '../../reactive-dom/template/reactive-content-node/create-reactive-content-node';
 import { createReactiveSwitchNode } from '../../reactive-dom/template/reactive-switch-node/create-reactive-switch-node';
 import { createElement } from '../../light-dom/node/create/element-node/create-element';
-import { toSubscribeFunction, toSubscribeFunctionStrict } from '../../misc/to-subscribe-function';
+import { toSubscribeFunction, toSubscribeFunctionStrict, toSubscribeFunctionThrowIfUndefined } from '../../misc/to-subscribe-function';
 
 /**
  * Mandatory constants to import for reactiveHTML
@@ -26,7 +26,8 @@ import { toSubscribeFunction, toSubscribeFunctionStrict } from '../../misc/to-su
 export const DEFAULT_CONSTANTS_TO_IMPORT = {
   // misc
   // toSubscribeFunction,
-  toSubscribeFunction: toSubscribeFunctionStrict,
+  // toSubscribeFunction: toSubscribeFunctionStrict,
+  toSubscribeFunction: toSubscribeFunctionThrowIfUndefined,
 
   // dom manipulation
   nodeAppendChild,

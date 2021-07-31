@@ -130,9 +130,10 @@ The style of a component **SHOULD ALWAYS** keeps its css encapsulated as much as
 - use `>`, or your css may leak on child components
 - avoid applying style to other components (like `body`)
 
-ℹ️ `rx-dom` supports partially the shadow DOM, but we strongly discourage its usage now.
+ℹ️ `rx-dom` supports partially the shadow DOM, but we strongly discourage its usage **now**.
 Indeed, the shadow DOM forces encapsulation, but we often encounter the need to style child components from a
-parent component. We're awaiting on [Constructable Stylesheets](https://developers.google.com/web/updates/2019/02/constructable-stylesheets) to go further.
+parent component, and injecting style sheet for each component is not yet performant.
+We're awaiting on [Constructable Stylesheets](https://developers.google.com/web/updates/2019/02/constructable-stylesheets) to go further.
 
 #### Step 4 - create your component
 
@@ -310,12 +311,13 @@ window.onload = run;
 </html>
 ```
 
-However, this won't work for 2 reasons:
+However, this is prohibited for 2 reasons:
 
-- `rx-dom` is intended to be tree-shacked and minified. If you don't explicitly boostrap or inject your main component,
-  you'll end up with an app of 0KB of javascript. For the same reason we use `generateCreateElementFunctionWithCustomElements`:
+- `rx-dom` is intended to be tree-shacked and minified. So, if you don't explicitly boostrap or inject your main component,
+  it means you've done zero import, consequently you'll end up with an app of 0KB of javascript.
+  For the same reason we use `generateCreateElementFunctionWithCustomElements`:
   to properly import every required components, else we may miss some custom elements
-  (meaning a custom tag acting like a div for example, because the component is not defined).
+  (meaning a custom tag acting like a simple div for example, because the component is not defined).
 - `rx-dom` doesn't use `document.body.appendChild` or any native DOM functions: it tries to be context independent
   (may run on node and browser), and uses a faster *'connected'* detection algorithm that the `connectedCallback`.
   So, you must use `rx-dom` functions instead of native ones.

@@ -1,4 +1,4 @@
-import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
+import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { fromEventTarget, IEmitFunction, IKeyValueTuple, ITypedPureEventTarget } from '@lifaon/rx-js-light';
 
 export function setReactiveEventListener<GName extends string, GEvent extends Event>(

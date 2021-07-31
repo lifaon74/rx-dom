@@ -9,6 +9,16 @@ export function toSubscribeFunction<GValue>(
     : single(value);
 }
 
+export function toSubscribeFunctionThrowIfUndefined<GValue>(
+  value: ISubscribeFunction<GValue> | GValue
+): ISubscribeFunction<GValue> {
+  if (value === void 0) {
+    throw new TypeError(`Not a subscribe function`);
+  } else {
+    return toSubscribeFunction(value);
+  }
+}
+
 export function toSubscribeFunctionStrict<GValue>(
   value: ISubscribeFunction<GValue> | GValue
 ): ISubscribeFunction<GValue> {

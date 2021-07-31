@@ -1,6 +1,6 @@
-## Reactive HTML syntax
+# Reactive HTML syntax
 
-### Text: {{ observable }}
+## Text: {{ observable }}
 
 ```html
 {{ observable }}
@@ -14,11 +14,11 @@ observable((value) => text.value = value);
 
 ---
 
-### Attributes
+## Attributes
 
-#### Bind: []
+### Bind: []
 
-##### Bind property: \[property\]
+#### Bind property: \[property\]
 
 ```html
 <input
@@ -32,7 +32,7 @@ It compiles to something similar to this:
 observable((value) => input.value = value);
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <input
@@ -40,7 +40,7 @@ observable((value) => input.value = value);
 />
 ```
 
-##### Bind class: \[class.class-name\]
+#### Bind class: \[class.class-name\]
 
 ```html
 <div
@@ -54,7 +54,7 @@ It compiles to something similar to this:
 observable((value) => div.classList.toggle('my-class', value));
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <input
@@ -62,7 +62,7 @@ observable((value) => div.classList.toggle('my-class', value));
 />
 ```
 
-##### Bind class list: \[class...\]
+#### Bind class list: \[class...\]
 
 ```html
 <div
@@ -76,7 +76,7 @@ It compiles to something similar to this:
 observable((classes) => div.className = classes);
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <div
@@ -84,7 +84,7 @@ observable((classes) => div.className = classes);
 ></div>
 ```
 
-##### Bind style: \[style.style-property\]
+#### Bind style: \[style.style-property\]
 
 ```html
 <div
@@ -98,7 +98,7 @@ It compiles to something similar to this:
 observable((value) => div.style.setProperty('font-size', value));
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <input
@@ -106,7 +106,7 @@ observable((value) => div.style.setProperty('font-size', value));
 />
 ```
 
-##### Bind style list: \[style...\]
+#### Bind style list: \[style...\]
 
 ```html
 <div
@@ -120,7 +120,7 @@ It compiles to something similar to this:
 observable((styles) => div.setAttribute('style', styles));
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <div
@@ -128,7 +128,7 @@ observable((styles) => div.setAttribute('style', styles));
 ></div>
 ```
 
-##### Bind attribute: \[attr.name\]
+#### Bind attribute: \[attr.name\]
 
 ```html
 <div
@@ -142,7 +142,7 @@ It compiles to something similar to this:
 observable((value) => div.setAttribute('aria-label', value));
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <input
@@ -152,7 +152,7 @@ observable((value) => div.setAttribute('aria-label', value));
 
 ---
 
-#### EventListener: (event-name)
+### EventListener: (event-name)
 
 ```html
 <div
@@ -166,7 +166,7 @@ It compiles to something similar to this:
 div.addEventListener('click', observer);
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <div
@@ -174,7 +174,9 @@ div.addEventListener('click', observer);
 ></div>
 ```
 
-#### Reference: #referenceName
+---
+
+### Reference: #reference-name
 
 ```html
 <div
@@ -198,7 +200,7 @@ setNodeReference('my-div', div);
 ></div>
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <div
@@ -208,9 +210,36 @@ setNodeReference('my-div', div);
 
 ---
 
-### Elements
+### Node Modifier: $modifier-name
 
-#### Template: rx-template
+```html
+<div
+  $modifier-name="[...args]"
+></div>
+```
+
+It compiles to something similar to this:
+
+```ts
+const newNode = getNodeModifier('modifier-name')(node, ...args);
+```
+
+
+##### alternative syntax
+
+```html
+<div
+  mod-modifier-name="[...args]"
+></div>
+```
+
+[more details here](../examples/node-modifiers.md)
+
+---
+
+## Elements
+
+### Template: rx-template
 
 ```html
 <rx-template
@@ -244,7 +273,7 @@ setTemplateReference(
 Example: `let-my-var="myNewVar"` => `{ myVar: myNewVar }`
 
 
-#### Template injection: rx-inject-template
+### Template injection: rx-inject-template
 
 ```html
 <rx-inject-template
@@ -271,7 +300,7 @@ attachTemplate(
 );
 ``` 
 
-#### Dynamic content injection: rx-inject-content
+### Dynamic content injection: rx-inject-content
 
 ```html
 <rx-inject-content 
@@ -291,7 +320,7 @@ It compiles to something similar to this:
 nodeAppendChild(parentNode, createReactiveContentNode(observable));
 ``` 
 
-#### Conditional boolean template injection: rx-if or *if
+### Conditional boolean template injection: rx-if or *if
 
 ```html
 <rx-if
@@ -330,7 +359,7 @@ nodeAppendChild(
 );
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <tag-mame
@@ -361,7 +390,7 @@ Which is equivalent to:
 ></rx-if>
 ```
 
-#### Conditional switch template injection: rx-switch
+### Conditional switch template injection: rx-switch
 
 ```html
 <rx-switch
@@ -409,7 +438,7 @@ nodeAppendChild(parentNode, createReactiveSwitchNode(observable, new Map([
 ]), templateReferenceC));
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <rx-switch
@@ -486,7 +515,7 @@ Which is equivalent to:
 </rx-switch>
 ```
 
-#### For loop template injection: rx-for-loop or *for
+### For loop template injection: rx-for-loop or *for
 
 ```html
 <rx-for-loop
@@ -522,7 +551,7 @@ nodeAppendChild(
 );
 ```
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <tag-name
@@ -555,7 +584,7 @@ Which is equivalent to:
 ></rx-for-loop>
 ```
 
-#### Virtual container: rx-container
+### Virtual container: rx-container
 
 ```html
 <rx-container>
@@ -586,7 +615,7 @@ List of names: Alice, Bob, Carol
 
 **NOTE:** as you may see there's no element around the text nodes.
 
-#### Inject some javascript: rx-script
+### Inject some javascript: rx-script
 
 ```html
 <rx-script>
@@ -614,7 +643,7 @@ The DOM is untouched.
 
 **NOTE:** when possible, always prefer to write your javascript code into your component's `typescript file` instead of using `rx-script` 
 
-###### alternative syntax
+##### alternative syntax
 
 ```html
 <script rx>

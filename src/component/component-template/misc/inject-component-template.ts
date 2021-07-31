@@ -1,4 +1,4 @@
-import { nodeAppendChild } from '../../../light-dom';
+import { IGenericHTMLTemplate, nodeAppendChild } from '../../../light-dom';
 import {
   createReferencesMapGetterAndSetter, getMissingReference
 } from '../../../reactive-html/references/create-references-map';
@@ -33,7 +33,7 @@ export function injectComponentTemplate<GData extends object>(
   const {
     getReference: getTemplateReference,
     setReference: setTemplateReference,
-  } = createReferencesMapGetterAndSetter<HTMLElement>();
+  } = createReferencesMapGetterAndSetter<IGenericHTMLTemplate>();
 
   nodeAppendChild(
     container,

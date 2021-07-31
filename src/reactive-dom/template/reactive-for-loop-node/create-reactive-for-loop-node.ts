@@ -1,20 +1,16 @@
-import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
-import { IHTMLTemplate, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
-import { trackByIdentity } from './track-by-identity';
-import { getChildNodes } from '../../../light-dom/node/properties/get-child-nodes';
-import { createDocumentFragment } from '../../../light-dom/node/create/create-document-fragment';
-import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
-import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
-import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
-import {
-  createReferenceNode, IReferenceNode
-} from '../../../light-dom/node/create/reference-node/create-reference-node';
-import {
-  createMulticastReplayLastSource, distinctEmitPipe, IEmitFunction, ISource, ISubscribeFunction
-} from '@lifaon/rx-js-light';
-import { incrementalUUID } from '../../../misc';
+import { createMulticastReplayLastSource, distinctEmitPipe, IEmitFunction, ISource, ISubscribeFunction } from '@lifaon/rx-js-light';
 import { attachNode, detachNodeHavingParent } from '../../../light-dom';
+import { createDocumentFragment } from '../../../light-dom/node/create/create-document-fragment';
+import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
+import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import { attachManyNodes } from '../../../light-dom/node/move/devired/batch/attach-many-nodes';
+import { getChildNodes } from '../../../light-dom/node/properties/get-child-nodes';
+import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
+import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
+import { IHTMLTemplate, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
+import { createIncrementalUUID } from '../../../misc';
+import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
+import { trackByIdentity } from './track-by-identity';
 
 interface INodesAndIndex {
   nodes: IHTMLTemplateNodeList | DocumentFragment;
@@ -57,7 +53,6 @@ function pushNodesIntoTrackByMap(
     trackByMap.set(trackedBy, [nodes]);
   }
 }
-
 
 /*--*/
 
@@ -153,7 +148,6 @@ function detachNodesOfTrackByMap(
   return detached;
 }
 
-
 /**
  * Attaches nodesAndIndexList after referenceNode
  * INFO:
@@ -227,7 +221,6 @@ function moveNodesForReactiveForLoopNode(
   return allNodes;
 }
 
-
 interface IUpdateNodesForReactiveForLoopNodeReturn {
   readonly currentTrackByMap: ITrackByMap; // the trackByMap generated
   readonly nodes: IHTMLTemplateNodeList; // the list of nodes
@@ -244,7 +237,7 @@ function updateNodesForReactiveForLoopNode<GItem>(
   // generate the list of nodes to insert or move from a list of items
   const {
     currentTrackByMap,
-    nodesAndIndexList
+    nodesAndIndexList,
   }: IGenerateNodesForReactiveForLoopNodeReturn = generateNodesForReactiveForLoopNode<GItem>(
     previousTrackByMap,
     template,
@@ -266,7 +259,6 @@ function updateNodesForReactiveForLoopNode<GItem>(
   };
 }
 
-
 /*--------*/
 
 export type IReactiveForLoopNodeTemplateArgument<GItem> = {
@@ -275,7 +267,6 @@ export type IReactiveForLoopNodeTemplateArgument<GItem> = {
 };
 
 export type IReactiveForLoopNodeTemplate<GItem> = IHTMLTemplate<IReactiveForLoopNodeTemplateArgument<GItem>>;
-
 
 export interface IReactiveForLoopNodeTrackByFunction<GItem> {
   (item: GItem): any;
@@ -286,6 +277,7 @@ export interface ICreateReactiveForLoopNodeOptions<GItem> {
   transparent?: boolean;
 }
 
+const INCREMENTAL_FOR_LOOP_UUID = createIncrementalUUID('FOR-LOOP');
 
 export function createReactiveForLoopNode<GItem, GTrackByValue>(
   subscribe: ISubscribeFunction<Iterable<GItem>>,
@@ -295,7 +287,7 @@ export function createReactiveForLoopNode<GItem, GTrackByValue>(
     transparent,
   }: ICreateReactiveForLoopNodeOptions<GItem> = {},
 ): IReferenceNode {
-  const referenceNode: IReferenceNode = createReferenceNode(incrementalUUID('FOR-LOOP'), transparent);
+  const referenceNode: IReferenceNode = createReferenceNode(INCREMENTAL_FOR_LOOP_UUID(), transparent);
 
   let previousTrackByMap: ITrackByMap = createTrackByMap();
   let nodes: IHTMLTemplateNodeList = [];

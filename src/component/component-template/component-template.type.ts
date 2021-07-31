@@ -1,3 +1,4 @@
+import { IGenericHTMLTemplate, IHTMLTemplate } from '../../light-dom';
 import { IReferencesMapGetter, IReferencesMapSetter } from '../../reactive-html/references/create-references-map';
 
 /** COMPILE **/
@@ -9,8 +10,8 @@ export interface IComponentTemplateCompileOptions {
 
 export type IGetNodeReferenceFunction = IReferencesMapGetter<HTMLElement>;
 export type ISetNodeReferenceFunction = IReferencesMapSetter<HTMLElement>;
-export type IGetTemplateReferenceFunction = IReferencesMapGetter<HTMLElement>;
-export type ISetTemplateReferenceFunction = IReferencesMapSetter<HTMLElement>;
+export type IGetTemplateReferenceFunction = IReferencesMapGetter<IGenericHTMLTemplate>;
+export type ISetTemplateReferenceFunction = IReferencesMapSetter<IGenericHTMLTemplate>;
 
 export interface ICompiledComponentTemplateFunctionVariables<GData extends object> {
   data: GData;

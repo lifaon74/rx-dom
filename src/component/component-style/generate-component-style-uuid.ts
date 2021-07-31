@@ -1,6 +1,8 @@
-import { incrementalUUID } from '../../misc/uuid/incremental-uuid';
+import { createIncrementalUUID } from '../../misc/uuid/incremental-uuid';
+
+const INCREMENTAL_STYLE_UUID = createIncrementalUUID('style');
 
 export function generateComponentStyleUUID(): string {
-  return incrementalUUID('style');
+  return INCREMENTAL_STYLE_UUID();
 }
 

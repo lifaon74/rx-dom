@@ -1,14 +1,14 @@
-import { getParentNode } from '../properties/get-parent-node';
+import { getParentNode } from '../../properties/get-parent-node';
 import {
   IEmitFunction, ISubscribeFunction, IUnsubscribeFunction, noop, pipeSubscribeFunction, shareSubscribePipe
 } from '@lifaon/rx-js-light';
-import { getDocument } from '../explore';
-import { onNodeParentChangeListener } from '../move';
-import { getShadowRootHost } from '../properties/get-shadow-root-host';
-import { documentFragmentIsAShadowRoot } from '../shadow';
-import { isDocumentFragment } from '../type';
-import { nodeContainsTraversingShadowDOM } from '../explore/node-contains-traversing-shadow-dom';
-import { nodeContains } from '../explore/node-contains';
+import { getDocument } from '../../explore';
+import { onNodeParentChangeListener } from '../../move';
+import { getShadowRootHost } from '../../properties/get-shadow-root-host';
+import { documentFragmentIsAShadowRoot } from '../../shadow';
+import { isDocumentFragment } from '../../type';
+import { nodeContainsTraversingShadowDOM } from '../../explore/node-contains-traversing-shadow-dom';
+import { nodeContains } from '../../explore/node-contains';
 
 export interface IOnNodeConnectedToOptions {
   traverseShadowDOM?: boolean;

@@ -42,7 +42,7 @@ export function generateReactiveStyleLines(
 ): ILines {
   return [
     `// reactive style '${ name }'`,
-    `setReactiveStyle(${ value }, node, ${ JSON.stringify(name) });`,
+    `setReactiveStyle(toSubscribeFunction(${ value }), node, ${ JSON.stringify(name) });`,
   ];
 }
 
