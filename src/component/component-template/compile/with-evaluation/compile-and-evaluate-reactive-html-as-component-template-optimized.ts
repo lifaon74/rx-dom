@@ -4,6 +4,10 @@ import { compileReactiveHTMLAsComponentTemplateFunctionOptimized } from '../to-l
 import { IComponentTemplate, IComponentTemplateCompileOptions } from '../../component-template.type';
 import { evaluateCompiledReactiveHtmlAsComponentTemplate } from './evaluate-compiled-reactive-html-as-component-template';
 
+/**
+ * EXPERIMENTAL
+ * @deprecated
+ */
 export function compileAndEvaluateReactiveHTMLAsComponentTemplateOptimized<GData extends object>(
   html: string,
   constantsToImport: object,

@@ -1,3 +1,4 @@
+import { registerComponentTemplateForAOT } from '../../aot';
 import { generateConstantsToImportForComponentTemplateFromObject } from '../../misc/generate-constants-to-import-for-component-template-from-object';
 import { linesToString } from '../../../../reactive-html';
 import { compileReactiveHTMLAsComponentTemplateFunction } from '../to-lines';
@@ -10,14 +11,20 @@ export function compileAndEvaluateReactiveHTMLAsComponentTemplate<GData extends 
   constantsToImport: object,
   options?: IComponentTemplateCompileOptions,
 ): IComponentTemplate<GData> {
-  return evaluateAndDebugCompiledReactiveHtmlAsComponentTemplate<GData>(
-    linesToString(
-      compileReactiveHTMLAsComponentTemplateFunction(
-        html,
-        generateConstantsToImportForComponentTemplateFromObject(constantsToImport, options),
-        options,
-      )
-    ),
+  const compiled: string = linesToString(
+    compileReactiveHTMLAsComponentTemplateFunction(
+      html,
+      generateConstantsToImportForComponentTemplateFromObject(constantsToImport, options),
+      options,
+    )
+  );
+
+  const componentTemplate: IComponentTemplate<GData> = evaluateAndDebugCompiledReactiveHtmlAsComponentTemplate<GData>(
+    compiled,
     constantsToImport,
   );
+
+  registerComponentTemplateForAOT(componentTemplate, compiled);
+
+  return componentTemplate;
 }

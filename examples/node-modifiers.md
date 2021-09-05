@@ -1,12 +1,12 @@
 ## node modifier
 
-A `node-modifier` is a function that takes a Node in input and some optional arguments,
+A `node-modifier` is a function that takes a Node in input with some optional arguments,
 and returns the same Node or another one.
 
 It may:
 
 - modify the Node content, properties, attributes, etc...
-- generate a new one, with a completely different structure (and event it's type) and return it
+- generate a new one, with a completely different structure (and/or even a different type) and return it
 
 ⚠️ using `node-modifier` allows you very fine control of your elements, however,
 this may easily lead to **unsafe or sensitive operations**.

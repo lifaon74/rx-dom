@@ -20,6 +20,6 @@
     "@lifaon/rx-js-light": "1.0.0-beta.2"
   },
   "dependencies": {
-    "@lifaon/rx-js-light": "1.1.3"
+    "@lifaon/rx-js-light": "1.1.4"
   }
 }

@@ -2,6 +2,10 @@ import { ILines, IObjectProperties, minifyHTML } from '../../../../reactive-html
 import { compileReactiveHTMLAsComponentTemplateFunction } from './compile-reactive-html-as-component-template-function';
 import { IComponentTemplateCompileOptions } from '../../component-template.type';
 
+/**
+ * EXPERIMENTAL
+ * @deprecated
+ */
 export async function compileReactiveHTMLAsComponentTemplateFunctionOptimized(
   html: string,
   constantsToImport?: IObjectProperties,
