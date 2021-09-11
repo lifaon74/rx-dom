@@ -5,7 +5,7 @@ import { onNodeConnectedToCached } from '../../light-dom/node/state/on-node-conn
 import { HTMLElementConstructor } from '../../light-dom/types';
 import { TOP_PARENT_NODE } from '../../misc/top-parent-node.constant';
 import { IComponentStyle, IComponentStyleAsync } from '../component-style/component-style.type';
-import { injectComponentStyle, injectComponentStyleUsingShadowDOM } from '../component-style/misc/inject-component-style';
+import { injectComponentStyles, injectComponentStylesUsingShadowDOM } from '../component-style/misc/inject-component-style';
 import { IComponentTemplate, IComponentTemplateAsync } from '../component-template/component-template.type';
 import {
   DEFAULT_INJECT_COMPONENT_TEMPLATE_RETURN,
@@ -16,29 +16,44 @@ import { registerCustomElement } from '../custom-element/custom-element-function
 import { IComponentOptions } from './component-options.type';
 import { IComponent } from './component.type';
 
+/** LOAD **/
+
 type IOptionalComponentTemplateAsync<GData extends object> = IComponentTemplateAsync<GData> | undefined;
-type IOptionalComponentStyleAsync = IComponentStyleAsync | undefined;
+type IOptionalComponentStylesAsync = Iterable<IComponentStyleAsync> | undefined;
 
 type IOptionalComponentTemplate<GData extends object> = IComponentTemplate<GData> | undefined;
-type IOptionalComponentStyle = IComponentStyle | undefined;
 
-type ILoadedComponentAndStyle<GData extends object> = [IOptionalComponentTemplate<GData>, IOptionalComponentStyle];
+type ILoadedComponentAndStyle<GData extends object> = [IOptionalComponentTemplate<GData>, IComponentStyle[]];
 
-function loadComponentTemplateAndStyle<GData extends object>(
+function loadComponentTemplateAndStyles<GData extends object>(
   template: IOptionalComponentTemplateAsync<GData>,
-  style: IOptionalComponentStyleAsync,
+  styles: IOptionalComponentStylesAsync,
 ): Promise<ILoadedComponentAndStyle<GData>> {
   return Promise.all([
-    Promise.resolve<IOptionalComponentTemplate<GData>>(template),
-    Promise.resolve<IOptionalComponentStyle>(style),
+    loadComponentTemplate<GData>(template),
+    loadComponentStyles(styles),
   ]);
 }
+
+function loadComponentTemplate<GData extends object>(
+  template: IOptionalComponentTemplateAsync<GData>,
+): Promise<IOptionalComponentTemplate<GData>> {
+  return Promise.resolve<IOptionalComponentTemplate<GData>>(template);
+}
+
+function loadComponentStyles(
+  styles: IOptionalComponentStylesAsync,
+): Promise<IComponentStyle[]> {
+  return Promise.all<IComponentStyle>((styles === void 0) ? [] : styles);
+}
+
+/** INJECT **/
 
 function injectComponentTemplateAndStyle<GData extends object>(
   instance: IComponent<GData>,
   data: GData,
   template: IOptionalComponentTemplate<GData>,
-  style: IOptionalComponentStyle,
+  styles: IComponentStyle[],
   useShadowDOM: boolean,
 ): IInjectComponentTemplateReturn {
   const container: Node = useShadowDOM
@@ -46,11 +61,11 @@ function injectComponentTemplateAndStyle<GData extends object>(
     : instance
   ;
 
-  if (style !== void 0) {
+  if (styles !== void 0) {
     if (useShadowDOM) {
-      injectComponentStyleUsingShadowDOM(style, instance);
+      injectComponentStylesUsingShadowDOM(styles, instance);
     } else {
-      injectComponentStyle(style, instance);
+      injectComponentStyles(styles, instance);
     }
   }
 
@@ -65,6 +80,8 @@ function injectComponentTemplateAndStyle<GData extends object>(
     );
   }
 }
+
+/** INIT **/
 
 function initComponent<GData extends object>(
   instance: IComponent<GData>,
@@ -81,16 +98,16 @@ function initComponent<GData extends object>(
       : Object.create(null),
   ) as GData;
 
-  loadComponentTemplateAndStyle(
+  loadComponentTemplateAndStyles(
     options.template,
-    options.style,
+    options.styles,
   )
-    .then(([template, style]: ILoadedComponentAndStyle<GData>) => {
+    .then(([template, styles]: ILoadedComponentAndStyle<GData>) => {
       return injectComponentTemplateAndStyle(
         instance,
         data,
         template,
-        style,
+        styles,
         useShadowDOM,
       );
     })
@@ -118,6 +135,8 @@ function initComponent<GData extends object>(
   }
 }
 
+/** FACTORY **/
+
 export function componentFactory<GBaseClass extends HTMLElementConstructor, GData extends object>(
   baseClass: GBaseClass,
   options: IComponentOptions<GData>,
@@ -131,7 +150,11 @@ export function componentFactory<GBaseClass extends HTMLElementConstructor, GDat
     }
   };
 
-  registerCustomElement(_class, options);
+  registerCustomElement(_class, {
+    name: options.name,
+    extends: options.extends,
+    observedAttributes: options.observedAttributes,
+  });
 
   return _class;
 }

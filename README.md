@@ -50,7 +50,7 @@ const CONSTANTS_TO_IMPORT = {
       Length: {{ $.remaining }} / 10
     </div>
   `, CONSTANTS_TO_IMPORT),
-  style: compileReactiveCSSAsComponentStyle(`
+  styles: [compileReactiveCSSAsComponentStyle(`
     :host {
       display: block;
     }
@@ -58,7 +58,7 @@ const CONSTANTS_TO_IMPORT = {
     :host > .max-length-container:not(.valid) {
       color: red;
     }
-  `),
+  `)],
 })
 export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IData> {
   protected readonly data: IData;

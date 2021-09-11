@@ -1,33 +1,35 @@
-const STYLE_ELEMENT_USAGE_COUNT = new WeakMap<HTMLStyleElement, number>();
+const STYLE_ELEMENT_USAGE_COUNT = new WeakMap<HTMLStyleElement, Set<HTMLElement>>();
 
-export function getStyleElementUsageCount(
+
+
+export function linkStyleElementWithComponent(
   styleElement: HTMLStyleElement,
-): number {
-  const value: number | undefined = STYLE_ELEMENT_USAGE_COUNT.get(styleElement);
-  return (value == void 0)
-    ? 0
-    : value;
+  component: HTMLElement,
+): boolean {
+  const components: Set<HTMLElement> | undefined = STYLE_ELEMENT_USAGE_COUNT.get(styleElement);
+  if (components === void 0) {
+    STYLE_ELEMENT_USAGE_COUNT.set(styleElement, new Set<HTMLElement>([component]));
+    return true;
+  } else {
+    components.add(component);
+    return false;
+  }
 }
 
-export function setStyleElementUsageCount(
+export function unlinkStyleElementWithComponent(
   styleElement: HTMLStyleElement,
-  value: number
-): void {
-  STYLE_ELEMENT_USAGE_COUNT.set(styleElement, value);
-}
-
-export function incrementStyleElementUsageCount(
-  styleElement: HTMLStyleElement,
-): number {
-  const value: number = getStyleElementUsageCount(styleElement) + 1;
-  setStyleElementUsageCount(styleElement, value);
-  return value;
-}
-
-export function decrementStyleElementUsageCount(
-  styleElement: HTMLStyleElement,
-): number {
-  const value: number = Math.max(getStyleElementUsageCount(styleElement) - 1, 0);
-  setStyleElementUsageCount(styleElement, value);
-  return value;
+  component: HTMLElement,
+): boolean {
+  const components: Set<HTMLElement> | undefined = STYLE_ELEMENT_USAGE_COUNT.get(styleElement);
+  if (components === void 0) {
+    return false;
+  } else {
+    components.delete(component);
+    if (components.size === 0) {
+      STYLE_ELEMENT_USAGE_COUNT.delete(styleElement);
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
