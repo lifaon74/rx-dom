@@ -3,6 +3,7 @@ import { IGetNodeModifierFunction } from './get-node-modifier-function.type';
 import { IGenericNodeModifierFunction } from './node-modifier-function.type';
 import { IGenericNodeModifier } from './node-modifier.type';
 
+
 export function generateGetNodeModifierFunctionFromArray(
   modifiers: ArrayLike<IGenericNodeModifier>,
 ): IGetNodeModifierFunction {
@@ -28,3 +29,4 @@ export function generateGetNodeModifierFunctionFromMap(
     }
   };
 }
+

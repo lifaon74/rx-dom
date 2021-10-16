@@ -1,7 +1,7 @@
 import { IGenericHTMLTemplate, nodeAppendChild } from '../../../light-dom';
 import {
   createReferencesMapGetterAndSetter, getMissingReference
-} from '../../../reactive-html/references/create-references-map';
+} from '../../../transpilers/references/create-references-map';
 import {
   IComponentTemplate, IGetNodeReferenceFunction, IGetTemplateReferenceFunction
 } from '../component-template.type';

@@ -1,3 +1,4 @@
-export * from './to-lines/index';
-export * from './with-evaluation/index';
+export * from './compile-reactive-html-as-generic-component-template';
+export * from './compile-reactive-html-as-component-template';
+export * from './evaluate-transpiled-reactive-html-as-component-template';
 

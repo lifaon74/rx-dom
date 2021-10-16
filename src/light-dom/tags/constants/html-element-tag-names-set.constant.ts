@@ -1,5 +1,5 @@
 // "([\w]+)": [\w]+;
-// $1,
+// '$1',
 
 export type IHTMLElementTagName = keyof HTMLElementTagNameMap;
 
@@ -14,7 +14,6 @@ export const HTML_ELEMENT_TAG_NAMES_SET = new Set<IHTMLElementTagName>([
   'audio',
   'b',
   'base',
-  'basefont',
   'bdi',
   'bdo',
   'blockquote',
@@ -123,4 +122,4 @@ export const HTML_ELEMENT_TAG_NAMES_SET = new Set<IHTMLElementTagName>([
   'var',
   'video',
   'wbr',
-]);
+] as IHTMLElementTagName[]);

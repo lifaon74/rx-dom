@@ -1,4 +1,3 @@
-export * from './decorators/index';
 export * from './helpers/index';
 export * from './component.type';
 export * from './component-decorator';

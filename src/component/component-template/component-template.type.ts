@@ -1,5 +1,5 @@
 import { IGenericHTMLTemplate, IHTMLTemplate } from '../../light-dom';
-import { IReferencesMapGetter, IReferencesMapSetter } from '../../reactive-html/references/create-references-map';
+import { IReferencesMapGetter, IReferencesMapSetter } from '../../transpilers/references/create-references-map';
 
 /** COMPILE **/
 

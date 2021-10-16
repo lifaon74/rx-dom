@@ -20,6 +20,12 @@
     "@lifaon/rx-js-light": "1.0.0-beta.2"
   },
   "dependencies": {
-    "@lifaon/rx-js-light": "1.1.4"
+    "@lifaon/rx-js-light": "1.1.4",
+    "@types/estree": "^0.0.50",
+    "acorn": "^8.5.0",
+    "acorn-walk": "^8.2.0",
+    "astring": "^1.7.5",
+    "puppeteer": "^10.4.0",
+    "source-map": "^0.7.3"
   }
 }
