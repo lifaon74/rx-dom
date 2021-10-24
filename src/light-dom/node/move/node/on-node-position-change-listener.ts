@@ -1,5 +1,5 @@
 import { createListenerBuilderFunctions, createListenerMap } from '@lifaon/rx-js-light';
-import { IParentNode } from '../../properties';
+import { IParentNode } from '../../properties/get-parent-node';
 
 export type INodePositionChangeValue = null | IParentNode;
 

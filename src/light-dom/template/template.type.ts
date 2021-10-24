@@ -16,7 +16,6 @@ export type IHTMLTemplateNodeList = readonly ChildNode[];
 export type IGenericHTMLTemplate = IHTMLTemplate<object>;
 export type IGenericHTMLTemplateOrNull = IGenericHTMLTemplate | null;
 
-
 // export type ITemplateNodeList = ArrayLike<IStandardNode>;
 //
 // /**

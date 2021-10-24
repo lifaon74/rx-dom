@@ -1,4 +1,3 @@
-
 export function isDOMNode(
   value: unknown,
 ): value is Node {

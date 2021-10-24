@@ -1,4 +1,3 @@
-
 export const DEFAULT_ATTACH_SHADOW_INIT: ShadowRootInit = {
   mode: 'open',
 };

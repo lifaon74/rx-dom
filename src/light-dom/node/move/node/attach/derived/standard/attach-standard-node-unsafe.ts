@@ -1,7 +1,6 @@
 import { getParentNode, IParentNode } from '../../../../../properties';
-import { attachNodeRaw } from '../../attach-node-raw';
 import { dispatchNodePositionChange } from '../../../on-node-position-change-listener';
-
+import { attachNodeRaw } from '../../attach-node-raw';
 
 export function attachStandardNodeUnsafe(
   node: Node,

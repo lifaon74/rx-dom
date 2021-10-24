@@ -1,7 +1,6 @@
-import { IComponentOptions } from './component-options.type';
+import { HTMLElementConstructor } from '../../light-dom/types/html-element-constructor.type';
 import { componentFactory } from './component-factory';
-import { HTMLElementConstructor } from '../../light-dom/types';
-
+import { IComponentOptions } from './component-options.type';
 
 /**
  * DECORATOR (CLASS)

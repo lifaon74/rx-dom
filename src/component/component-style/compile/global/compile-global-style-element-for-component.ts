@@ -1,4 +1,4 @@
-import { attachShadow, createElement, createElementNode, nodeAppendChild, setAttributeValue } from '../../../../light-dom';
+import { setAttributeValue } from '../../../../light-dom';
 import { generateComponentStyleUUID } from '../../generate-component-style-uuid';
 import { reflectCSSStyleSheetOnOwnStyleElement } from '../../helpers';
 import { appendStyleElementToHead } from '../../helpers/append-style-element-to-head';

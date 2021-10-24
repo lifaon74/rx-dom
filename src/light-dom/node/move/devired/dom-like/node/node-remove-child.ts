@@ -1,5 +1,5 @@
-import { nodeRemove } from '../child-node/node-remove';
 import { isChildNodeOf } from '../../../../state/is-child-node-of';
+import { nodeRemove } from '../child-node/node-remove';
 
 /**
  * Equivalent of:

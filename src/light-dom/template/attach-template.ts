@@ -1,7 +1,6 @@
-import { IHTMLTemplate, IHTMLTemplateNodeList } from './template.type';
-import { getChildNodes } from '../node/properties/get-child-nodes';
 import { attachNode } from '../node';
-
+import { getChildNodes } from '../node/properties/get-child-nodes';
+import { IHTMLTemplate, IHTMLTemplateNodeList } from './template.type';
 
 export function attachTemplate<GArgument extends object>(
   template: IHTMLTemplate<GArgument>,
@@ -26,7 +25,6 @@ export function attachOptionalTemplate<GArgument extends object>(
 }
 
 /*---------------------*/
-
 
 export function attachTemplateFragment(
   fragment: DocumentFragment,

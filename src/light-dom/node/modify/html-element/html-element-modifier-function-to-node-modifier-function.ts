@@ -10,7 +10,6 @@ export type IHTMLElementModifierFunctionToNodeModifierFunction<GHTMLElementModif
     : never
   ;
 
-
 /** FUNCTION **/
 
 export function htmlElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction extends IGenericHTMLElementModifierFunction>(

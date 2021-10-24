@@ -2,7 +2,7 @@ import { ISubscribeFunction, single } from '@lifaon/rx-js-light';
 import { isSubscribeFunction } from './is/is-subscribe-function';
 
 export function toSubscribeFunction<GValue>(
-  value: ISubscribeFunction<GValue> | GValue
+  value: ISubscribeFunction<GValue> | GValue,
 ): ISubscribeFunction<GValue> {
   return isSubscribeFunction(value)
     ? value
@@ -10,7 +10,7 @@ export function toSubscribeFunction<GValue>(
 }
 
 export function toSubscribeFunctionThrowIfUndefined<GValue>(
-  value: ISubscribeFunction<GValue> | GValue
+  value: ISubscribeFunction<GValue> | GValue,
 ): ISubscribeFunction<GValue> {
   if (value === void 0) {
     throw new TypeError(`Not a subscribe function`);
@@ -20,7 +20,7 @@ export function toSubscribeFunctionThrowIfUndefined<GValue>(
 }
 
 export function toSubscribeFunctionStrict<GValue>(
-  value: ISubscribeFunction<GValue> | GValue
+  value: ISubscribeFunction<GValue> | GValue,
 ): ISubscribeFunction<GValue> {
   if (isSubscribeFunction(value)) {
     return value;

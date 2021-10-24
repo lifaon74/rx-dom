@@ -9,17 +9,18 @@
 `reactive html` is an angular like syntax (html with special attributes and components, very close to the standard html)
 , which, when compiled to javascript, generates and mutates the DOM from observables, in a very efficient way.
 
-As an example, if you want to generate a *div* with the class 'valid' when the observable `$.valid` emits *true*, you
+As an example, if you want to generate a *div* with the class 'valid' when the observable `$.valid$` emits *true*, you
 may write:
 
 ```html
+
 <div
-  [class.valid]="$.valid"
+  [class.valid]="$.valid$"
 ></div>
 ```
 
-And use the function `compileAndEvaluateReactiveHTMLAsComponentTemplate` to compile
-and evaluate this *reactive html* into javascript.
+And use the function `compileReactiveHTMLAsGenericComponentTemplate` to compile and evaluate this *reactive html* into
+javascript.
 
 The complete syntax for `reactive html` may be found [HERE](../src/syntax.md)
 
@@ -27,79 +28,70 @@ The complete syntax for `reactive html` may be found [HERE](../src/syntax.md)
 
 Let's create a file `hello-world.component.ts` in its own folder.
 
-#### Step 1 - define what you want to import into your component
+#### Step 1 - define what you want to import into your component (optional if you have nothing to import)
 
 The compiled `reactive html` is completely isolated: it doesn't import any functions, constants, or use global
-variables. Instead, everything must come from the caller of the function.
-This level of encapsulation allows `rx-dom` to strongly minify you component and run then at extreme speed.
+variables. Instead, everything must come from the caller of the function. This level of encapsulation allows `rx-dom` to
+strongly minify you component and run then at extreme speed.
 
-So, the first step is to define what will be required into your component: 
+So, the first step is to define what will be required into your component:
 
 ```ts
-const CONSTANTS_TO_IMPORT = {
-  ...DEFAULT_CONSTANTS_TO_IMPORT,
+const customElements = {
+  // put your list of custom elements here
 };
 ```
 
-`DEFAULT_CONSTANTS_TO_IMPORT`: is the *'minimal'* list of functions used by `rx-dom`, when compiling some `reactive html`.
-You probably want to use them in each of your components.
-
-⚠️ If your component is using custom elements (or other `rx-dom` elements), you'll need to import them too:
-
 ```ts
-export const MY_COMPONENT_CUSTOM_ELEMENTS = [
-  AppChildComponent,
-];
-
-const CONSTANTS_TO_IMPORT = {
-  ...DEFAULT_CONSTANTS_TO_IMPORT,
-  createElement: generateCreateElementFunctionWithCustomElements(MY_COMPONENT_CUSTOM_ELEMENTS),
+const modifiers = {
+  // put your list of modifiers here
 };
 ```
 
-This ensures that every custom element is properly included into your application, and you didn't forget anyone.
-This is only a security restriction, but it will avoid you many problems in large applications.
-
+If a custom element or a modifier is detected in your template and is not included, it will trigger an explicit error. This ensures that
+every custom element or modifier is properly imported into your application, and you didn't forget anyone.
 
 #### Step 2 - write your reactive html
 
 We will write some `reactive html`: an input, which, when changed, immediately updates a validity check:
 
 ```ts
-const reactiveHTML = `
-  <div class="input-container">
-    <input
-      #input
-      [value]="$.input.subscribe"
-      (input)="() => $.input.emit(getNodeReference('input').value)"
-    >
-  </div>
-  <div
-    class="max-length-container"
-    [class.valid]="$.valid"
-  >
-    Length: {{ $.remaining }} / 10
-  </div>
-`;
-
-const compiledTemplate = compileAndEvaluateReactiveHTMLAsComponentTemplate(reactiveHTML, CONSTANTS_TO_IMPORT);
+const template = compileReactiveHTMLAsGenericComponentTemplate({
+  html: `
+      <div class="input-container">
+        <input
+          #input
+          [value]="$.$input$.subscribe"
+          (input)="() => $.$input$.emit(getNodeReference('input').value)"
+        >
+      </div>
+      <div
+        class="max-length-container"
+        [class.valid]="$.valid$"
+      >
+        Length: {{ $.remaining$ }} / 10
+      </div>
+   `,
+  customElements, // optional
+  modifiers, // optional
+})
 ```
 
-In your `reactive html`, you have access to many variables:
+In your `reactive html`, you have access to these variables:
 
-- everything present in `CONSTANTS_TO_IMPORT`
-- `$content`: a document fragment, containing the nodes that was present into your component before the template is injected
+- `$content`: a document fragment, containing the nodes that was present into your component before the template is
+  injected
   (ak: `ng-content` for angular or `children` for react)
-- `$`: the data coming from your component. It's an object containing some observables that you'll use to update the DOM.
- 
+- `$`: the data coming from your component. It's an object containing some observables that you'll use to update the
+  DOM.
 
 Let's define an interface for `$`:
 
 ```ts
 interface IData {
-  input: IMulticastReplayLastSource<string>; // the value of the input
-  remaining: ISubscribeFunction<number>; // how many caracters remains until the input is invalid (maxlength)
-  valid: ISubscribeFunction<boolean>; // is the input valid ?
+  readonly $input$: IMulticastReplayLastSource<string>; // the value of the input
+  readonly remaining$: ISubscribeFunction<number>; // how many caracters remains until the input is invalid (maxlength)
+  readonly valid$: ISubscribeFunction<boolean>; // is the input valid ?
 }
 ```
 
@@ -110,7 +102,7 @@ These data comes from the return of the method `onCreate` when your component is
 Because HTML is nothing without css, let's style our component:
 
 ```ts
-const css = `
+const styleSheet = compileReactiveCSSAsComponentStyle(`
   :host {
     display: block;
   }
@@ -118,9 +110,7 @@ const css = `
   :host > .max-length-container:not(.valid) {
     color: red;
   }
-`;
-
-compileReactiveCSSAsComponentStyle(css);
+`);
 ```
 
 The `:host` selector is used to select your component.
@@ -130,14 +120,16 @@ The style of a component **SHOULD ALWAYS** keeps its css encapsulated as much as
 - use `>`, or your css may leak on child components
 - avoid applying style to other components (like `body`)
 
-ℹ️ `rx-dom` supports partially the shadow DOM, but we strongly discourage its usage **now**.
-Indeed, the shadow DOM forces encapsulation, but we often encounter the need to style child components from a
-parent component, and injecting style sheet for each component is not yet performant.
-We're awaiting on [Constructable Stylesheets](https://developers.google.com/web/updates/2019/02/constructable-stylesheets) to go further.
+ℹ️ `rx-dom` supports partially the shadow DOM, but we strongly discourage its usage **now**. Indeed, the shadow DOM
+forces encapsulation, but we often encounter the need to style child components from a parent component, and injecting
+style sheet for each component is not yet performant. We're awaiting
+on [Constructable Stylesheets](https://developers.google.com/web/updates/2019/02/constructable-stylesheets) to go
+further.
 
 #### Step 4 - create your component
 
-`rx-dom` components are simply [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
+`rx-dom` components are
+simply [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
 with a decorator to initialize them:
 
 - it registers the component (tag-name)
@@ -149,36 +141,33 @@ with a decorator to initialize them:
 
 // the interface of the data available in the template
 interface IData {
-  input: IMulticastReplayLastSource<string>;
-  remaining: ISubscribeFunction<number>;
-  valid: ISubscribeFunction<boolean>;
+  readonly $input$: IMulticastReplayLastSource<string>;
+  readonly remaining$: ISubscribeFunction<number>;
+  readonly valid$: ISubscribeFunction<boolean>;
 }
-
-// what to import in the context of the template
-const CONSTANTS_TO_IMPORT = {
-  ...DEFAULT_CONSTANTS_TO_IMPORT,
-};
 
 /**
  * A component is nothing more that a custom element with a decorator.
  */
 @Component({
-  name: 'app-hello-world', // the name of the component
-  template: compileAndEvaluateReactiveHTMLAsComponentTemplate(`
-    <div class="input-container">
-      <input
-        #input
-        [value]="$.input.subscribe"
-        (input)="() => $.input.emit(getNodeReference('input').value)"
+  name: 'app-hello-world',
+  template: compileReactiveHTMLAsGenericComponentTemplate({
+    html: `
+      <div class="input-container">
+        <input
+          #input
+          [value]="$.$input$.subscribe"
+          (input)="() => $.$input$.emit(getNodeReference('input').value)"
+        >
+      </div>
+      <div
+        class="max-length-container"
+        [class.valid]="$.valid$"
       >
-    </div>
-    <div
-      class="max-length-container"
-      [class.valid]="$.valid"
-    >
-      Length: {{ $.remaining }} / 10
-    </div>
-  `, CONSTANTS_TO_IMPORT), // compiles some 'reactive html' into a component template
+        Length: {{ $.remaining$ }} / 10
+      </div>
+   `,
+  }),
   styles: [compileReactiveCSSAsComponentStyle(`
     :host {
       display: block;
@@ -187,7 +176,7 @@ const CONSTANTS_TO_IMPORT = {
     :host > .max-length-container:not(.valid) {
       color: red;
     }
-  `)], // compiles some 'reactive css' for a component
+  `)],
 })
 export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IData> {
   protected readonly data: IData;
@@ -196,13 +185,13 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
     super();
     // 'input' is an source which contains and emits the value of our input
     const input = let$$('');
-    
+
     // 'remaining' is an observable whose value is computed from the length of 'input'
     const remaining = map$$(input.subscribe, (value: string) => value.length);
-    
+
     // 'valid' is an observable whose value is true if 'remaining' is less than 10
     const valid = map$$(remaining, (value: number) => (value <= 10));
-    
+
     this.data = {
       input,
       remaining,
@@ -217,7 +206,6 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
 }
 ```
 
-
 [comment]: <> (```ts)
 
 [comment]: <> (export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IData> {)
@@ -231,7 +219,7 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
 [comment]: <> (    // 'input' is an source which contains and emits the value of our input)
 
 [comment]: <> (    const input = createMulticastReplayLastSource<string>&#40;{ initialValue: '' }&#41;;)
-    
+
 [comment]: <> (    // 'remaining' is an observable whose value is computed from the length of 'input')
 
 [comment]: <> (    const remaining = pipeSubscribeFunction&#40;input.subscribe, [)
@@ -277,6 +265,7 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
 The last step is to append you component into the body of your html's page:
 
 ```html
+
 <html lang="en">
   <head>
     <title>My app</title>
@@ -296,11 +285,12 @@ function run() {
 window.onload = run;
 ```
 
----
+**WARNING**
 
 `rx-dom` components are simply custom elements, so you may expect writing directly:
 
 ```html
+
 <html lang="en">
   <head>
     <title>My app</title>
@@ -313,14 +303,14 @@ window.onload = run;
 
 However, this is prohibited for 2 reasons:
 
-- `rx-dom` is intended to be tree-shacked and minified. So, if you don't explicitly boostrap or inject your main component,
-  it means you've done zero import, consequently you'll end up with an app of 0KB of javascript.
-  For the same reason we use `generateCreateElementFunctionWithCustomElements`:
-  to properly import every required components, else we may miss some custom elements
-  (meaning a custom tag acting like a simple div for example, because the component is not defined).
+- `rx-dom` is intended to be tree-shacked and minified. So, if you don't explicitly boostrap or inject your main
+  component, you'll probably end with zero imports, consequently you'll have an app of 0KB of javascript (components will be missing).
+  That's why you have to declare and import your custom elements with the property `customElements` when using `compileReactiveHTMLAsGenericComponentTemplate`.
 - `rx-dom` doesn't use `document.body.appendChild` or any native DOM functions: it tries to be context independent
-  (may run on node and browser), and uses a faster *'connected'* detection algorithm that the `connectedCallback`.
-  So, you must use `rx-dom` functions instead of native ones.
+  (may run on node and browser), and uses a faster *'connected'* detection algorithm that the `connectedCallback`. So,
+  you must use `rx-dom` functions instead of native ones.
+  For example, if you write `document.body.appendChild(new AppHelloWorldComponent())`, your application won't properly boot,
+  and won't be ready for any future SSR.
 
 
 

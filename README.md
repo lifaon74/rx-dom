@@ -7,10 +7,15 @@
 
 [comment]: <> (https://github.com/tusharmath/reactive-dom#virtualdomvsreactivedom)
 
-**rx-dom** is an [observable based](https://github.com/lifaon74/rx-js-light) library for building very high performance user interfaces:
+**rx-dom** is an [observable based](https://github.com/lifaon74/rx-js-light) library for building **very high performance** user interfaces:
 you get the angular like syntax with near native performances.
 
 It binds for you the DOM nodes with observables to automatically update only the relevant parts, ensuring maximal efficiency.
+
+To simplify: you create dynamic variables, and **rx-dom** takes care for you to refresh the DOM.
+
+Moreover, it comes with an [AOT plugin for rollup](https://github.com/lifaon74/rx-dom-aot-plugin),
+which strongly optimizes your components and generates very small bundle.
 
 It's light, fast, and simple ! Give it a try !
 
@@ -24,32 +29,30 @@ It's light, fast, and simple ! Give it a try !
 /** COMPONENT **/
 
 interface IData {
-  input: IMulticastReplayLastSource<string>;
-  remaining: ISubscribeFunction<number>;
-  valid: ISubscribeFunction<boolean>;
+  readonly $input$: IMulticastReplayLastSource<string>;
+  readonly remaining$: ISubscribeFunction<number>;
+  readonly valid$: ISubscribeFunction<boolean>;
 }
-
-const CONSTANTS_TO_IMPORT = {
-  ...DEFAULT_CONSTANTS_TO_IMPORT,
-};
 
 @Component({
   name: 'app-hello-world',
-  template: compileAndEvaluateReactiveHTMLAsComponentTemplate(`
-    <div class="input-container">
-      <input
-        #input
-        [value]="$.input.subscribe"
-        (input)="() => $.input.emit(input.value)"
+  template: compileReactiveHTMLAsGenericComponentTemplate({
+    html: `
+      <div class="input-container">
+        <input
+          #input
+          [value]="$.$input$.subscribe"
+          (input)="() => $.$input$.emit(getNodeReference('input').value)"
+        >
+      </div>
+      <div
+        class="max-length-container"
+        [class.valid]="$.valid$"
       >
-    </div>
-    <div
-      class="max-length-container"
-      [class.valid]="$.valid"
-    >
-      Length: {{ $.remaining }} / 10
-    </div>
-  `, CONSTANTS_TO_IMPORT),
+        Length: {{ $.remaining$ }} / 10
+      </div>
+   `,
+  }),
   styles: [compileReactiveCSSAsComponentStyle(`
     :host {
       display: block;
@@ -65,21 +68,15 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
 
   constructor() {
     super();
-    const input = createMulticastReplayLastSource<string>({ initialValue: '' });
 
-    const remaining = pipeSubscribeFunction(input.subscribe, [
-      mapSubscribePipe((value: string) => value.length)
-    ]);
-
-    const valid = pipeSubscribeFunction(remaining, [
-      mapSubscribePipe((value: number) => (value <= 10)),
-    ]);
-
+    const $input$ = let$$('');
+    const remaining$ = map$$($input$.subscribe, (value: string) => value.length);
+    const valid$ = map$$(remaining$, (value: number) => (value <= 10));
 
     this.data = {
-      input,
-      remaining,
-      valid,
+      $input$,
+      remaining$,
+      valid$,
     };
   }
 
@@ -89,10 +86,9 @@ export class AppHelloWorldComponent extends HTMLElement implements OnCreate<IDat
 }
 ```
 
-## 📦 Installation
+[Click here to see the live demo](https://stackblitz.com/edit/typescript-ydrjlp?file=hello-world.shortcuts.component.ts)
 
-**BETA**: the lib is currently in beta, meaning it's stable enough for most of its functions,
-however some may evolve in the future. It's ready for small or individual projects. Feel free to test and give feedback.
+## 📦 Installation
 
 ```bash
 yarn add @lifaon/rx-dom
@@ -129,9 +125,7 @@ Feature | Angular | Virtual DOM (React, Vue) | rx-dom
 
 *size is calculated for similar 'hello world' projects, compiled, minified and gzipped.
 
-**rx-dom** anticipated aot (compiled when bundling, instead of doing it in the browser):
-this would remove a few bytes coming from the jit compiler, and fasten the execution.
-It currently lacks of its own cli, so AOT will be available in a future release.
+**rx-dom** [has been thought to support AOT](https://github.com/lifaon74/rx-dom-aot-plugin), which generates very small bundles.
 
 We may conclude that current frameworks are pretty efficient, but are not as optimized as they could be.
 **rx-dom** tries to do better by conciliating an elegant syntax with maximal performances.

@@ -14,6 +14,6 @@ export function isCamelCase(
 export function camelCaseToDashCase(
   input: string,
 ): string {
-  return input.replace(/[A-Z]/g, (match: string) => `-${ match.toLowerCase() }`);
+  return input.replace(/[A-Z]/g, (match: string) => `-${match.toLowerCase()}`);
 }
 

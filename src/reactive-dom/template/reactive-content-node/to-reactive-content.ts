@@ -3,8 +3,10 @@ import {
   createDocumentFragment,
   createTextNode,
   IDocumentFragmentOrNull,
-  IGenericHTMLTemplate, isDocumentFragment,
-  isDOMNode, isHTMLTemplate,
+  IGenericHTMLTemplate,
+  isDocumentFragment,
+  isDOMNode,
+  isHTMLTemplate,
   nodeAppendChild,
 } from '../../../light-dom';
 import { toSubscribeFunctionThrowIfUndefined } from '../../../misc';

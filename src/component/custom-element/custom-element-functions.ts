@@ -1,6 +1,6 @@
-import { HTMLElementConstructor } from '../../light-dom/types';
 import { defineCustomElement } from '../../light-dom/custom-element/define-custom-element';
-
+import { HTMLElementConstructor } from '../../light-dom/types';
+import { objectDefineProperty } from '../../misc/object-define-property';
 
 /**
  * Returns the list of all the observedAttributes of a CustomElement
@@ -21,7 +21,7 @@ export function getCustomElementObservedAttributes(
       } else if (descriptor.hasOwnProperty('get')) {
         values = (descriptor.get as () => string[]).call(target);
       } else {
-        throw new TypeError(`Expected 'value' or 'get' in descriptor for ${ superClass.name }.observedAttributes`);
+        throw new TypeError(`Expected 'value' or 'get' in descriptor for ${superClass.name}.observedAttributes`);
       }
 
       for (let i = 0, l = values.length; i < l; i++) {
@@ -38,7 +38,6 @@ export function getCustomElementObservedAttributes(
   return observedAttributes;
 }
 
-
 export function updateObservedAttributes(
   target: HTMLElementConstructor,
   newObservedAttributes: Iterable<string>,
@@ -51,7 +50,7 @@ export function updateObservedAttributes(
     observedAttributes.add(result.value);
   }
 
-  Object.defineProperty(target, 'observedAttributes', {
+  objectDefineProperty(target, 'observedAttributes', {
     value: Array.from(observedAttributes),
     writable: false,
     configurable: true,

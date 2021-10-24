@@ -9,8 +9,8 @@ function subscribeOnNodeConnectedTo<GValue>(
 ): IUnsubscribeFunction
 ```
 
-Uses [onNodeConnectedToWithImmediateCached](../../light-dom/node/state/on-node-connected-to/on-node-connected-to.md),
-to subscribe to `subscribe` and sends the data into `emit`.
+Uses [onNodeConnectedToWithImmediateCached](../../light-dom/node/state/on-node-connected-to/on-node-connected-to.md), to
+subscribe to `subscribe` and sends the data into `emit`.
 
 ### Example
 

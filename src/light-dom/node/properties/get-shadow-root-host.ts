@@ -1,6 +1,3 @@
-
-
-
 export function getShadowRootHost<GElement extends Element>(
   node: ShadowRoot,
 ): GElement {

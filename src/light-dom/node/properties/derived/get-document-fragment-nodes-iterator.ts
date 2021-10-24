@@ -1,11 +1,11 @@
 import { getFirstChild } from '../get-first-child';
-import { getNextSibling } from '../get-next-sibling';
 import { getLastChild } from '../get-last-child';
+import { getNextSibling } from '../get-next-sibling';
 
 /**
  * Iterator over the nodes of a document fragment even when attached to the DOM
  */
-export function * getDocumentFragmentChildNodesIterator(
+export function* getDocumentFragmentChildNodesIterator(
   fragment: DocumentFragment,
 ): Generator<ChildNode> {
   let node: ChildNode | null = getFirstChild(fragment);

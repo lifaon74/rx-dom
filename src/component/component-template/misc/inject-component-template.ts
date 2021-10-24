@@ -1,10 +1,6 @@
 import { IGenericHTMLTemplate, nodeAppendChild } from '../../../light-dom';
-import {
-  createReferencesMapGetterAndSetter, getMissingReference
-} from '../../../transpilers/references/create-references-map';
-import {
-  IComponentTemplate, IGetNodeReferenceFunction, IGetTemplateReferenceFunction
-} from '../component-template.type';
+import { createReferencesMapGetterAndSetter, getMissingReference } from '../../../transpilers/references/create-references-map';
+import { IComponentTemplate, IGetNodeReferenceFunction, IGetTemplateReferenceFunction } from '../component-template.type';
 
 export interface IInjectComponentTemplateReturn {
   getNodeReference: IGetNodeReferenceFunction;
@@ -15,7 +11,6 @@ export const DEFAULT_INJECT_COMPONENT_TEMPLATE_RETURN = {
   getNodeReference: getMissingReference,
   getTemplateReference: getMissingReference,
 };
-
 
 export function injectComponentTemplate<GData extends object>(
   template: IComponentTemplate<GData>,

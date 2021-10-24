@@ -1,7 +1,6 @@
 import { attachStandardNodeUnsafe } from './attach-standard-node-unsafe';
 import { isAttachStandardNodeUseful } from './is-attach-standard-node-useful';
 
-
 export function attachStandardNode(
   node: Node,
   parentNode: Node,

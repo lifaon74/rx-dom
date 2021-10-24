@@ -1,8 +1,6 @@
-import {
-  composeEmitFunction, ISource, mapEmitPipe, mapSubscribePipe, pipeSubscribeFunction
-} from '@lifaon/rx-js-light';
+import { composeEmitFunction, ISource, mapEmitPipe, mapSubscribePipe, pipeSubscribeFunction } from '@lifaon/rx-js-light';
+import { IAttributeValueOrNull } from '../../../../light-dom';
 import { ISyncAttributeWithSourceOptions, syncAttributeWithSource } from './sync-attribute-with-source';
-import { IAttributeValue } from '../../../../light-dom';
 
 export function syncAttributeWithBooleanSource(
   source: ISource<boolean>,
@@ -14,14 +12,14 @@ export function syncAttributeWithBooleanSource(
   syncAttributeWithSource(
     {
       subscribe: pipeSubscribeFunction(source.subscribe, [
-        mapSubscribePipe<boolean, IAttributeValue>((value: boolean) => {
+        mapSubscribePipe<boolean, IAttributeValueOrNull>((value: boolean) => {
           return value
             ? ''
             : null;
         }),
       ]),
       emit: composeEmitFunction([
-        mapEmitPipe<IAttributeValue, boolean>((value: IAttributeValue): boolean => {
+        mapEmitPipe<IAttributeValueOrNull, boolean>((value: IAttributeValueOrNull): boolean => {
           return (value === null)
             ? defaultSourceValue
             : Boolean(value);

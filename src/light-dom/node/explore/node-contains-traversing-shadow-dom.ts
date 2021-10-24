@@ -1,5 +1,6 @@
-import { isShadowRoot } from '../shadow';
-import { getParentNode, getShadowRootHost } from '../properties';
+import { getParentNode } from '../properties/get-parent-node';
+import { getShadowRootHost } from '../properties/get-shadow-root-host';
+import { isShadowRoot } from '../shadow/is-shadow-root';
 
 export function nodeContainsTraversingShadowDOM(
   parentNode: Node,

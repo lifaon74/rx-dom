@@ -1,6 +1,6 @@
-import { nodeInsertBefore } from './node-insert-before';
-import { nodeRemove } from '../child-node/node-remove';
 import { isChildNodeOf } from '../../../../state/is-child-node-of';
+import { nodeRemove } from '../child-node/node-remove';
+import { nodeInsertBefore } from './node-insert-before';
 
 /**
  * Equivalent of:

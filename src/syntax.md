@@ -6,6 +6,8 @@
 {{ observable }}
 ```
 
+Creates a Text Node whose content is updated by a SubscribeFunction (`string`).
+
 It compiles to something similar to this:
 
 ```ts
@@ -25,6 +27,9 @@ observable((value) => text.value = value);
   [value]="observable"
 />
 ```
+
+Links the property of an Element with a SubscribeFunction (`any`): when the SubscribeFunction changes, the property is
+updated with the received value.
 
 It compiles to something similar to this:
 
@@ -48,6 +53,9 @@ observable((value) => input.value = value);
 ></div>
 ```
 
+Links the classList of an Element with a SubscribeFunction (`boolean`): when the SubscribeFunction changes, the class is
+toggled (present only when `true` is received).
+
 It compiles to something similar to this:
 
 ```ts
@@ -69,6 +77,9 @@ observable((value) => div.classList.toggle('my-class', value));
   [class...]="observable"
 ></div>
 ```
+
+Links the className of an Element with a SubscribeFunction (`Set<string>`): when the SubscribeFunction changes, the
+classes are added or removed from the Element.
 
 It compiles to something similar to this:
 
@@ -92,11 +103,28 @@ observable((classes) => div.className = classes);
 ></div>
 ```
 
+Links a style property of an Element with a SubscribeFunction (`string | number | null`):
+
+If `null` is received, the property is removed. If a `string | number` is received, the property is converted to string
+and set.
+
 It compiles to something similar to this:
 
 ```ts
 observable((value) => div.style.setProperty('font-size', value));
 ```
+
+[comment]: <> (**ℹ️ INFO:** you can specify a unit using:)
+
+[comment]: <> (```html)
+
+[comment]: <> (<div)
+
+[comment]: <> (  [style.font-size.px]="observable")
+
+[comment]: <> (></div>)
+
+[comment]: <> (```)
 
 ##### alternative syntax
 
@@ -113,6 +141,9 @@ observable((value) => div.style.setProperty('font-size', value));
   [style...]="observable"
 ></div>
 ```
+
+Links the style attribute of an Element with a SubscribeFunction (`Map<string, string>`): when the SubscribeFunction
+changes, the Element's style is updated.
 
 It compiles to something similar to this:
 
@@ -135,6 +166,10 @@ observable((styles) => div.setAttribute('style', styles));
   [attr.aria-label]="observable"
 ></div>
 ```
+
+Links an attribute of an Element with a SubscribeFunction (`string | null`):
+
+If `null` is received, the attribute is removed. If a `string` is received, the attribute is set to this value.
 
 It compiles to something similar to this:
 
@@ -160,6 +195,8 @@ observable((value) => div.setAttribute('aria-label', value));
 ></div>
 ```
 
+Creates an *eventsListener* on an Element and output its content into an Observer (`Event`):
+
 It compiles to something similar to this:
 
 ```ts
@@ -176,7 +213,7 @@ div.addEventListener('click', observer);
 
 ---
 
-### Reference: #reference-name
+### Reference: #reference-name (EXPERIMENTAL)
 
 ```html
 <div
@@ -184,15 +221,17 @@ div.addEventListener('click', observer);
 ></div>
 ```
 
+Creates a reference on an Element.
+
 It compiles to something similar to this:
 
 ```ts
 setNodeReference('my-div', div);
 ```
 
-ℹ️ You can retrieve a reference to a Node with `getNodeReference('my-div')`.
+**ℹ️ INFO:** you can retrieve a reference to a Node with `getNodeReference('my-div')`.
 
-ℹ️ you may set a value to this ref attribute. In this case, the value will be used as the reference's name:
+**ℹ️ INFO:** you may set a value to this ref attribute. In this case, the value will be used as the reference's name:
 
 ```html
 <div
@@ -218,12 +257,13 @@ setNodeReference('my-div', div);
 ></div>
 ```
 
+Creates a [modifier]((../examples/node-modifiers.md)) on an Element.
+
 It compiles to something similar to this:
 
 ```ts
 const newNode = getNodeModifier('modifier-name')(node, ...args);
 ```
-
 
 ##### alternative syntax
 
@@ -267,11 +307,10 @@ setTemplateReference(
 );
 ```
 
-ℹ️ You can retrieve a reference to a Template with `getTemplateReference('templateReference')`.
+**ℹ️ INFO:**️ You can retrieve a reference to a Template with `getTemplateReference('templateReference')`.
 
-⚠️ html attribute's names are case-insensitive, so the `let` properties are converted from `dash-case` to `camelCase`.
-Example: `let-my-var="myNewVar"` => `{ myVar: myNewVar }`
-
+**⚠️️ WARNING:** html attribute's names are case-insensitive, so the `let` properties are converted from `dash-case`
+to `camelCase`. Example: `let-my-var="myNewVar"` => `{ myVar: myNewVar }`
 
 ### Template injection: rx-inject-template
 
@@ -333,10 +372,10 @@ nodeAppendChild(parentNode, createReactiveContentNode(observable));
 Creates a virtual Node which:
 
 - subscribes to `conditionObservable`
-- and injects `templateReferenceTrue` if it received *true*,
+- and injects `templateReferenceTrue` if it received *true*
 - or injects `templateReferenceFalse` if it received *false*
 
-ℹ️ the previous injected template is removed.
+**ℹ️ INFO:** the previously injected template is removed.
 
 Attributes:
 
@@ -344,7 +383,7 @@ Attributes:
 - `true`: the name of the template to inject if `condition` emitted *true*
 - `false`: the name of the template to inject if `condition` emitted *false*
 
-ℹ️ you may omit one of the template.
+**ℹ️ INFO:** you may omit one of the template.
 
 It compiles to something similar to this:
 
@@ -415,7 +454,7 @@ Creates a virtual Node which:
 - subscribes to `observable`
 - and injects `templateReferenceA`, `templateReferenceB` or `templateReferenceC` according to the received value
 
-ℹ️ the previous injected template is removed.
+**ℹ️ INFO:** the previous injected template is removed.
 
 Attributes:
 
@@ -427,7 +466,7 @@ Attributes:
 - rx-switch-default
   - `template`: the template reference to inject
 
-ℹ️ you may omit `rx-switch-default`.
+**ℹ️ INFO:** you may omit `rx-switch-default`.
 
 It compiles to something similar to this:
 
@@ -530,7 +569,7 @@ Creates a virtual Node which:
 - subscribes to `itemsObservable`
 - and injects the template `templateReference` for each received values
 
-ℹ️ the virtual Node take care to optimize the DOM and the rendering process (re-use nodes if possible).
+**ℹ️ INFO:** the virtual Node take care to optimize the DOM and the rendering process (re-use nodes if possible).
 
 Attributes:
 
@@ -641,7 +680,8 @@ const isLoading$ = map$$($.state$, state => (state === 'loading'));
 
 The DOM is untouched.
 
-**NOTE:** when possible, always prefer to write your javascript code into your component's `typescript file` instead of using `rx-script` 
+**NOTE:** when possible, always prefer to write your javascript code into your component's `typescript file` instead of
+using `rx-script`
 
 ##### alternative syntax
 

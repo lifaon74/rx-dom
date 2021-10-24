@@ -17,7 +17,7 @@ export function createToStringFunctionForNativeFunction(
   nativeFunction?: IGenericFunction,
 ): IToStringFunction {
   return (nativeFunction === void 0)
-    ? () => `function ${ name }() { [native code] };`
+    ? () => `function ${name}() { [native code] };`
     : nativeFunction.toString.bind(nativeFunction)
     ;
 }

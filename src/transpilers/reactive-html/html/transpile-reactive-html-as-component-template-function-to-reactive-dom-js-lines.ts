@@ -1,11 +1,16 @@
 import {
-  transpileReactiveHTMLAsRXTemplateToReactiveDOMJSLines, DEFAULT_DATA_NAME, indentLines, IObjectProperties, IObjectPropertyEntry
-} from '../../index';
-import { DEFAULT_CONTENT_NAME } from '../../constants/default-content-name.constant';
-import { ILines } from '../../types/lines.type';
-import {
-  ICompiledComponentTemplateFunctionVariables, IComponentTemplateCompileOptions
+  ICompiledComponentTemplateFunctionVariables,
+  IComponentTemplateCompileOptions,
 } from '../../../component/component-template/component-template.type';
+import { DEFAULT_CONTENT_NAME } from '../../constants/default-content-name.constant';
+import {
+  DEFAULT_DATA_NAME,
+  indentLines,
+  IObjectProperties,
+  IObjectPropertyEntry,
+  transpileReactiveHTMLAsRXTemplateToReactiveDOMJSLines,
+} from '../../index';
+import { ILines } from '../../types/lines.type';
 
 type IKeyOfCompiledComponentTemplateFunctionVariables = keyof ICompiledComponentTemplateFunctionVariables<object>;
 
@@ -26,15 +31,15 @@ export function transpileReactiveHTMLAsComponentTemplateFunctionToReactiveDOMJSL
   const variablesToRemap: IObjectProperties = [];
 
   if (dataName !== DATA_KEY) {
-    variablesToRemap.push([dataName, `${ VARIABLES_NAME }.${ DATA_KEY }`]);
+    variablesToRemap.push([dataName, `${VARIABLES_NAME}.${DATA_KEY}`]);
   }
 
   if (contentName !== CONTENT_KEY) {
-    variablesToRemap.push([contentName, `${ VARIABLES_NAME }.${ CONTENT_KEY }`]);
+    variablesToRemap.push([contentName, `${VARIABLES_NAME}.${CONTENT_KEY}`]);
   }
 
   return [
-    `(${ VARIABLES_NAME }, ${ CONSTANTS_NAME }) => {`,
+    `(${VARIABLES_NAME}, ${CONSTANTS_NAME}) => {`,
     ...indentLines([
       `return (`,
       ...indentLines(transpileReactiveHTMLAsRXTemplateToReactiveDOMJSLines(
@@ -43,11 +48,11 @@ export function transpileReactiveHTMLAsComponentTemplateFunctionToReactiveDOMJSL
       )),
       `)({`,
       ...indentLines([
-        `...${ CONSTANTS_NAME },`,
-        `...${ VARIABLES_NAME },`,
+        `...${CONSTANTS_NAME},`,
+        `...${VARIABLES_NAME},`,
         ...variablesToRemap.map(([propertyName, propertyValue]: IObjectPropertyEntry) => {
-          return `${ propertyName }: ${ propertyValue },`;
-        })
+          return `${propertyName}: ${propertyValue},`;
+        }),
       ]),
       `});`,
     ]),

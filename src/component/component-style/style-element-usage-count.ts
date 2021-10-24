@@ -1,7 +1,5 @@
 const STYLE_ELEMENT_USAGE_COUNT = new WeakMap<HTMLStyleElement, Set<HTMLElement>>();
 
-
-
 export function linkStyleElementWithComponent(
   styleElement: HTMLStyleElement,
   component: HTMLElement,

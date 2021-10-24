@@ -10,17 +10,17 @@ export function transpileReactiveHTMLToReactiveDOMJSLines(
       `<!DOCTYPE html><html><body>${html}</body></html>`,
       'text/html',
     );
-    // .parseFromString(
-    //   // html,
-    //   `
-    //     <!DOCTYPE html>
-    //     <html>
-    //       <head></head>
-    //       <body>${html}</body>
-    //     </html>
-    //     `,
-    //   'text/html',
-    //   // 'application/xhtml+xml'
-    // );
+  // .parseFromString(
+  //   // html,
+  //   `
+  //     <!DOCTYPE html>
+  //     <html>
+  //       <head></head>
+  //       <body>${html}</body>
+  //     </html>
+  //     `,
+  //   'text/html',
+  //   // 'application/xhtml+xml'
+  // );
   return transpileReactiveHTMLNodesToReactiveDOMJSLines(getChildNodes(document.body));
 }

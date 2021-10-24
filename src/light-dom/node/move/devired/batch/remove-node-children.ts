@@ -1,5 +1,5 @@
-import { nodeRemove } from '../dom-like';
 import { getFirstChild } from '../../../properties';
+import { nodeRemove } from '../dom-like';
 
 export function removeNodeChildren(
   parentNode: Node,

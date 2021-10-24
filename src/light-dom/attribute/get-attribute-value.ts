@@ -1,8 +1,8 @@
-import { IAttributeValue } from './set-attribute-value';
+import { IAttributeValueOrNull } from './attribute-value.type';
 
 export function getAttributeValue(
   element: Element,
   name: string,
-): IAttributeValue {
+): IAttributeValueOrNull {
   return element.getAttribute(name);
 }

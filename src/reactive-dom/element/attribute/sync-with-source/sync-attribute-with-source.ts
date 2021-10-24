@@ -1,8 +1,5 @@
 import { IGenericFunction, ISource } from '@lifaon/rx-js-light';
-import {
-  getAttributeValue, IAttributeValue, onAttributeChangeListener, setAttributeValueWithEvent
-} from '../../../../light-dom';
-
+import { getAttributeValue, IAttributeValueOrNull, onAttributeChangeListener, setAttributeValueWithEvent } from '../../../../light-dom';
 
 export interface ISyncAttributeWithSourceOptions {
   // syncImmediately?: 'no' | 'exclude-null' | 'include-null'; // (default: 'exclude-null')
@@ -10,7 +7,7 @@ export interface ISyncAttributeWithSourceOptions {
 }
 
 export function syncAttributeWithSource(
-  source: ISource<IAttributeValue>,
+  source: ISource<IAttributeValueOrNull>,
   element: Element,
   name: string,
   {
@@ -29,18 +26,17 @@ export function syncAttributeWithSource(
     }
   };
 
-  source.subscribe((value: IAttributeValue) => {
+  source.subscribe((value: IAttributeValueOrNull) => {
     dispatch(() => {
       setAttributeValueWithEvent(element, name, value);
     });
   });
 
-  onAttributeChangeListener(element, name)((value: IAttributeValue) => {
+  onAttributeChangeListener(element, name)((value: IAttributeValueOrNull) => {
     dispatch(() => {
       source.emit(value);
     });
   });
-
 
   if (syncImmediately) {
     dispatch(() => {

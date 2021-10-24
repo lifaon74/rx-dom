@@ -19,7 +19,7 @@ export function querySelectorOrThrow<GElement extends Element>(
 ): GElement | never {
   const element: GElement | null = querySelector<GElement>(parentNode, selector);
   if (element === null) {
-    throw new Error(`querySelector failed to retrieve: '${ selector }'`);
+    throw new Error(`querySelector failed to retrieve: '${selector}'`);
   } else {
     return element;
   }

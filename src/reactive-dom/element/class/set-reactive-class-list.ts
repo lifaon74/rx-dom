@@ -1,7 +1,9 @@
-import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
-import { IClassNamesList } from './functions/extract-class-names';
-import { differClassNames } from './functions/differ-class-names';
 import { ISubscribeFunction } from '@lifaon/rx-js-light';
+import { addCSSClass } from '../../../light-dom/class/add-css-class';
+import { removeCSSClass } from '../../../light-dom/class/remove-css-class';
+import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
+import { differClassNames } from './functions/differ-class-names';
+import { IClassNamesList } from './functions/extract-class-names';
 
 export type IReactiveClassListValue = IClassNamesList;
 
@@ -17,11 +19,11 @@ export function setReactiveClassList(
     const iterator: IterableIterator<string> = previousClassNames.values();
     let result: IteratorResult<string>;
     while (!(result = iterator.next()).done) {
-      element.classList.remove(result.value);
+      removeCSSClass(element, result.value);
     }
 
     for (let i = 0, l = nextClassNames.length; i < l; i++) {
-      element.classList.add(nextClassNames[i]);
+      addCSSClass(element, nextClassNames[i]);
     }
 
     previousClassNames = new Set<string>(classNames);

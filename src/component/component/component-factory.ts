@@ -2,7 +2,7 @@ import { freeze } from '@lifaon/rx-js-light';
 import { attachNodeChildrenToNewDocumentFragment } from '../../light-dom/node/move/devired/batch/attach-node-children-to-new-document-fragment';
 import { attachShadow } from '../../light-dom/node/shadow/attach-shadow';
 import { onNodeConnectedToCached } from '../../light-dom/node/state/on-node-connected-to/on-node-connected-to';
-import { HTMLElementConstructor } from '../../light-dom/types';
+import { HTMLElementConstructor } from '../../light-dom/types/html-element-constructor.type';
 import { TOP_PARENT_NODE } from '../../misc/top-parent-node.constant';
 import { IComponentStyle, IComponentStyleAsync } from '../component-style/component-style.type';
 import { injectComponentStyles, injectComponentStylesUsingShadowDOM } from '../component-style/misc/inject-component-style';

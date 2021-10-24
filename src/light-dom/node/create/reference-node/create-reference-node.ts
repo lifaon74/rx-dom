@@ -1,5 +1,5 @@
-import { createTextNode } from '../create-text-node';
 import { createCommentNode } from '../create-comment-node';
+import { createTextNode } from '../create-text-node';
 
 export type IReferenceNode = Comment | Text;
 

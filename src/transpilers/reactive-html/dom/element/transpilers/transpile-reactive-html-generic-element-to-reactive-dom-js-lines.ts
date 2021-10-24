@@ -1,4 +1,4 @@
-import { getAttributeValue, IAttributeValue, ICreateElementOptions } from '../../../../../light-dom';
+import { getAttributeValue, IAttributeValueOrNull, ICreateElementOptions } from '../../../../../light-dom';
 import { getChildNodes } from '../../../../../light-dom/node/properties/get-child-nodes';
 import { getTagName } from '../../../../../light-dom/node/properties/get-tag-name';
 import { scopeLines } from '../../../../helpers/lines-formating-helpers';
@@ -11,7 +11,7 @@ export function transpileReactiveHTMLGenericElementToReactiveDOMJSLines(
   node: Element,
 ): ILinesOrNull {
   const name: string = getTagName(node);
-  const isAttribute: IAttributeValue = getAttributeValue(node, 'is');
+  const isAttribute: IAttributeValueOrNull = getAttributeValue(node, 'is');
 
   const elementOptions: ICreateElementOptions | null = (isAttribute === null)
     ? null

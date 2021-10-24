@@ -1,4 +1,6 @@
-import { IStylePropertyAndValueTuple, IStylesMap } from './extract-styles';
+import { IStylePropertyObjectWithOptionalPriorityOrNull } from '../../../../light-dom/style/style-property.type';
+import { IStylePropertyAndValueTuple } from './extract-styles';
+import { IStylesMap } from './styles-map.type';
 
 /**
  * Removes from 'previousStyles' values in 'styles' (keep only styles to remove)
@@ -10,20 +12,30 @@ export function differStyleMap(
   previousStyles: IStylesMap,
   styles: IStylesMap,
 ): IStylePropertyAndValueTuple[] {
-  const nextStyles: [string, string][] = [];
-  const iterator: IterableIterator<[string, string]> = styles.entries();
-  let result: IteratorResult<[string, string]>;
+  const nextStyles: [string, IStylePropertyObjectWithOptionalPriorityOrNull][] = [];
+  const iterator: IterableIterator<[string, IStylePropertyObjectWithOptionalPriorityOrNull]> = styles.entries();
+  let result: IteratorResult<[string, IStylePropertyObjectWithOptionalPriorityOrNull]>;
   while (!(result = iterator.next()).done) {
-    const [key, value] = result.value;
+    const [key, styleProperty] = result.value;
     if (previousStyles.has(key)) {
-      if (previousStyles.get(key) !== value) {
-        nextStyles.push([key, value]);
+      if (generateStylePropertyKey(previousStyles.get(key) as IStylePropertyObjectWithOptionalPriorityOrNull) !== generateStylePropertyKey(styleProperty)) {
+        nextStyles.push([key, styleProperty]);
       }
       previousStyles.delete(key);
     } else {
-      nextStyles.push([key, value]);
+      nextStyles.push([key, styleProperty]);
     }
   }
 
   return nextStyles;
+}
+
+type IStylePropertyKey = string | null;
+
+function generateStylePropertyKey(
+  property: IStylePropertyObjectWithOptionalPriorityOrNull,
+): IStylePropertyKey {
+  return (property === null)
+    ? null
+    : `${JSON.stringify(property.value)}-${JSON.stringify(property.priority ?? '')}`;
 }

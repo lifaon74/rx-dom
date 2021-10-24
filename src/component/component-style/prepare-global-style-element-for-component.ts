@@ -1,11 +1,7 @@
+import { cloneNode } from '../../light-dom';
+import { getAttributeValue } from '../../light-dom/attribute/get-attribute-value';
 import { setAttributeValue } from '../../light-dom/attribute/set-attribute-value';
 import { compileGlobalStyleElementForComponent } from './compile/global/compile-global-style-element-for-component';
-import { reflectCSSStyleSheetOnOwnStyleElement } from './helpers/reflect-css-style-sheet-on-own-style-element';
-import { getAttributeValue } from '../../light-dom/attribute/get-attribute-value';
-import { activateStyleElement, getCSSStyleSheetOfStyleElement } from './helpers';
-import { generateComponentStyleUUID } from './generate-component-style-uuid';
-import { cloneNode } from '../../light-dom';
-import { appendStyleElementToHead } from './helpers/append-style-element-to-head';
 
 export const HOST_ATTRIBUTE_NAME = 'host';
 
@@ -22,8 +18,6 @@ export function getGlobalStyleElementForComponent(
   }
   return globalHTMLStyleElement;
 }
-
-
 
 export function applyGlobalStyleElementForComponent(
   styleElement: HTMLStyleElement,

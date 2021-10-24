@@ -1,6 +1,5 @@
-import { createDocumentFragment } from '../create-document-fragment';
 import { attachNode } from '../../move';
-
+import { createDocumentFragment } from '../create-document-fragment';
 
 export function createDocumentFragmentFilledWithNodes(
   nodes: ArrayLike<Node>,

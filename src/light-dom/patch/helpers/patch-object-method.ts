@@ -1,4 +1,5 @@
 import { IGenericFunction } from '@lifaon/rx-js-light';
+import { objectDefineProperty } from '../../../misc/object-define-property';
 import { endPatching, isPatching, startPatching } from './is-patching';
 
 type IMethodNameConstraintRaw<GObject extends object> = {
@@ -21,7 +22,7 @@ export function patchObjectMethod<// generics
 ): void {
   const native: GObject[GMethodName] = obj[methodName];
 
-  const patched = function (this: unknown, ...args: unknown[]): unknown {
+  const patched = function(this: unknown, ...args: unknown[]): unknown {
     if (isPatching()) {
       return (native as IGenericFunction).apply(this, args);
     } else {
@@ -32,7 +33,7 @@ export function patchObjectMethod<// generics
     }
   };
 
-  Object.defineProperty(patched, 'name', {
+  objectDefineProperty(patched, 'name', {
     ...Object.getOwnPropertyDescriptor(patched, 'name'),
     value: methodName,
   });

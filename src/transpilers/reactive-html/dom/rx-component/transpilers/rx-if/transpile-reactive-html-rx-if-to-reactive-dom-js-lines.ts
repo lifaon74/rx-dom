@@ -1,6 +1,6 @@
 import { getAttributeValue } from '../../../../../../light-dom/attribute/get-attribute-value';
 import { hasAttribute } from '../../../../../../light-dom/attribute/has-attribute';
-import { setAttributeValue } from '../../../../../../light-dom/attribute/set-attribute-value';
+import { removeAttribute } from '../../../../../../light-dom/attribute/remove-attribute';
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-nodes';
 import { generateGetOptionalTemplateReferenceCode } from '../../../../../helpers/generate-get-template-reference-code';
@@ -94,7 +94,7 @@ export function transpileReactiveHTMLRXIfToReactiveDOMJSLines(
     );
   } else if (hasAttribute(node, COMMAND_NAME)) {
     const condition: string = getAttributeValue(node, COMMAND_NAME) as string;
-    setAttributeValue(node, COMMAND_NAME, null);
+    removeAttribute(node, COMMAND_NAME);
 
     return scopeLines([
       ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(node, LOCAL_TEMPLATE_NAME),

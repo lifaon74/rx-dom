@@ -1,12 +1,10 @@
 import { createStyleElement } from '../helpers/create-style-element';
 
-
 export function compileReactiveCSSAsComponentStyle(
   css: string,
 ): HTMLStyleElement {
   return createStyleElement(css);
 }
-
 
 // export function compileReactiveCSSAsComponentStyle(
 //   css: string,

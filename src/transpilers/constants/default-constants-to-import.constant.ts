@@ -2,6 +2,7 @@ import { setAttributeValueWithEvent } from '../../light-dom/attribute/with-event
 import { createDocumentFragment } from '../../light-dom/node/create/create-document-fragment';
 import { createTextNode } from '../../light-dom/node/create/create-text-node';
 import { createElement } from '../../light-dom/node/create/element-node/create-element';
+import { getNodeModifier } from '../../light-dom/node/modify/node/get-node-modifier';
 import { nodeAppendChild } from '../../light-dom/node/move/devired/dom-like/node/node-append-child';
 import { attachTemplate } from '../../light-dom/template/attach-template';
 import { toSubscribeFunctionThrowIfUndefined } from '../../misc/to-subscribe-function';
@@ -26,6 +27,7 @@ export const DEFAULT_CONSTANTS_TO_IMPORT = {
   // toSubscribeFunction,
   // toSubscribeFunction: toSubscribeFunctionStrict,
   toSubscribeFunction: toSubscribeFunctionThrowIfUndefined,
+  getNodeModifier,
 
   // dom manipulation
   nodeAppendChild,

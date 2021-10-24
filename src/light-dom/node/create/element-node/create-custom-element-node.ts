@@ -1,5 +1,5 @@
-import { createElementNode, ICreateElementNodeOptions } from './create-element-node';
 import { getCustomElementConstructorFromTagName } from '../../../custom-element';
+import { createElementNode, ICreateElementNodeOptions } from './create-element-node';
 
 export interface ICustomElementCreationWithIsOptions extends Omit<ElementCreationOptions, 'is'>, Required<Pick<ElementCreationOptions, 'is'>> {
 }
@@ -22,14 +22,13 @@ export function createCustomElementNodeWithoutIs<GElement extends Element>(
   return createCustomElementNode<GElement>(tagName, tagName, options);
 }
 
-
 function createCustomElementNode<GElement extends Element>(
   tagName: string,
   is: string,
   options?: ICreateElementNodeOptions,
 ): GElement {
   if (getCustomElementConstructorFromTagName(is) === void 0) {
-    throw new Error(`Missing custom element: '${ is }'`);
+    throw new Error(`Missing custom element: '${is}'`);
   } else {
     return createElementNode(tagName, options);
   }

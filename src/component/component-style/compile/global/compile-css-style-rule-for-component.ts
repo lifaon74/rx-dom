@@ -1,4 +1,3 @@
-
 const HOST_SELECTOR = ':host';
 const HOST_CONTEXT_SELECTOR = ':host-context';
 
@@ -36,7 +35,7 @@ export function compileCSSStyleRuleForComponent(
         position = selector.length;
       } else {
         const selectorBefore: string = selector.slice(position, index);
-        const selectorHost: string = `[${ componentId }]`;
+        const selectorHost: string = `[${componentId}]`;
         let selectorHostSelf: string;
 
         position = index + HOST_SELECTOR.length;
@@ -49,24 +48,24 @@ export function compileCSSStyleRuleForComponent(
           selectorHostSelf = '';
         }
 
-        newSelector += `${ selectorBefore }${ selectorHost }${ selectorHostSelf }`;
+        newSelector += `${selectorBefore}${selectorHost}${selectorHostSelf}`;
       }
     } else {
       const selectorBefore: string = selector.slice(position, index);
-      const selectorHost: string = `[${ componentId }]`;
+      const selectorHost: string = `[${componentId}]`;
       let selectorHostContext: string;
 
       position = index + HOST_CONTEXT_SELECTOR.length;
 
       if (selector.startsWith('(', position)) {
         const i: number = extractParenthesisContent(selector, position);
-        selectorHostContext = `${ selector.slice(position + 1, i - 1) } `;
+        selectorHostContext = `${selector.slice(position + 1, i - 1)} `;
         position = i;
       } else {
         selectorHostContext = '';
       }
 
-      newSelector += `${ selectorBefore }${ selectorHostContext }${ selectorHost }`;
+      newSelector += `${selectorBefore}${selectorHostContext}${selectorHost}`;
     }
   }
 

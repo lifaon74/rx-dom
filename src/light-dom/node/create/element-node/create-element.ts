@@ -1,12 +1,13 @@
-import { createElementNode, ICreateElementNodeOptions } from './create-element-node';
-import { isSVGElementTagName } from '../../../tags/is/is-svg-element-tag-name';
-import { createElementNodeNS } from './create-element-node-ns';
 import { isCustomElementTagName } from '../../../tags/is/is-custom-element-tag-name';
 import { isHTMLElementTagName } from '../../../tags/is/is-html-element-tag-name';
+import { isSVGElementTagName } from '../../../tags/is/is-svg-element-tag-name';
 import {
-  createCustomElementNodeWithIs, createCustomElementNodeWithoutIs,
-  ICreateCustomElementNodeWithIsOptions
+  createCustomElementNodeWithIs,
+  createCustomElementNodeWithoutIs,
+  ICreateCustomElementNodeWithIsOptions,
 } from './create-custom-element-node';
+import { createElementNode, ICreateElementNodeOptions } from './create-element-node';
+import { createElementNodeNS } from './create-element-node-ns';
 
 export interface ICreateElementOptions extends ICreateElementNodeOptions {
 }
@@ -46,6 +47,5 @@ export function createElement(
     return createElementNode(tagName, options);
   }
 }
-
 
 export type ICreateElementFunction = typeof createElement;

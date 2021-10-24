@@ -1,4 +1,3 @@
-
 export function getTagName(
   node: Element,
 ): string {

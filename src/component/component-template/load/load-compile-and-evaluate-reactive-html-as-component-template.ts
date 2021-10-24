@@ -1,5 +1,5 @@
-import { compileReactiveHTMLAsComponentTemplate } from '../compile/compile-reactive-html-as-component-template';
 import { createNetworkErrorFromResponse } from '@lifaon/rx-js-light';
+import { compileReactiveHTMLAsComponentTemplate } from '../compile/compile-reactive-html-as-component-template';
 import { IComponentTemplate, IComponentTemplateCompileOptions } from '../component-template.type';
 
 /**

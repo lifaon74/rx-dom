@@ -1,14 +1,16 @@
-export type IAttributeValue = string | null;
+import { IAttributeValueOrNull } from './attribute-value.type';
+import { removeAttribute } from './remove-attribute';
+import { setAttribute } from './set-attribute';
 
 export function setAttributeValue(
   element: Element,
   name: string,
-  value: IAttributeValue,
+  value: IAttributeValueOrNull,
 ): void {
   if (value === null) {
-    element.removeAttribute(name);
+    removeAttribute(element, name);
   } else {
-    element.setAttribute(name, value);
+    setAttribute(element, name, value);
   }
 }
 

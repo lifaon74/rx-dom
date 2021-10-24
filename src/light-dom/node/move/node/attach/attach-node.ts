@@ -1,7 +1,6 @@
-import { isDocumentFragment } from '../../../type';
+import { isDocumentFragment } from '../../../type/is-document-fragment';
 import { attachDocumentFragment } from './derived/fragment/attach-document-fragment';
 import { attachStandardNode } from './derived/standard/attach-standard-node';
-
 
 // INFO attaching a shadowRoot to an element is the exact same thing as attaching a documentFragment to this element
 //  (put shadowRoot content into this element)

@@ -1,4 +1,3 @@
-
 export function cloneNode<GNode extends Node>(
   node: GNode,
   deep?: boolean,

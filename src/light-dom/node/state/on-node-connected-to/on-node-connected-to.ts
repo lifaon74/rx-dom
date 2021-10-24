@@ -1,14 +1,19 @@
-import { getParentNode } from '../../properties/get-parent-node';
 import {
-  IEmitFunction, ISubscribeFunction, IUnsubscribeFunction, noop, pipeSubscribeFunction, shareSubscribePipe
+  IEmitFunction,
+  ISubscribeFunction,
+  IUnsubscribeFunction,
+  noop,
+  pipeSubscribeFunction,
+  shareSubscribePipe,
 } from '@lifaon/rx-js-light';
-import { getDocument } from '../../explore';
-import { onNodeParentChangeListener } from '../../move';
-import { getShadowRootHost } from '../../properties/get-shadow-root-host';
-import { documentFragmentIsAShadowRoot } from '../../shadow';
-import { isDocumentFragment } from '../../type';
-import { nodeContainsTraversingShadowDOM } from '../../explore/node-contains-traversing-shadow-dom';
+import { getDocument } from '../../explore/get-document';
 import { nodeContains } from '../../explore/node-contains';
+import { nodeContainsTraversingShadowDOM } from '../../explore/node-contains-traversing-shadow-dom';
+import { onNodeParentChangeListener } from '../../move/node/on-node-parent-change-listener';
+import { getParentNode } from '../../properties/get-parent-node';
+import { getShadowRootHost } from '../../properties/get-shadow-root-host';
+import { documentFragmentIsAShadowRoot } from '../../shadow/document-fragment-is-a-shadow-root';
+import { isDocumentFragment } from '../../type/is-document-fragment';
 
 export interface IOnNodeConnectedToOptions {
   traverseShadowDOM?: boolean;
@@ -51,7 +56,7 @@ export function onNodeConnectedTo(
                 (_unsubscribeFunctions.pop() as IUnsubscribeFunction)();
               }
               update(referenceNode);
-            })
+            }),
         );
 
         const _parentNode: Node | null = (traverseShadowDOM && _isDocumentFragment && documentFragmentIsAShadowRoot(_node as DocumentFragment))
@@ -89,7 +94,6 @@ export function onNodeConnectedTo(
   };
 }
 
-
 export function onNodeConnectedToWithImmediate(
   node: Node,
   parentNode: Node = getDocument(),
@@ -101,7 +105,6 @@ export function onNodeConnectedToWithImmediate(
     return listener(emit);
   };
 }
-
 
 /*---*/
 
@@ -136,7 +139,6 @@ export function onNodeConnectedToCached(
   return subscribe;
 }
 
-
 export function onNodeConnectedToWithImmediateCached(
   node: Node,
   parentNode: Node = getDocument(),
@@ -151,7 +153,7 @@ export function onNodeConnectedToWithImmediateCached(
     emit(
       traverseShadowDOM
         ? nodeContainsTraversingShadowDOM(parentNode, node)
-        : nodeContains(parentNode, node)
+        : nodeContains(parentNode, node),
     );
     return listener(emit);
   };

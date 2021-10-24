@@ -1,7 +1,7 @@
 import { INodeOrString, nodeOrStringAsNode } from '../../../../create/derived/node-or-string-as-node';
+import { getParentNode, IParentNode } from '../../../../properties/get-parent-node';
 import { nodeInsertBefore } from '../node/node-insert-before';
 import { nodeRemove } from './node-remove';
-import { getParentNode, IParentNode } from '../../../../properties/get-parent-node';
 
 /**
  * Equivalent of:
@@ -17,7 +17,7 @@ export function nodeReplaceWith(
       nodeInsertBefore(
         parentNode,
         nodeOrStringAsNode(nodes[i]),
-        node
+        node,
       );
     }
     nodeRemove(node);

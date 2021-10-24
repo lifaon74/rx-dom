@@ -1,4 +1,3 @@
-
 export function getShadowRoot(
   node: Element,
 ): ShadowRoot | null {

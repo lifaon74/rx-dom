@@ -1,6 +1,5 @@
-import { isAttachDocumentFragmentUseful } from './is-attach-document-fragment-useful';
 import { attachDocumentFragmentUnsafe } from './attach-document-fragment-unsafe';
-
+import { isAttachDocumentFragmentUseful } from './is-attach-document-fragment-useful';
 
 export function attachDocumentFragment(
   fragment: DocumentFragment,

@@ -1,7 +1,7 @@
 import { INodeOrString, nodeOrStringAsNode } from '../../../../create/derived/node-or-string-as-node';
-import { nodeInsertBefore } from '../node/node-insert-before';
-import { getParentNode, IParentNode } from '../../../../properties/get-parent-node';
 import { getNextSibling } from '../../../../properties/get-next-sibling';
+import { getParentNode, IParentNode } from '../../../../properties/get-parent-node';
+import { nodeInsertBefore } from '../node/node-insert-before';
 
 /**
  * Equivalent of:

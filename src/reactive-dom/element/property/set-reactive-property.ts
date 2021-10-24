@@ -1,6 +1,6 @@
+import { ISubscribeFunction } from '@lifaon/rx-js-light';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { searchCaseInsensitiveProperty } from './search-case-insensitive-property';
-import { ISubscribeFunction } from '@lifaon/rx-js-light';
 
 export function setReactiveProperty<GPropertyValue>(
   subscribe: ISubscribeFunction<GPropertyValue>,
@@ -20,7 +20,7 @@ export function setCaseInsensitiveReactiveProperty(
   const _name: string | null = searchCaseInsensitiveProperty(name, node);
   if (_name === null) {
     console.warn(node);
-    throw new Error(`Missing property '${ name }'`);
+    throw new Error(`Missing property '${name}'`);
   }
   return setReactiveProperty(
     subscribe,

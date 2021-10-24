@@ -12,7 +12,7 @@ export type IHavingSubscribeFunctionPropertiesFromPropertyTuple<GProperty extend
 // }[Extract<keyof GProperties, number>];
 
 type TupleTypes<T> = { [P in keyof T]: T[P] } extends { [key: number]: infer V } ? V : never;
-type UnionToIntersection<U> = (U extends any ? (k: U)=>void : never) extends ((k: infer I)=>void) ? I : never;
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
 
 export type IHavingMultipleSubscribeFunctionProperties<GProperties extends readonly IGenericSubscribeFunctionProperty[]> = UnionToIntersection<TupleTypes<{
   [GKey in keyof GProperties]: GProperties[GKey] extends IGenericSubscribeFunctionProperty

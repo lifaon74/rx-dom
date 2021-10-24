@@ -1,6 +1,8 @@
-import { getFirstChild, getLastChild, getNextSibling } from '../../../../../properties';
-import { attachNodeRaw } from '../../attach-node-raw';
+import { getFirstChild } from '../../../../../properties/get-first-child';
+import { getLastChild } from '../../../../../properties/get-last-child';
+import { getNextSibling } from '../../../../../properties/get-next-sibling';
 import { dispatchNodePositionChange } from '../../../on-node-position-change-listener';
+import { attachNodeRaw } from '../../attach-node-raw';
 
 export function attachDocumentFragmentUnsafe(
   fragment: DocumentFragment,

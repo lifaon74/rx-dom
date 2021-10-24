@@ -1,10 +1,18 @@
 import {
-  ISource, ISubscribeFunction, mergeAllSingleSubscribePipe, noop, pipeSubscribeFunction, single, readSubscribeFunctionValue, IEmitFunction,
+  IEmitFunction,
+  ISource,
+  ISubscribeFunction,
+  mergeAllSingleSubscribePipe,
+  noop,
+  pipeSubscribeFunction,
+  readSubscribeFunctionValue,
+  single,
 } from '@lifaon/rx-js-light';
+import { objectDefineProperty } from '../../../misc/object-define-property';
 
 export type IHavingSubscribeFunctionProperties<GName extends string, GValue> =
-  Record<`${ GName }$`, ISubscribeFunction<GValue>>
-  & Readonly<Record<`$${ GName }`, IEmitFunction<GValue>>>
+  Record<`${GName}$`, ISubscribeFunction<GValue>>
+  & Readonly<Record<`$${GName}`, IEmitFunction<GValue>>>
   & Record<GName, GValue>;
 
 export type IObjectWithSubscribeFunctionProperties<GTarget extends object, GName extends string, GValue> =
@@ -20,7 +28,7 @@ interface IPropertySetFunction<GValue> {
 function createPropertySetFunction<GValue>(
   setFunction: IPropertySetFunction<GValue>,
   setMode: IPropertySetMode,
-): IPropertySetFunction<GValue>  {
+): IPropertySetFunction<GValue> {
   switch (setMode) {
     case 'enable':
       return setFunction;
@@ -34,6 +42,11 @@ function createPropertySetFunction<GValue>(
       throw new Error(`Invalid mode`);
   }
 }
+
+const DEFAULT_OPTIONS = {
+  configurable: true,
+  enumerable: true,
+};
 
 export function setComponentSubscribeFunctionProperties<GTarget extends object, GName extends string, GValue>(
   target: GTarget,
@@ -56,9 +69,8 @@ export function setComponentSubscribeFunctionProperties<GTarget extends object, 
   //   cachedValue = value;
   // });
 
-  Object.defineProperty(target, `${ propertyName }$`, {
-    configurable: true,
-    enumerable: true,
+  objectDefineProperty(target, `${propertyName}$`, {
+    ...DEFAULT_OPTIONS,
     get: (): ISubscribeFunction<GValue> => {
       return source$;
     },
@@ -67,9 +79,8 @@ export function setComponentSubscribeFunctionProperties<GTarget extends object, 
     }, setMode),
   });
 
-  Object.defineProperty(target, `$${ propertyName }`, {
-    configurable: true,
-    enumerable: true,
+  objectDefineProperty(target, `$${propertyName}`, {
+    ...DEFAULT_OPTIONS,
     get: (): IEmitFunction<GValue> => {
       return $source;
     },
@@ -78,9 +89,8 @@ export function setComponentSubscribeFunctionProperties<GTarget extends object, 
     },
   });
 
-  Object.defineProperty(target, propertyName, {
-    configurable: true,
-    enumerable: true,
+  objectDefineProperty(target, propertyName, {
+    ...DEFAULT_OPTIONS,
     get: (): GValue => {
       return readSubscribeFunctionValue(source$, (): GValue => {
         console.warn(`The source did not send immediately a value`);

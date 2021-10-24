@@ -6,7 +6,7 @@ export interface ILoadReactiveHTMLAsGenericComponentTemplateOptions extends Omit
   url: string | URL;
 }
 
-export function loadReactiveHTMLAsComponentTemplate<GData extends object>(
+export function loadReactiveHTMLAsGenericComponentTemplate<GData extends object>(
   {
     url,
     ...options

@@ -1,5 +1,5 @@
-import { isValidCSSIdentifier } from '../../../../misc/tokenizers/css';
 import { INullish, isNullish, ISubscribePipeFunction, mapSubscribePipe } from '@lifaon/rx-js-light';
+import { isValidCSSIdentifier } from '../../../../misc/tokenizers/css';
 
 /** TYPES **/
 
@@ -19,7 +19,6 @@ export type IClassNamesLike =
   | IClassNamesAsIterable
   | IClassNamesAsObject;
 
-
 /** FUNCTIONS **/
 
 /**
@@ -38,10 +37,10 @@ export function extractClassNamesFromIterator(
         classNames.add(className);
         i++;
       } else {
-        throw new SyntaxError(`Invalid class name: '${ className }'.`);
+        throw new SyntaxError(`Invalid class name: '${className}'.`);
       }
     } else {
-      throw new TypeError(`Expected string in iterator at index ${ i }, found: '${ className }'.`);
+      throw new TypeError(`Expected string in iterator at index ${i}, found: '${className}'.`);
     }
   }
   return classNames;
@@ -53,7 +52,6 @@ export function extractClassNamesFromIterable(
 ): IClassNamesList {
   return extractClassNamesFromIterator(iterable[Symbol.iterator](), classNames);
 }
-
 
 /**
  * Expects object having well formed class names as keys, or throws.
@@ -68,7 +66,7 @@ export function extractClassNamesFromObject(
       if (typeof key === 'string') {
         extractClassNamesFromString(key, classNames);
       } else {
-        throw new TypeError(`Expected string as key, found: '${ key }'.`);
+        throw new TypeError(`Expected string as key, found: '${key}'.`);
       }
     }
   }
@@ -87,10 +85,9 @@ export function extractClassNamesFromString(
     input.split(' ')
       .map(_ => _.trim())
       .filter(_ => (_.length > 0)),
-    classNames
+    classNames,
   );
 }
-
 
 /**
  * Extracts a list of class names from an input.
@@ -113,7 +110,6 @@ export function extractClassNamesFromClassNamesLike(
     throw new TypeError(`Invalid input type.`);
   }
 }
-
 
 /**
  * Creates a SubscribePipe which converts IClassNamesLike into IClassNamesList

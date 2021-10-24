@@ -1,9 +1,9 @@
 import { createListenerBuilderFunctions, createListenerMap, freeze, ISubscribeFunction } from '@lifaon/rx-js-light';
+import { IAttributeValueOrNull } from '../attribute-value.type';
 import { getAttributeValue } from '../get-attribute-value';
-import { IAttributeValue, setAttributeValue } from '../set-attribute-value';
+import { setAttributeValue } from '../set-attribute-value';
 
 const ATTRIBUTE_REFERENCE_STORE = new WeakMap<Element, Map<string, IAttributeReference>>();
-
 
 export interface IAttributeReference {
   readonly element: Element;
@@ -36,37 +36,34 @@ export function generateAttributeReference(
 
 /*---*/
 
-
-const ON_ATTRIBUTE_CHANGE_LISTENERS = createListenerMap<IAttributeReference, IAttributeValue>();
+const ON_ATTRIBUTE_CHANGE_LISTENERS = createListenerMap<IAttributeReference, IAttributeValueOrNull>();
 
 export const {
   listener: onAttributeReferenceChangeListener,
   dispatch: dispatchAttributeReferenceChange,
 } = createListenerBuilderFunctions(ON_ATTRIBUTE_CHANGE_LISTENERS);
 
-
 /*---*/
 
 export function onAttributeChangeListener(
   element: Element,
   name: string,
-): ISubscribeFunction<IAttributeValue> {
+): ISubscribeFunction<IAttributeValueOrNull> {
   return onAttributeReferenceChangeListener(generateAttributeReference(element, name));
 }
 
 export function dispatchAttributeChange(
   element: Element,
   name: string,
-  value: IAttributeValue,
+  value: IAttributeValueOrNull,
 ): void {
   return dispatchAttributeReferenceChange(generateAttributeReference(element, name), value);
 }
 
-
 export function setAttributeValueWithEvent(
   element: Element,
   name: string,
-  value: IAttributeValue,
+  value: IAttributeValueOrNull,
 ): void {
   if (getAttributeValue(element, name) !== value) {
     setAttributeValue(element, name, value);

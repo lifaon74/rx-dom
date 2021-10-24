@@ -1,3 +1,3 @@
-import { IAttributeValue } from '../../../light-dom';
+import { IAttributeValueOrNull } from '../../../light-dom';
 
-export type IReactiveAttributeValue = IAttributeValue;
+export type IReactiveAttributeValue = IAttributeValueOrNull;

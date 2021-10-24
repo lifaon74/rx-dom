@@ -1,4 +1,3 @@
-
 export interface IIncrementalUUID {
   (): string;
 }
@@ -8,6 +7,6 @@ export function createIncrementalUUID(
 ): IIncrementalUUID {
   let count: number = 0;
   return (): string => {
-    return `${ prefix }-${ (count++).toString(16) }`;
+    return `${prefix}-${(count++).toString(16)}`;
   };
 }

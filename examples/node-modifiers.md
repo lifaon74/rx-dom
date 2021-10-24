@@ -21,27 +21,19 @@ const tooltipModifier = createElementModifier('tooltip', (element: HTMLElement, 
 });
 ```
 
-Then, we must inject our modifiers into the constants of our component:
-
-```ts
-const CONSTANTS_TO_IMPORT = {
-  ...DEFAULT_CONSTANTS_TO_IMPORT,
-  getNodeModifier: generateGetNodeModifierFunctionFromArray([
-    tooltipModifier,
-  ]),
-};
-```
-
-The last step, is to use the modifier into some `reactive-html`:
+Then we may use it into some `reactive-html`:
 
 ```html
-compileAndEvaluateReactiveHTMLAsComponentTemplate<any>(`
-  <div $tooltip="['hello world !']">
-    some content
-  </div>
+compileReactiveHTMLAsGenericComponentTemplate({
+  html: `
+    <div $tooltip="['hello world !']">
+      some content
+    </div>
   `,
-  CONSTANTS_TO_IMPORT,
-)
+  modifiers: [
+    tooltipModifier,
+  ],
+})
 ```
 
 It compiles to something similar to this:
@@ -60,8 +52,6 @@ const newNode = ((element: HTMLElement, value: string): HTMLElement => {
 })(node, 'hello world !');
 ```
 
-
-
 ---
 
 ## Example:
@@ -75,22 +65,18 @@ const tooltipModifier = createElementModifier('tooltip', (element: HTMLElement, 
 
 /*---*/
 
-const CONSTANTS_TO_IMPORT = {
-  ...DEFAULT_CONSTANTS_TO_IMPORT,
-  getNodeModifier: generateGetNodeModifierFunctionFromArray([
-    tooltipModifier,
-  ]),
-};
-
 @Component({
   name: 'app-main',
-  template: compileAndEvaluateReactiveHTMLAsComponentTemplate<any>(`
+  template: compileReactiveHTMLAsGenericComponentTemplate({
+    html: `
       <div $tooltip="['hello world !']">
         some content
       </div>
     `,
-    CONSTANTS_TO_IMPORT,
-  ),
+    modifiers: [
+      tooltipModifier,
+    ],
+  }),
 })
 class AppMainComponent extends HTMLElement {
   constructor() {
@@ -100,3 +86,5 @@ class AppMainComponent extends HTMLElement {
 
 bootstrap(new AppMainComponent());
 ```
+
+[comment]: <> (TODO playgroud)

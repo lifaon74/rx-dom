@@ -1,7 +1,7 @@
 import { ILines } from '../types/lines.type';
 import { indentLines } from './lines-formating-helpers';
 
-export type IObjectPropertyEntry = [propertyName: string, propertyValue: string];
+export type IObjectPropertyEntry = [propertyName: string, propertyValue: string | ILines];
 export type IObjectProperties = IObjectPropertyEntry[];
 
 export function generateObjectPropertiesLines(
@@ -14,14 +14,35 @@ export function generateObjectPropertiesLines(
     return [
       `{`,
       ...indentLines(
-        entries.map(([propertyName, propertyValue]: IObjectPropertyEntry) => {
-          return (
-            (propertyName === propertyValue)
-            || (propertyValue.trim() === '')
-          )
-            ? `${propertyName},`
-            : `${propertyName}: ${propertyValue},`;
-        }),
+        entries
+          .map(([propertyName, propertyValue]: IObjectPropertyEntry): ILines => {
+
+            const propertyValueLines: ILines = (typeof propertyValue === 'string')
+              ? (
+                (
+                  (propertyName === propertyValue)
+                  || (propertyValue.trim() === '')
+                )
+                  ? []
+                  : [propertyValue]
+              )
+              : propertyValue;
+
+            const length: number = propertyValueLines.length;
+
+            return (length === 0)
+              ? [`${propertyName},`]
+              : (
+                (length === 1)
+                  ? [`${propertyName}: ${propertyValueLines[0]},`]
+                  : [
+                    `${propertyName}: ${propertyValueLines[0]}`,
+                    ...propertyValueLines.slice(1, -1),
+                    `${propertyValueLines[length - 1]},`,
+                  ]
+              );
+          })
+          .flat(),
       ),
       `}`,
     ];
