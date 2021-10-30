@@ -1,4 +1,4 @@
-import { nodeReplaceChild } from '../../node';
+import { nodeReplaceChild } from '../../node/move/derived/dom-like/node/node-replace-child';
 import { patchObjectMethod } from '../helpers/patch-object-method';
 
 export function patchNodeReplaceChild(): void {

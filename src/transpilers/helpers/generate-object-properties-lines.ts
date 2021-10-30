@@ -1,5 +1,5 @@
 import { ILines } from '../types/lines.type';
-import { indentLines } from './lines-formating-helpers';
+import { indentLines } from './lines-formatting-helpers';
 
 export type IObjectPropertyEntry = [propertyName: string, propertyValue: string | ILines];
 export type IObjectProperties = IObjectPropertyEntry[];

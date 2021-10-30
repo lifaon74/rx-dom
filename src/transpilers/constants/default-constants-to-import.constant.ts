@@ -3,7 +3,7 @@ import { createDocumentFragment } from '../../light-dom/node/create/create-docum
 import { createTextNode } from '../../light-dom/node/create/create-text-node';
 import { createElement } from '../../light-dom/node/create/element-node/create-element';
 import { getNodeModifier } from '../../light-dom/node/modify/node/get-node-modifier';
-import { nodeAppendChild } from '../../light-dom/node/move/devired/dom-like/node/node-append-child';
+import { nodeAppendChild } from '../../light-dom/node/move/derived/dom-like/node/node-append-child';
 import { attachTemplate } from '../../light-dom/template/attach-template';
 import { toSubscribeFunctionThrowIfUndefined } from '../../misc/to-subscribe-function';
 import { setReactiveAttribute } from '../../reactive-dom/element/attribute/set-reactive-attribute';

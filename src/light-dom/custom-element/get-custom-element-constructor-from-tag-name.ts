@@ -1,4 +1,4 @@
-import { HTMLElementConstructor } from '../types';
+import { HTMLElementConstructor } from '../types/html-element-constructor.type';
 import { getCustomElementRegistry } from './get-custom-element-registry';
 
 export function getCustomElementConstructorFromTagName<GElementConstructor extends HTMLElementConstructor>(

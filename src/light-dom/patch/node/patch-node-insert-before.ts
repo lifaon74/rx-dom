@@ -1,4 +1,4 @@
-import { nodeInsertBefore } from '../../node';
+import { nodeInsertBefore } from '../../node/move/derived/dom-like/node/node-insert-before';
 import { patchObjectMethod } from '../helpers/patch-object-method';
 
 export function patchNodeInsertBefore(): void {

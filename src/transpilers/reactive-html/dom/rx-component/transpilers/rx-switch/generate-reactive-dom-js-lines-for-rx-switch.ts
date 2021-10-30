@@ -1,4 +1,4 @@
-import { scopeLines } from '../../../../../helpers';
+import { scopeLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILines } from '../../../../../types/lines.type';
 import { SWITCH_DEFAULT_NAME } from './switch-default-name.constant';
 import { SWITCH_MAP_NAME } from './switch-map-name.constant';

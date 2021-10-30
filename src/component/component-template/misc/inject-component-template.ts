@@ -1,4 +1,5 @@
-import { IGenericHTMLTemplate, nodeAppendChild } from '../../../light-dom';
+import { nodeAppendChild } from '../../../light-dom/node/move/derived/dom-like/node/node-append-child';
+import { IGenericHTMLTemplate } from '../../../light-dom/template/template.type';
 import { createReferencesMapGetterAndSetter, getMissingReference } from '../../../transpilers/references/create-references-map';
 import { IComponentTemplate, IGetNodeReferenceFunction, IGetTemplateReferenceFunction } from '../component-template.type';
 

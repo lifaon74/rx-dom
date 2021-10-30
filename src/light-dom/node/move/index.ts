@@ -1,2 +1,2 @@
-export * from './devired/index';
+export * from './derived/index';
 export * from './node/index';

@@ -1,4 +1,4 @@
-import { getDocument } from '../../explore';
+import { getDocument } from '../../explore/get-document';
 import { ICreateElementNodeOptions } from './create-element-node';
 
 export function createElementNodeNS<GQualifiedName extends keyof SVGElementTagNameMap>(

@@ -10,3 +10,10 @@ export function setReactiveEventListener<GName extends string, GEvent extends Ev
 }
 
 
+// export function setReactiveEventListener<GName extends string, GEvent extends Event>(
+//   emit: IEmitFunction<ISubscribeFunction<GEvent>>,
+//   target: Node & ITypedPureEventTarget<IKeyValueTuple<GName, GEvent>>,
+//   eventName: GName,
+// ): void {
+//   emit(fromEventTarget<GName, GEvent>(target, eventName));
+// }

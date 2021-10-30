@@ -1,4 +1,4 @@
-import { nodeRemoveChild } from '../../node';
+import { nodeRemoveChild } from '../../node/move/derived/dom-like/node/node-remove-child';
 import { patchObjectMethod } from '../helpers/patch-object-method';
 
 export function patchNodeRemoveChild(): void {

@@ -1,7 +1,7 @@
 import { ISubscribeFunction } from '@lifaon/rx-js-light';
 import { setStylePropertyObjectOrNull } from '../../../light-dom/style/set-style-property-object-or-null';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
-import { dynamicStyleValueLikeToDynamicStyleValue, IDynamicStyleValueLike } from './functions';
+import { dynamicStyleValueLikeToDynamicStyleValue, IDynamicStyleValueLike } from './functions/converters/dynamic-style-value-converters';
 
 // export type IDynamicStyleValue = IStylePropertyObjectWithOptionalPriorityOrNull;
 //

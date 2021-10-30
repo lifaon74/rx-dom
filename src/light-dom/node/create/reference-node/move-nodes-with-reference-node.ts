@@ -1,8 +1,9 @@
 import { IUnsubscribeFunction } from '@lifaon/rx-js-light';
-import { onNodeParentChangeListener } from '../../move';
-import { attachManyNodes } from '../../move/devired/batch/attach-many-nodes';
-import { detachManyNodes } from '../../move/devired/batch/detach-many-nodes';
-import { getNextSibling, getParentNode, IParentNode } from '../../properties';
+import { attachManyNodes } from '../../move/derived/batch/attach-many-nodes';
+import { detachManyNodes } from '../../move/derived/batch/detach-many-nodes';
+import { onNodeParentChangeListener } from '../../move/node/on-node-parent-change-listener';
+import { getNextSibling } from '../../properties/get-next-sibling';
+import { getParentNode, IParentNode } from '../../properties/get-parent-node';
 
 export function moveNodesWithReferenceNode(
   referenceNode: Node,

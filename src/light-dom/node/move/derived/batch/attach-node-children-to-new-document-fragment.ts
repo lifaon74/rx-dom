@@ -1,6 +1,7 @@
-import { createDocumentFragment } from '../../../create';
-import { getFirstChild, IParentNode } from '../../../properties';
-import { attachStandardNodeUnsafe } from '../../node';
+import { createDocumentFragment } from '../../../create/create-document-fragment';
+import { getFirstChild } from '../../../properties/get-first-child';
+import { IParentNode } from '../../../properties/get-parent-node';
+import { attachStandardNodeUnsafe } from '../../node/attach/derived/standard/attach-standard-node-unsafe';
 
 export function attachNodeChildrenToNewDocumentFragment(
   parentNode: IParentNode,

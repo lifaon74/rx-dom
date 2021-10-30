@@ -1,4 +1,4 @@
-import { nodeAppend } from '../../node';
+import { nodeAppend } from '../../node/move/derived/dom-like/parent-node/node-append';
 import { ParentNodeConstructor } from '../../types/parent-node-constructor.type';
 import { patchObjectMethod } from '../helpers/patch-object-method';
 import { DEFAULT_PARENT_NODE_CONSTRUCTORS } from './parent-node-constructors.constant';

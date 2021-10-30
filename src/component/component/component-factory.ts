@@ -1,5 +1,5 @@
 import { freeze } from '@lifaon/rx-js-light';
-import { attachNodeChildrenToNewDocumentFragment } from '../../light-dom/node/move/devired/batch/attach-node-children-to-new-document-fragment';
+import { attachNodeChildrenToNewDocumentFragment } from '../../light-dom/node/move/derived/batch/attach-node-children-to-new-document-fragment';
 import { attachShadow } from '../../light-dom/node/shadow/attach-shadow';
 import { onNodeConnectedToCached } from '../../light-dom/node/state/on-node-connected-to/on-node-connected-to';
 import { HTMLElementConstructor } from '../../light-dom/types/html-element-constructor.type';

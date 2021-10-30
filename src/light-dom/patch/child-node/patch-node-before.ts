@@ -1,4 +1,4 @@
-import { nodeBefore } from '../../node';
+import { nodeBefore } from '../../node/move/derived/dom-like/child-node/node-before';
 import { ChildNodeConstructor } from '../../types/child-node-constructor.type';
 import { patchObjectMethod } from '../helpers/patch-object-method';
 import { DEFAULT_CHILD_NODE_CONSTRUCTORS } from './child-node-constructors.constant';

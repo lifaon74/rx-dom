@@ -1,13 +1,13 @@
 import { distinctEmitPipe, ISubscribeFunction } from '@lifaon/rx-js-light';
 import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
-import { detachManyNodes } from '../../../light-dom/node/move/devired/batch/detach-many-nodes';
+import { detachManyNodes } from '../../../light-dom/node/move/derived/batch/detach-many-nodes';
 import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
 import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
 import { attachOptionalTemplate } from '../../../light-dom/template/attach-template';
 import { IGenericHTMLTemplateOrNull, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
-import { createIncrementalUUID } from '../../../misc';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
+import { createIncrementalUUID } from '../../../misc/uuid/incremental-uuid';
 
 const INCREMENTAL_IF_UUID = createIncrementalUUID('IF');
 

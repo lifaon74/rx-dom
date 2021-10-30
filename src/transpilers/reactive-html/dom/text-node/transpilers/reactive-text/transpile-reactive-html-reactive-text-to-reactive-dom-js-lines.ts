@@ -1,6 +1,6 @@
-import { nullIfEmptyLines } from '../../../../../helpers';
+import { nullIfEmptyLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILines, ILinesOrNull } from '../../../../../types/lines.type';
-import { generateReactiveDOMJSLinesForStaticTextNode } from '../static-text';
+import { generateReactiveDOMJSLinesForStaticTextNode } from '../static-text/generate-reactive-dom-js-lines-for-static-text-node';
 import { generateReactiveDOMJSLinesForReactiveTextNode } from './generate-reactive-dom-js-lines-for-reactive-text-node';
 
 /**

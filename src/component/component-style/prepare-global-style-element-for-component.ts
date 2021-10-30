@@ -1,6 +1,6 @@
-import { cloneNode } from '../../light-dom';
 import { getAttributeValue } from '../../light-dom/attribute/get-attribute-value';
 import { setAttributeValue } from '../../light-dom/attribute/set-attribute-value';
+import { cloneNode } from '../../light-dom/node/misc/clone-node';
 import { compileGlobalStyleElementForComponent } from './compile/global/compile-global-style-element-for-component';
 
 export const HOST_ATTRIBUTE_NAME = 'host';

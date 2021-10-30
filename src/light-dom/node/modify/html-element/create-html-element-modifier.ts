@@ -1,4 +1,4 @@
-import { createNodeModifier } from '../node';
+import { createNodeModifier } from '../node/create-node-modifier';
 import { INodeModifier } from '../node/node-modifier.type';
 import {
   htmlElementModifierFunctionToNodeModifierFunction,

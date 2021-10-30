@@ -1,4 +1,4 @@
-import { attachNode } from '../../../node';
+import { attachNode } from '../../../node/attach/attach-node';
 
 /**
  * Equivalent of:

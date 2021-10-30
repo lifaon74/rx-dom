@@ -1,9 +1,11 @@
-import { getShadowRoot, nodeAppendChild, onNodeConnectedToWithImmediateCached } from '../../../light-dom';
+import { nodeAppendChild } from '../../../light-dom/node/move/derived/dom-like/node/node-append-child';
+import { getShadowRoot } from '../../../light-dom/node/properties/get-shadow-root';
+import { onNodeConnectedToWithImmediateCached } from '../../../light-dom/node/state/on-node-connected-to/on-node-connected-to';
 import { importNode } from '../../../light-dom/others/import-node';
-import { TOP_PARENT_NODE } from '../../../misc';
-import { IComponent } from '../../component';
+import { TOP_PARENT_NODE } from '../../../misc/top-parent-node.constant';
+import { IComponent } from '../../component/component.type';
 import { IComponentStyle } from '../component-style.type';
-import { activateStyleElement } from '../helpers';
+import { activateStyleElement } from '../helpers/activate-style-element';
 import { applyGlobalStyleElementForComponent, getGlobalStyleElementForComponent } from '../prepare-global-style-element-for-component';
 import { linkStyleElementWithComponent, unlinkStyleElementWithComponent } from '../style-element-usage-count';
 

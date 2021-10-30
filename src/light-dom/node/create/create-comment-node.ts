@@ -1,4 +1,4 @@
-import { getDocument } from '../explore';
+import { getDocument } from '../explore/get-document';
 
 /**
  * Creates a Comment Node with a static value

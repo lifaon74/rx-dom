@@ -1,5 +1,5 @@
 import { composeEmitFunction, ISource, mapEmitPipe, mapSubscribePipe, pipeSubscribeFunction } from '@lifaon/rx-js-light';
-import { IAttributeValueOrNull } from '../../../../light-dom';
+import { IAttributeValueOrNull } from '../../../../light-dom/attribute/attribute-value.type';
 import { ISyncAttributeWithSourceOptions, syncAttributeWithSource } from './sync-attribute-with-source';
 
 export function syncAttributeWithBooleanSource(

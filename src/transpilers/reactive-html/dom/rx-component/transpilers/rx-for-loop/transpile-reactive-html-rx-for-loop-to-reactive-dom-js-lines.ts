@@ -5,7 +5,7 @@ import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-
 import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-nodes';
 import { generateGetTemplateReferenceCode } from '../../../../../helpers/generate-get-template-reference-code';
 import { generateObjectPropertiesLines, IObjectProperties } from '../../../../../helpers/generate-object-properties-lines';
-import { scopeLines } from '../../../../../helpers/lines-formating-helpers';
+import { scopeLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
 import {
   extractRXAttributesFromReactiveHTMLAttribute,

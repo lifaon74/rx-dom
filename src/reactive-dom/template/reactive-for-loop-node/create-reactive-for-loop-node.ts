@@ -1,15 +1,16 @@
 import { createMulticastReplayLastSource, distinctEmitPipe, IEmitFunction, ISource, ISubscribeFunction } from '@lifaon/rx-js-light';
-import { attachNode, detachNodeHavingParent } from '../../../light-dom';
 import { createDocumentFragment } from '../../../light-dom/node/create/create-document-fragment';
 import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
-import { attachManyNodes } from '../../../light-dom/node/move/devired/batch/attach-many-nodes';
+import { attachManyNodes } from '../../../light-dom/node/move/derived/batch/attach-many-nodes';
+import { attachNode } from '../../../light-dom/node/move/node/attach/attach-node';
+import { detachNodeHavingParent } from '../../../light-dom/node/move/node/detach/derived/detach-node-having-parent';
 import { getChildNodes } from '../../../light-dom/node/properties/get-child-nodes';
 import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
 import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
 import { IHTMLTemplate, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
-import { createIncrementalUUID } from '../../../misc';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
+import { createIncrementalUUID } from '../../../misc/uuid/incremental-uuid';
 import { trackByIdentity } from './track-by-identity';
 
 interface INodesAndIndex {

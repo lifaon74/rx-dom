@@ -1,10 +1,9 @@
-import { dashCaseToCamelCase } from '../../../../../../misc/case-converters';
-import { generateObjectPropertyEntry, IObjectPropertyEntry } from '../../../../../helpers/generate-object-properties-lines';
-
 /**
  * Syntax:
  *  - prefixed: let-name
- */
+ */ import { dashCaseToCamelCase } from '../../../../../../misc/case-converters/dash-case';
+import { generateObjectPropertyEntry, IObjectPropertyEntry } from '../../../../../helpers/generate-object-properties-lines';
+
 
 export interface ILetProperty {
   readonly name: string;

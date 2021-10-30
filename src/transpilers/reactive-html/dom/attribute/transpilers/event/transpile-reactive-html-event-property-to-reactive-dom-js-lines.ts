@@ -1,5 +1,5 @@
-import { wrapGenericToLinesIteratorTranspilerWithOptionalValueConverter } from '../../../../../helpers';
 import { createGenericToLinesIteratorTranspiler } from '../../../../../helpers/iterator-transpiler/create-generic-to-lines-iterator-transpiler';
+import { wrapGenericToLinesIteratorTranspilerWithOptionalValueConverter } from '../../../../../helpers/iterator-transpiler/wrap-generic-to-lines-iterator-transpiler-with-optional-value-converter';
 import { IToLinesTranspiler } from '../../../../../types/to-lines.transpiler.type';
 import { extractEventPropertyFromReactiveHTMLAttribute, IEventProperty } from './extract-event-property-from-reactive-html-attribute';
 import { transpileReactiveHTMLReactiveEventListenerToReactiveDOMJSLines } from './transpilers/transpile-reactive-html-reactive-event-listener-to-reactive-dom-js-lines';

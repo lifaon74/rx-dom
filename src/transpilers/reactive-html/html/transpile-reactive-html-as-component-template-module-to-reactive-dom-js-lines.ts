@@ -1,5 +1,6 @@
 import { IComponentTemplateCompileOptions } from '../../../component/component-template/component-template.type';
-import { indentLines, IObjectProperties } from '../../index';
+import { IObjectProperties } from '../../helpers/generate-object-properties-lines';
+import { indentLines } from '../../helpers/lines-formatting-helpers';
 import { ILines } from '../../types/lines.type';
 import { transpileReactiveHTMLAsComponentTemplateFunctionToReactiveDOMJSLines } from './transpile-reactive-html-as-component-template-function-to-reactive-dom-js-lines';
 

@@ -1,4 +1,4 @@
-import { getDocument } from '../node';
+import { getDocument } from '../node/explore/get-document';
 
 export function importNode<GNode extends Node>(
   importedNode: GNode,

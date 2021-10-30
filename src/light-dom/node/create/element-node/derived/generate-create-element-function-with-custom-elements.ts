@@ -1,7 +1,7 @@
 import { createMissingComponentImportRXDOMError } from '../../../../../misc/errors/rx-dom-error-1--missing-component-import';
 import { createMissingTagNameForComponentRXDOMError } from '../../../../../misc/errors/rx-dom-error-2--missing-tag-name-for-component';
-import { isCustomElementTagName } from '../../../../tags';
-import { HTMLElementConstructor } from '../../../../types';
+import { isCustomElementTagName } from '../../../../tags/is/is-custom-element-tag-name';
+import { HTMLElementConstructor } from '../../../../types/html-element-constructor.type';
 import { createElement, ICreateElementFunction, ICreateElementOptions } from '../create-element';
 
 export function generateCreateElementFunctionWithCustomElements(

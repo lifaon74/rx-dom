@@ -1,11 +1,13 @@
-import { getAttributeValue, IAttributeValueOrNull, ICreateElementOptions } from '../../../../../light-dom';
+import { IAttributeValueOrNull } from '../../../../../light-dom/attribute/attribute-value.type';
+import { getAttributeValue } from '../../../../../light-dom/attribute/get-attribute-value';
+import { ICreateElementOptions } from '../../../../../light-dom/node/create/element-node/create-element';
 import { getChildNodes } from '../../../../../light-dom/node/properties/get-child-nodes';
 import { getTagName } from '../../../../../light-dom/node/properties/get-tag-name';
-import { scopeLines } from '../../../../helpers/lines-formating-helpers';
+import { scopeLines } from '../../../../helpers/lines-formatting-helpers';
 import { ILines, ILinesOrNull } from '../../../../types/lines.type';
 import { transpileReactiveHTMLAttributesToReactiveDOMJSLines } from '../../attributes/transpile-reactive-html-attributes-to-reactive-dom-js-lines';
 import { transpileReactiveHTMLNodesToReactiveDOMJSLines } from '../../nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
-import { transpileReactiveHTMLElementModifiersToReactiveDOMJSLines } from './modifier';
+import { transpileReactiveHTMLElementModifiersToReactiveDOMJSLines } from './modifier/transpile-reactive-html-element-modifiers-to-reactive-dom-js-lines';
 
 export function transpileReactiveHTMLGenericElementToReactiveDOMJSLines(
   node: Element,

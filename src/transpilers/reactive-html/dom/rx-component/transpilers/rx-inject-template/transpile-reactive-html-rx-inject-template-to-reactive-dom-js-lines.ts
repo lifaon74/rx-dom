@@ -1,8 +1,8 @@
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-nodes';
-import { dashCaseToCamelCase } from '../../../../../../misc/case-converters';
+import { dashCaseToCamelCase } from '../../../../../../misc/case-converters/dash-case';
 import { generateGetTemplateReferenceCode } from '../../../../../helpers/generate-get-template-reference-code';
-import { indentLines } from '../../../../../helpers/lines-formating-helpers';
+import { indentLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
 import { extractLetPropertyFromReactiveHTMLAttribute, ILetProperty } from '../helpers/extract-let-property-from-reactive-html-attribute';
 

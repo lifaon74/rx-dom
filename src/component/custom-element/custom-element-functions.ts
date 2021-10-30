@@ -1,5 +1,5 @@
 import { defineCustomElement } from '../../light-dom/custom-element/define-custom-element';
-import { HTMLElementConstructor } from '../../light-dom/types';
+import { HTMLElementConstructor } from '../../light-dom/types/html-element-constructor.type';
 import { objectDefineProperty } from '../../misc/object-define-property';
 
 /**

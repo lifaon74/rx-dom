@@ -142,13 +142,15 @@ export function onNodeConnectedToCached(
 export function onNodeConnectedToWithImmediateCached(
   node: Node,
   parentNode: Node = getDocument(),
-  options?: IOnNodeConnectedToOptions,
+  {
+    traverseShadowDOM = true,
+    ...options
+  }: IOnNodeConnectedToOptions = {},
 ): ISubscribeFunction<boolean> {
-  const traverseShadowDOM: boolean = ((options === void 0) || (options.traverseShadowDOM === void 0))
-    ? true
-    : options.traverseShadowDOM;
-
-  const listener: ISubscribeFunction<boolean> = onNodeConnectedToCached(node, parentNode);
+  const listener: ISubscribeFunction<boolean> = onNodeConnectedToCached(node, parentNode, {
+    traverseShadowDOM,
+    ...options,
+  });
   return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
     emit(
       traverseShadowDOM

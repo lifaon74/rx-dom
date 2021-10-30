@@ -1,4 +1,4 @@
-import { detachNode } from '../../../node';
+import { detachNode } from '../../../node/detach/detach-node';
 
 /**
  * Equivalent of:

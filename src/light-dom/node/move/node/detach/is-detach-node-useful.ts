@@ -1,4 +1,4 @@
-import { getParentNode } from '../../../properties';
+import { getParentNode } from '../../../properties/get-parent-node';
 
 export function isDetachNodeUseful(
   node: Node,

@@ -1,5 +1,5 @@
-import { wrapGenericToLinesIteratorTranspilerWithOptionalValueConverter } from '../../../../../helpers';
 import { createGenericToLinesIteratorTranspiler } from '../../../../../helpers/iterator-transpiler/create-generic-to-lines-iterator-transpiler';
+import { wrapGenericToLinesIteratorTranspilerWithOptionalValueConverter } from '../../../../../helpers/iterator-transpiler/wrap-generic-to-lines-iterator-transpiler-with-optional-value-converter';
 import { IToLinesTranspiler } from '../../../../../types/to-lines.transpiler.type';
 import {
   extractReferencePropertyFromReactiveHTMLAttribute,

@@ -1,4 +1,4 @@
-import { nullIfEmptyLines } from '../../../../helpers/lines-formating-helpers';
+import { nullIfEmptyLines } from '../../../../helpers/lines-formatting-helpers';
 import { ILines, ILinesOrNull } from '../../../../types/lines.type';
 import { transpileReactiveHTMLNodeToReactiveDOMJSLines } from '../../node/transpile-reactive-html-node-to-reactive-dom-js-lines';
 

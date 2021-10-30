@@ -1,4 +1,4 @@
-import { getParentNode, IParentNode } from '../../../../../properties';
+import { getParentNode, IParentNode } from '../../../../../properties/get-parent-node';
 import { dispatchNodePositionChange } from '../../../on-node-position-change-listener';
 import { attachNodeRaw } from '../../attach-node-raw';
 

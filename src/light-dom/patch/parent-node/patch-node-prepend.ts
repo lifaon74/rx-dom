@@ -1,4 +1,4 @@
-import { nodePrepend } from '../../node';
+import { nodePrepend } from '../../node/move/derived/dom-like/parent-node/node-prepend';
 import { ParentNodeConstructor } from '../../types/parent-node-constructor.type';
 import { patchObjectMethod } from '../helpers/patch-object-method';
 import { DEFAULT_PARENT_NODE_CONSTRUCTORS } from './parent-node-constructors.constant';

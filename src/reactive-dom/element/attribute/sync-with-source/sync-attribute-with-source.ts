@@ -1,5 +1,10 @@
 import { IGenericFunction, ISource } from '@lifaon/rx-js-light';
-import { getAttributeValue, IAttributeValueOrNull, onAttributeChangeListener, setAttributeValueWithEvent } from '../../../../light-dom';
+import { IAttributeValueOrNull } from '../../../../light-dom/attribute/attribute-value.type';
+import { getAttributeValue } from '../../../../light-dom/attribute/get-attribute-value';
+import {
+  onAttributeChangeListener,
+  setAttributeValueWithEvent,
+} from '../../../../light-dom/attribute/with-event/set-attribute-value-with-event';
 
 export interface ISyncAttributeWithSourceOptions {
   // syncImmediately?: 'no' | 'exclude-null' | 'include-null'; // (default: 'exclude-null')

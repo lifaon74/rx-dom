@@ -1,4 +1,4 @@
-import { IGenericHTMLTemplate } from '../../light-dom';
+import { IGenericHTMLTemplate } from '../../light-dom/template/template.type';
 import { IReferencesMapGetter, IReferencesMapSetter } from '../../transpilers/references/create-references-map';
 
 /** COMPILE **/

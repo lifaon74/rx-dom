@@ -1,4 +1,4 @@
-import { indentLines } from '../../../../../helpers';
+import { indentLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILines } from '../../../../../types/lines.type';
 
 export function generateReactiveDOMJSLinesForRXForLoop(

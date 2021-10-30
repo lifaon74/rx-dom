@@ -1,4 +1,4 @@
-import { nodeAppendChild } from '../../node';
+import { nodeAppendChild } from '../../node/move/derived/dom-like/node/node-append-child';
 import { patchObjectMethod } from '../helpers/patch-object-method';
 
 export function patchNodeAppendChild(): void {

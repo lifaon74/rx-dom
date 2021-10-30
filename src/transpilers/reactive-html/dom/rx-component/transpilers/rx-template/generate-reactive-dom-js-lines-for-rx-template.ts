@@ -1,4 +1,5 @@
-import { generateObjectPropertiesLines, indentLines, IObjectProperties } from '../../../../../helpers';
+import { generateObjectPropertiesLines, IObjectProperties } from '../../../../../helpers/generate-object-properties-lines';
+import { indentLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILines } from '../../../../../types/lines.type';
 
 export function generateReactiveDOMJSLinesForRXTemplate(

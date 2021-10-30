@@ -1,6 +1,6 @@
-import { hasAttribute } from '../../../../../../light-dom';
+import { hasAttribute } from '../../../../../../light-dom/attribute/has-attribute';
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
-import { stringToLines } from '../../../../../helpers';
+import { stringToLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILines, ILinesOrNull } from '../../../../../types/lines.type';
 
 /*

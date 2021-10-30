@@ -1,4 +1,4 @@
-import { scopeLines } from '../../../../../helpers';
+import { scopeLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILines } from '../../../../../types/lines.type';
 import { IModifierProperty } from './extract-modifier-property-from-reactive-html-attribute';
 

@@ -1,4 +1,4 @@
-import { attachNode } from '../node';
+import { attachNode } from '../node/move/node/attach/attach-node';
 import { getChildNodes } from '../node/properties/get-child-nodes';
 import { IHTMLTemplate, IHTMLTemplateNodeList } from './template.type';
 

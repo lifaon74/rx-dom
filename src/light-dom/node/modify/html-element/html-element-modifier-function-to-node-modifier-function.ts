@@ -1,5 +1,5 @@
 import { isHTMLElement } from '../../type/is-html-element';
-import { INodeModifierFunction } from '../node';
+import { INodeModifierFunction } from '../node/node-modifier-function.type';
 import { IGenericHTMLElementModifierFunction, IHTMLElementModifierFunction } from './html-element-modifier-function.type';
 
 /** INFER **/

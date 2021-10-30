@@ -1,4 +1,4 @@
-import { getDocument } from '../explore';
+import { getDocument } from '../explore/get-document';
 
 export function createDocumentFragment(
   doc: Document = getDocument(),

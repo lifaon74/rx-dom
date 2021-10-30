@@ -1,7 +1,7 @@
 import { getChildNodes } from '../../../../../../light-dom/node/properties/get-child-nodes';
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { IObjectProperties } from '../../../../../helpers/generate-object-properties-lines';
-import { indentLines } from '../../../../../helpers/lines-formating-helpers';
+import { indentLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
 import {
   extractReferencePropertyFromReactiveHTMLAttribute,

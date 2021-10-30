@@ -1,4 +1,6 @@
-import { getLastChild, getParentNode, getPreviousSibling } from '../../../../../properties';
+import { getLastChild } from '../../../../../properties/get-last-child';
+import { getParentNode } from '../../../../../properties/get-parent-node';
+import { getPreviousSibling } from '../../../../../properties/get-previous-sibling';
 
 /**
  * Returns true if attaching 'node' before 'referenceNode' creates a change

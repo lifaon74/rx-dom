@@ -1,4 +1,4 @@
-import { getCustomElementConstructorFromTagName } from '../../../custom-element';
+import { getCustomElementConstructorFromTagName } from '../../../custom-element/get-custom-element-constructor-from-tag-name';
 import { createElementNode, ICreateElementNodeOptions } from './create-element-node';
 
 export interface ICustomElementCreationWithIsOptions extends Omit<ElementCreationOptions, 'is'>, Required<Pick<ElementCreationOptions, 'is'>> {

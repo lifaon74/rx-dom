@@ -1,4 +1,4 @@
-import { attachNode } from '../../move';
+import { attachNode } from '../../move/node/attach/attach-node';
 import { createDocumentFragment } from '../create-document-fragment';
 
 export function createDocumentFragmentFilledWithNodes(

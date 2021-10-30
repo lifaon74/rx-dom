@@ -1,4 +1,4 @@
-import { getDocument } from '../../explore';
+import { getDocument } from '../../explore/get-document';
 
 export interface ICreateElementNodeOptions {
   document?: Document;

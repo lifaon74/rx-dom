@@ -1,4 +1,5 @@
-import { getDocumentBody, nodeInsertBefore } from '../../light-dom';
+import { getDocumentBody } from '../../light-dom/node/explore/get-document-body';
+import { nodeInsertBefore } from '../../light-dom/node/move/derived/dom-like/node/node-insert-before';
 
 export function bootstrap(
   node: Element,

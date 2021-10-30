@@ -11,7 +11,7 @@ function onNodeConnectedTo(
 This function detects when `node` is connected to `parentNode` (default: `document`). Its returns a SubscribeFunction
 that emits *true* if the node is connected, else *false*.
 
-⚠️ This function only works if you user rx-dom build in function to mutate the DOM:
+⚠️ This function only works if you use the rx-dom's build in functions to mutate the DOM:
 
 - nodeAppendChild
 - nodeInsertBefore

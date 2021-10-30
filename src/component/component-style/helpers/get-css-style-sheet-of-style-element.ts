@@ -1,4 +1,4 @@
-import { nodeRemove } from '../../../light-dom';
+import { nodeRemove } from '../../../light-dom/node/move/derived/dom-like/child-node/node-remove';
 import { appendStyleElementToHead } from './append-style-element-to-head';
 
 export interface IGetCSSStyleSheetContextOfStyleElementCallback {

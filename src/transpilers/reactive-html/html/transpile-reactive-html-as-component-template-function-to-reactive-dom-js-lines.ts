@@ -3,14 +3,11 @@ import {
   IComponentTemplateCompileOptions,
 } from '../../../component/component-template/component-template.type';
 import { DEFAULT_CONTENT_NAME } from '../../constants/default-content-name.constant';
-import {
-  DEFAULT_DATA_NAME,
-  indentLines,
-  IObjectProperties,
-  IObjectPropertyEntry,
-  transpileReactiveHTMLAsRXTemplateToReactiveDOMJSLines,
-} from '../../index';
+import { DEFAULT_DATA_NAME } from '../../constants/default-data-name.constant';
+import { IObjectProperties, IObjectPropertyEntry } from '../../helpers/generate-object-properties-lines';
+import { indentLines } from '../../helpers/lines-formatting-helpers';
 import { ILines } from '../../types/lines.type';
+import { transpileReactiveHTMLAsRXTemplateToReactiveDOMJSLines } from './transpile-reactive-html-as-rx-template-to-reactive-dom-js-lines';
 
 type IKeyOfCompiledComponentTemplateFunctionVariables = keyof ICompiledComponentTemplateFunctionVariables<object>;
 
