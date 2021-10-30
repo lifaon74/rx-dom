@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@lifaon/rx-js-light@1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@lifaon/rx-js-light/-/rx-js-light-1.1.4.tgz#1c85da62d2bf89f36f6fe3110d45d4b18b830285"
-  integrity sha512-2dgM3uI2yCc6ni6gniu1EKtniV4fchAOu9ZpdBeTc1LhRgVH9G/vvZtkhCjkzDXKKIC178+RDCV9xqSPiThN9Q==
+"@lifaon/rx-js-light@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@lifaon/rx-js-light/-/rx-js-light-1.2.1.tgz#46cadf09acb6ce7553ba2446ff93ca4417c2fde1"
+  integrity sha512-FOqYmd/R5ScOBlEPS3blI3q9KGBn9duEIHj0Ns2+kCVBhGap4lv61MWSwNbeYVGjOsFxhJoRgqVmX+sMBo8j0Q==

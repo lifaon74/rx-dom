@@ -100,7 +100,7 @@ npm install @lifaon/rx-dom --save
 
 This library supports:
 
-- **common-js** (require): transpiled as es5, with .cjs extension, useful for old nodejs versions
+- **common-js** (require): transpiled as es6, with .cjs extension, useful for old nodejs versions
 - **module** (esm import): transpiled as esnext, with .mjs extension (requires node resolution for external packages)
 
 In a **browser** environment, you'll need to resolve external imports thought a bundler like
