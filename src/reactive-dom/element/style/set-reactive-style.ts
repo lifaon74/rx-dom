@@ -1,4 +1,4 @@
-import { ISubscribeFunction } from '@lifaon/rx-js-light';
+import { IObservable } from '@lifaon/rx-js-light';
 import { setStylePropertyObjectOrNull } from '../../../light-dom/style/set-style-property-object-or-null';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { dynamicStyleValueLikeToDynamicStyleValue, IDynamicStyleValueLike } from './functions/converters/dynamic-style-value-converters';
@@ -6,7 +6,7 @@ import { dynamicStyleValueLikeToDynamicStyleValue, IDynamicStyleValueLike } from
 // export type IDynamicStyleValue = IStylePropertyObjectWithOptionalPriorityOrNull;
 //
 // export function setReactiveStyle(
-//   subscribe: ISubscribeFunction<IDynamicStyleValue>,
+//   subscribe: IObservable<IDynamicStyleValue>,
 //   element: HTMLElement,
 //   name: string,
 // ): void {
@@ -18,7 +18,7 @@ import { dynamicStyleValueLikeToDynamicStyleValue, IDynamicStyleValueLike } from
 export type IDynamicStyleValue = IDynamicStyleValueLike;
 
 export function setReactiveStyle(
-  subscribe: ISubscribeFunction<IDynamicStyleValue>,
+  subscribe: IObservable<IDynamicStyleValue>,
   element: HTMLElement,
   name: string,
 ): void {

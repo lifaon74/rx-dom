@@ -1,4 +1,4 @@
-import { ISubscribeFunction } from '../../../types';
+import { IObservable } from '../../../types';
 import { ContainerNode } from '../container-node';
 import { uuid } from '../../../misc/helpers/uuid';
 import { attachNode } from '../../dom-mutation/node/attach-node';
@@ -9,7 +9,7 @@ import { noop } from '../../../misc/helpers/noop';
 import { isDocumentFragment } from '../../dom-mutation/node/is-document-fragment';
 
 // export function createReactiveConditionalNodeStatic(
-//   subscribe: ISubscribeFunction<boolean>,
+//   subscribe: IObservable<boolean>,
 //   node: Node,
 // ): Comment {
 //   const containerNode: ContainerNode = new ContainerNode(`IF - ${ uuid() }`, true);
@@ -42,7 +42,7 @@ export interface IReactiveConditionalNodeOptions {
 }
 
 export function createReactiveConditionalNode(
-  subscribe: ISubscribeFunction<boolean>,
+  subscribe: IObservable<boolean>,
   createNode: IReactiveConditionalNodeCreateFunction,
   {
     destroyTimeout = 0,
@@ -90,7 +90,7 @@ export function createReactiveConditionalNode(
 }
 
 // export function createReactiveConditionalNode(
-//   subscribe: ISubscribeFunction<boolean>,
+//   subscribe: IObservable<boolean>,
 //   createNode: () => Node,
 //   {
 //     destroyTimeout = 0,
@@ -133,7 +133,7 @@ export function createReactiveConditionalNode(
 // }
 
 // export function createReactiveConditionalNode(
-//   subscribe: ISubscribeFunction<boolean>,
+//   subscribe: IObservable<boolean>,
 //   createNode: () => Node,
 //   {
 //     destroyTimeout = 0,
@@ -178,7 +178,7 @@ export function createReactiveConditionalNode(
 
 
 // export function createReactiveConditionalNode(
-//   subscribe: ISubscribeFunction<boolean>,
+//   subscribe: IObservable<boolean>,
 //   createNode: () => Node,
 //   {
 //     destroyTimeout = 0,

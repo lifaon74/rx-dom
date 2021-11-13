@@ -1,4 +1,4 @@
-import { composeEmitFunction, ISource, mapEmitPipe, mapSubscribePipe, pipeSubscribeFunction } from '@lifaon/rx-js-light';
+import { composeObserver, ISource, mapObserverPipe, mapObservablePipe, pipeObservable } from '@lifaon/rx-js-light';
 import { IAttributeValueOrNull } from '../../../../light-dom/attribute/attribute-value.type';
 import { ISyncAttributeWithSourceOptions, syncAttributeWithSource } from './sync-attribute-with-source';
 
@@ -11,15 +11,15 @@ export function syncAttributeWithNumberSource(
 ): void {
   syncAttributeWithSource(
     {
-      subscribe: pipeSubscribeFunction(source.subscribe, [
-        mapSubscribePipe<number, IAttributeValueOrNull>((value: number) => {
+      subscribe: pipeObservable(source.subscribe, [
+        mapObservablePipe<number, IAttributeValueOrNull>((value: number) => {
           return (value === defaultSourceValue)
             ? null
             : value.toString(10);
         }),
       ]),
-      emit: composeEmitFunction([
-        mapEmitPipe<IAttributeValueOrNull, number>((value: IAttributeValueOrNull) => {
+      emit: composeObserver([
+        mapObserverPipe<IAttributeValueOrNull, number>((value: IAttributeValueOrNull) => {
           return (value === null)
             ? defaultSourceValue
             : Number(value);

@@ -1,4 +1,4 @@
-import { distinctEmitPipe, ISubscribeFunction } from '@lifaon/rx-js-light';
+import { distinctObserverPipe, IObservable } from '@lifaon/rx-js-light';
 import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import { detachManyNodes } from '../../../light-dom/node/move/derived/batch/detach-many-nodes';
@@ -12,7 +12,7 @@ import { createIncrementalUUID } from '../../../misc/uuid/incremental-uuid';
 const INCREMENTAL_IF_UUID = createIncrementalUUID('IF');
 
 export function createReactiveIfNode(
-  subscribe: ISubscribeFunction<boolean>,
+  subscribe: IObservable<boolean>,
   templateTrue: IGenericHTMLTemplateOrNull = null,
   templateFalse: IGenericHTMLTemplateOrNull = null,
   transparent?: boolean,
@@ -26,7 +26,7 @@ export function createReactiveIfNode(
     () => nodes,
   );
 
-  subscribeOnNodeConnectedTo<boolean>(referenceNode, subscribe, distinctEmitPipe<boolean>()((value: boolean) => {
+  subscribeOnNodeConnectedTo<boolean>(referenceNode, subscribe, distinctObserverPipe<boolean>()((value: boolean) => {
     detachManyNodes(nodes); // with events fine because we are connected, so parent cannot be a document fragment
     nodes = attachOptionalTemplate(
       (
@@ -44,7 +44,7 @@ export function createReactiveIfNode(
 }
 
 // export function createReactiveIfNode(
-//   subscribe: ISubscribeFunction<boolean>,
+//   subscribe: IObservable<boolean>,
 //   templateTrue: ITemplate<[]> = createDocumentFragment,
 //   templateFalse: ITemplate<[]> = createDocumentFragment,
 // ): Comment {
@@ -70,7 +70,7 @@ export function createReactiveIfNode(
 // }
 
 // export function attachReactiveIf(
-//   subscribe: ISubscribeFunction<boolean>,
+//   subscribe: IObservable<boolean>,
 //   templateTrue: ITemplate<[]> | null,
 //   templateFalse: ITemplate<[]> | null,
 //   parentNode: Node,

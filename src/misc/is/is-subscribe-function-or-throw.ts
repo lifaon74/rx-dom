@@ -1,10 +1,10 @@
-import { ISubscribeFunction } from '@lifaon/rx-js-light';
-import { isSubscribeFunction } from './is-subscribe-function';
+import { IObservable } from '@lifaon/rx-js-light';
+import { isObservable } from './is-observable';
 
-export function isSubscribeFunctionOrThrow<GValue>(
+export function isObservableOrThrow<GValue>(
   value: unknown,
-): asserts value is ISubscribeFunction<GValue> {
-  if (!isSubscribeFunction(value)) {
+): asserts value is IObservable<GValue> {
+  if (!isObservable(value)) {
     throw new TypeError(`Not a subscribe function`);
   }
 }

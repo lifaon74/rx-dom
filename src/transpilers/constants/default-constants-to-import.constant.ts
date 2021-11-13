@@ -5,7 +5,7 @@ import { createElement } from '../../light-dom/node/create/element-node/create-e
 import { getNodeModifier } from '../../light-dom/node/modify/node/get-node-modifier';
 import { nodeAppendChild } from '../../light-dom/node/move/derived/dom-like/node/node-append-child';
 import { attachTemplate } from '../../light-dom/template/attach-template';
-import { toSubscribeFunctionThrowIfUndefined } from '../../misc/to-subscribe-function';
+import { toObservableThrowIfUndefined } from '../../misc/to-observable';
 import { setReactiveAttribute } from '../../reactive-dom/element/attribute/set-reactive-attribute';
 import { setReactiveClass } from '../../reactive-dom/element/class/set-reactive-class';
 import { setReactiveClassList } from '../../reactive-dom/element/class/set-reactive-class-list';
@@ -24,9 +24,9 @@ import { createReactiveTextNode } from '../../reactive-dom/text/create-reactive-
  */
 export const DEFAULT_CONSTANTS_TO_IMPORT = {
   // misc
-  // toSubscribeFunction,
-  // toSubscribeFunction: toSubscribeFunctionStrict,
-  toSubscribeFunction: toSubscribeFunctionThrowIfUndefined,
+  // toObservable,
+  // toObservable: toObservableStrict,
+  toObservable: toObservableThrowIfUndefined,
   getNodeModifier,
 
   // dom manipulation

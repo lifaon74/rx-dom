@@ -1,5 +1,5 @@
-export * from './set-component-subscribe-function-properties';
-export * from './set-component-multiple-subscribe-function-properties';
+export * from './define-observable-property';
+export * from './set-component-multiple-observable-properties';
 
 
 

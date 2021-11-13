@@ -1,4 +1,4 @@
-import { ISubscribeFunction } from '@lifaon/rx-js-light';
+import { IObservable } from '@lifaon/rx-js-light';
 import { removeStyleProperty } from '../../../light-dom/style/remove-style-property';
 import { setStylePropertyObjectOrNull } from '../../../light-dom/style/set-style-property-object-or-null';
 import { IStylePropertyObjectWithOptionalPriorityOrNull } from '../../../light-dom/style/style-property.type';
@@ -10,7 +10,7 @@ import { IStylesMap } from './functions/styles-map.type';
 export type IDynamicStyleListValue = IStylesMap;
 
 export function setReactiveStyleList(
-  subscribe: ISubscribeFunction<IDynamicStyleListValue>,
+  subscribe: IObservable<IDynamicStyleListValue>,
   element: HTMLElement,
 ): void {
   let previousStyles: IDynamicStyleListValue = new Map<string, IStylePropertyObjectWithOptionalPriorityOrNull>();

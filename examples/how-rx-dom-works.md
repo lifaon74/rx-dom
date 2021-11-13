@@ -17,9 +17,8 @@ console.log(
     html: `
       <div class="input-container">
         <input
-          #input
           [value]="$.$input$.subscribe"
-          (input)="() => $.$input$.emit(getNodeReference('input').value)"
+          (input)="() => $.$input$.emit(node.value)"
         >
       </div>
       <div
@@ -37,7 +36,7 @@ console.log(
 You'll end up with something similar to this:
 
 ```ts
-({getNodeReference, setNodeReference, data: $}) => {
+({data: $}) => {
   const parentNode = createDocumentFragment();
   {
     const node = createElement("div");
@@ -47,7 +46,7 @@ You'll end up with something similar to this:
       {
         const node = createElement("input");
         setNodeReference("input", node);
-        setReactiveEventListener(() => $.$input$.emit(getNodeReference('input').value), node, "input");
+        setReactiveEventListener(() => $.$input$.emit(node.value), node, "input");
         setReactiveProperty(toSubscribeFunction($.$input$.subscribe), node, "value");
         nodeAppendChild(parentNode, node);
       }

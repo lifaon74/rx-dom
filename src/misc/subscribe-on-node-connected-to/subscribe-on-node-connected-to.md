@@ -3,10 +3,10 @@
 ```ts
 function subscribeOnNodeConnectedTo<GValue>(
   node: Node,
-  subscribe: ISubscribeFunction<GValue>,
-  emit: IEmitFunction<GValue>,
+  subscribe: IObservable<GValue>,
+  emit: IObserver<GValue>,
   topParentNode?: Node,
-): IUnsubscribeFunction
+): IUnsubscribe
 ```
 
 Uses [onNodeConnectedToWithImmediateCached](../../light-dom/node/state/on-node-connected-to/on-node-connected-to.md), to

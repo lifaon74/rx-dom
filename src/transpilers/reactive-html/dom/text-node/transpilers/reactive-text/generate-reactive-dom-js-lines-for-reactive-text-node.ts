@@ -5,6 +5,6 @@ export function generateReactiveDOMJSLinesForReactiveTextNode(
 ): ILines {
   return [
     `// reactive text node`,
-    `nodeAppendChild(parentNode, createReactiveTextNode(toSubscribeFunction(${value})));`,
+    `nodeAppendChild(parentNode, createReactiveTextNode(toObservable(${value})));`,
   ];
 }

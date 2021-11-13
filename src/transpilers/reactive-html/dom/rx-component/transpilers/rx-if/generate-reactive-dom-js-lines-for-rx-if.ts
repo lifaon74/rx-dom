@@ -7,6 +7,6 @@ export function generateReactiveDOMJSLinesForRXIf(
 ): ILines {
   return [
     `// reactive if`,
-    `nodeAppendChild(parentNode, createReactiveIfNode(toSubscribeFunction(${condition}), ${templateTrue}, ${templateFalse}));`,
+    `nodeAppendChild(parentNode, createReactiveIfNode(toObservable(${condition}), ${templateTrue}, ${templateFalse}));`,
   ];
 }

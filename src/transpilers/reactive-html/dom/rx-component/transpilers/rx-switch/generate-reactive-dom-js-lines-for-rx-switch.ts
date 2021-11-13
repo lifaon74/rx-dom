@@ -14,6 +14,6 @@ export function generateReactiveDOMJSLinesForRXSwitch(
     `const ${switchMapName} = new Map();`,  // INFO let and const are important, because they SCOPE and fix the variables
     `let ${switchDefaultName} = null;`,
     ...childLines,
-    `nodeAppendChild(parentNode, createReactiveSwitchNode(toSubscribeFunction(${expression}), ${switchMapName}, ${switchDefaultName}));`,
+    `nodeAppendChild(parentNode, createReactiveSwitchNode(toObservable(${expression}), ${switchMapName}, ${switchDefaultName}));`,
   ]);
 }

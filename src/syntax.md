@@ -6,7 +6,7 @@
 {{ observable }}
 ```
 
-Creates a Text Node whose content is updated by a SubscribeFunction (`string`).
+Creates a Text Node whose content is updated by a Observable (`string`).
 
 It compiles to something similar to this:
 
@@ -28,7 +28,7 @@ observable((value) => text.value = value);
 />
 ```
 
-Links the property of an Element with a SubscribeFunction (`any`): when the SubscribeFunction changes, the property is
+Links the property of an Element with a Observable (`any`): when the Observable changes, the property is
 updated with the received value.
 
 It compiles to something similar to this:
@@ -53,7 +53,7 @@ observable((value) => input.value = value);
 ></div>
 ```
 
-Links the classList of an Element with a SubscribeFunction (`boolean`): when the SubscribeFunction changes, the class is
+Links the classList of an Element with a Observable (`boolean`): when the Observable changes, the class is
 toggled (present only when `true` is received).
 
 It compiles to something similar to this:
@@ -78,7 +78,7 @@ observable((value) => div.classList.toggle('my-class', value));
 ></div>
 ```
 
-Links the className of an Element with a SubscribeFunction (`Set<string>`): when the SubscribeFunction changes, the
+Links the className of an Element with a Observable (`Set<string>`): when the Observable changes, the
 classes are added or removed from the Element.
 
 It compiles to something similar to this:
@@ -103,7 +103,7 @@ observable((classes) => div.className = classes);
 ></div>
 ```
 
-Links a style property of an Element with a SubscribeFunction (`string | number | null`):
+Links a style property of an Element with a Observable (`string | number | null`):
 
 If `null` is received, the property is removed. If a `string | number` is received, the property is converted to string
 and set.
@@ -142,7 +142,7 @@ observable((value) => div.style.setProperty('font-size', value));
 ></div>
 ```
 
-Links the style attribute of an Element with a SubscribeFunction (`Map<string, string>`): when the SubscribeFunction
+Links the style attribute of an Element with a Observable (`Map<string, string>`): when the Observable
 changes, the Element's style is updated.
 
 It compiles to something similar to this:
@@ -167,7 +167,7 @@ observable((styles) => div.setAttribute('style', styles));
 ></div>
 ```
 
-Links an attribute of an Element with a SubscribeFunction (`string | null`):
+Links an attribute of an Element with a Observable (`string | null`):
 
 If `null` is received, the attribute is removed. If a `string` is received, the attribute is set to this value.
 
@@ -213,41 +213,55 @@ div.addEventListener('click', observer);
 
 ---
 
-### Reference: #reference-name (EXPERIMENTAL)
+[comment]: <> (### Reference: #reference-name &#40;EXPERIMENTAL&#41;)
 
-```html
-<div
-  #my-div
-></div>
-```
+[comment]: <> (```html)
 
-Creates a reference on an Element.
+[comment]: <> (<div)
 
-It compiles to something similar to this:
+[comment]: <> (  #my-div)
 
-```ts
-setNodeReference('my-div', div);
-```
+[comment]: <> (></div>)
 
-**ℹ️ INFO:** you can retrieve a reference to a Node with `getNodeReference('my-div')`.
+[comment]: <> (```)
 
-**ℹ️ INFO:** you may set a value to this ref attribute. In this case, the value will be used as the reference's name:
+[comment]: <> (Creates a reference on an Element.)
 
-```html
-<div
-  #ref="my-div"
-></div>
-```
+[comment]: <> (It compiles to something similar to this:)
 
-##### alternative syntax
+[comment]: <> (```ts)
 
-```html
-<div
-  ref-my-div
-></div>
-```
+[comment]: <> (setNodeReference&#40;'my-div', div&#41;;)
 
----
+[comment]: <> (```)
+
+[comment]: <> (**ℹ️ INFO:** you can retrieve a reference to a Node with `getNodeReference&#40;'my-div'&#41;`.)
+
+[comment]: <> (**ℹ️ INFO:** you may set a value to this ref attribute. In this case, the value will be used as the reference's name:)
+
+[comment]: <> (```html)
+
+[comment]: <> (<div)
+
+[comment]: <> (  #ref="my-div")
+
+[comment]: <> (></div>)
+
+[comment]: <> (```)
+
+[comment]: <> (##### alternative syntax)
+
+[comment]: <> (```html)
+
+[comment]: <> (<div)
+
+[comment]: <> (  ref-my-div)
+
+[comment]: <> (></div>)
+
+[comment]: <> (```)
+
+[comment]: <> (---)
 
 ### Node Modifier: $modifier-name
 
@@ -351,7 +365,7 @@ Injects dynamically a DocumentFragment into the DOM. Previously inserted nodes a
 
 Attributes:
 
-- `content`: the SubscribeFunction which emits a DocumentFragment or null
+- `content`: the Observable which emits a DocumentFragment or null
 
 It compiles to something similar to this:
 
@@ -379,7 +393,7 @@ Creates a virtual Node which:
 
 Attributes:
 
-- `condition`: the SubscribeFunction to listen to
+- `condition`: the Observable to listen to
 - `true`: the name of the template to inject if `condition` emitted *true*
 - `false`: the name of the template to inject if `condition` emitted *false*
 
@@ -459,7 +473,7 @@ Creates a virtual Node which:
 Attributes:
 
 - rx-switch
-  - `expression`: the SubscribeFunction to listen to
+  - `expression`: the Observable to listen to
 - rx-switch-case
   - `case`: the value for this template
   - `template`: the template reference to inject
@@ -573,7 +587,7 @@ Creates a virtual Node which:
 
 Attributes:
 
-- `items`: the SubscribeFunction to listen to
+- `items`: the Observable to listen to
 - `template`: the name of the template to inject for each values
 - `track-by` (optional): a trackByFunction to known which nodes may be re-used
 

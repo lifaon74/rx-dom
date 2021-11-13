@@ -1,10 +1,10 @@
 import {
-  IEmitFunction,
-  ISubscribeFunction,
-  IUnsubscribeFunction,
+  IObserver,
+  IObservable,
+  IUnsubscribe,
   noop,
-  pipeSubscribeFunction,
-  shareSubscribePipe,
+  pipeObservable,
+  shareObservablePipe,
 } from '@lifaon/rx-js-light';
 import { getDocument } from '../../explore/get-document';
 import { nodeContains } from '../../explore/node-contains';
@@ -25,14 +25,14 @@ export function onNodeConnectedTo(
   {
     traverseShadowDOM = true,
   }: IOnNodeConnectedToOptions = {},
-): ISubscribeFunction<boolean> {
+): IObservable<boolean> {
   if (node === parentNode) {
     throw new Error(`Invalid parentNode`);
   }
 
-  return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+  return (emit: IObserver<boolean>): IUnsubscribe => {
     let running: boolean = true;
-    let _unsubscribeFunctions: IUnsubscribeFunction[] = [];
+    let _unsubscribeFunctions: IUnsubscribe[] = [];
     let _connected: boolean = traverseShadowDOM
       ? nodeContainsTraversingShadowDOM(parentNode, node)
       : nodeContains(parentNode, node);
@@ -53,7 +53,7 @@ export function onNodeConnectedTo(
             : onNodeParentChangeListener(_node)((): void => {
               // removes all unsubscribeFunctions for parents over this node
               while (_unsubscribeFunctions.length > index) {
-                (_unsubscribeFunctions.pop() as IUnsubscribeFunction)();
+                (_unsubscribeFunctions.pop() as IUnsubscribe)();
               }
               update(referenceNode);
             }),
@@ -98,9 +98,9 @@ export function onNodeConnectedToWithImmediate(
   node: Node,
   parentNode: Node = getDocument(),
   options?: IOnNodeConnectedToOptions,
-): ISubscribeFunction<boolean> {
-  const listener: ISubscribeFunction<boolean> = onNodeConnectedTo(node, parentNode, options);
-  return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+): IObservable<boolean> {
+  const listener: IObservable<boolean> = onNodeConnectedTo(node, parentNode, options);
+  return (emit: IObserver<boolean>): IUnsubscribe => {
     emit(parentNode.contains(node));
     return listener(emit);
   };
@@ -108,30 +108,30 @@ export function onNodeConnectedToWithImmediate(
 
 /*---*/
 
-const ON_NODE_CONNECTED_TO_CACHE = new WeakMap<Node, WeakMap<Node, Map<string, ISubscribeFunction<boolean>>>>();
+const ON_NODE_CONNECTED_TO_CACHE = new WeakMap<Node, WeakMap<Node, Map<string, IObservable<boolean>>>>();
 
 export function onNodeConnectedToCached(
   node: Node,
   parentNode: Node = getDocument(),
   options: IOnNodeConnectedToOptions = {},
-): ISubscribeFunction<boolean> {
+): IObservable<boolean> {
   let map1 = ON_NODE_CONNECTED_TO_CACHE.get(node);
   if (map1 === void 0) {
-    map1 = new WeakMap<Node, Map<string, ISubscribeFunction<boolean>>>();
+    map1 = new WeakMap<Node, Map<string, IObservable<boolean>>>();
     ON_NODE_CONNECTED_TO_CACHE.set(node, map1);
   }
 
   let map2 = map1.get(parentNode);
   if (map2 === void 0) {
-    map2 = new Map<string, ISubscribeFunction<boolean>>();
+    map2 = new Map<string, IObservable<boolean>>();
     map1.set(parentNode, map2);
   }
 
   const _options: string = JSON.stringify(options);
   let subscribe = map2.get(_options);
   if (subscribe === void 0) {
-    subscribe = pipeSubscribeFunction(onNodeConnectedTo(node, parentNode), [
-      shareSubscribePipe<boolean>(),
+    subscribe = pipeObservable(onNodeConnectedTo(node, parentNode), [
+      shareObservablePipe<boolean>(),
     ]);
     map2.set(_options, subscribe);
   }
@@ -146,12 +146,12 @@ export function onNodeConnectedToWithImmediateCached(
     traverseShadowDOM = true,
     ...options
   }: IOnNodeConnectedToOptions = {},
-): ISubscribeFunction<boolean> {
-  const listener: ISubscribeFunction<boolean> = onNodeConnectedToCached(node, parentNode, {
+): IObservable<boolean> {
+  const listener: IObservable<boolean> = onNodeConnectedToCached(node, parentNode, {
     traverseShadowDOM,
     ...options,
   });
-  return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+  return (emit: IObserver<boolean>): IUnsubscribe => {
     emit(
       traverseShadowDOM
         ? nodeContainsTraversingShadowDOM(parentNode, node)
@@ -162,23 +162,23 @@ export function onNodeConnectedToWithImmediateCached(
 }
 
 // // TODO cache options too
-// const ON_NODE_CONNECTED_TO_CACHE = new WeakMap<Node, WeakMap<Node, ISubscribeFunction<boolean>>>();
+// const ON_NODE_CONNECTED_TO_CACHE = new WeakMap<Node, WeakMap<Node, IObservable<boolean>>>();
 //
 // export function onNodeConnectedToCached(
 //   node: Node,
 //   parentNode: Node = getDocument(),
-// ): ISubscribeFunction<boolean> {
+// ): IObservable<boolean> {
 //   let map1 = ON_NODE_CONNECTED_TO_CACHE.get(node);
 //   if (map1 === void 0) {
-//     map1 = new WeakMap<Node, ISubscribeFunction<boolean>>();
+//     map1 = new WeakMap<Node, IObservable<boolean>>();
 //     ON_NODE_CONNECTED_TO_CACHE.set(node, map1);
 //   }
 //
 //
 //   let subscribe = map1.get(parentNode);
 //   if (subscribe === void 0) {
-//     subscribe = pipeSubscribeFunction(onNodeConnectedTo(node, parentNode), [
-//       shareSubscribePipe<boolean>(),
+//     subscribe = pipeObservable(onNodeConnectedTo(node, parentNode), [
+//       shareObservablePipe<boolean>(),
 //     ]);
 //     map1.set(parentNode, subscribe);
 //   }
@@ -190,9 +190,9 @@ export function onNodeConnectedToWithImmediateCached(
 // export function onNodeConnectedToWithImmediateCached(
 //   node: Node,
 //   parentNode: Node = getDocument(),
-// ): ISubscribeFunction<boolean> {
-//   const listener: ISubscribeFunction<boolean> = onNodeConnectedToCached(node, parentNode);
-//   return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+// ): IObservable<boolean> {
+//   const listener: IObservable<boolean> = onNodeConnectedToCached(node, parentNode);
+//   return (emit: IObserver<boolean>): IUnsubscribe => {
 //     emit(parentNode.contains(node));
 //     return listener(emit);
 //   };

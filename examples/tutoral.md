@@ -62,7 +62,7 @@ const template = compileReactiveHTMLAsGenericComponentTemplate({
         <input
           #input
           [value]="$.$input$.subscribe"
-          (input)="() => $.$input$.emit(getNodeReference('input').value)"
+          (input)="() => $.$input$.emit(node.value)"
         >
       </div>
       <div
@@ -120,11 +120,15 @@ The style of a component **SHOULD ALWAYS** keeps its css encapsulated as much as
 - use `>`, or your css may leak on child components
 - avoid applying style to other components (like `body`)
 
-ℹ️ `rx-dom` supports partially the shadow DOM, but we strongly discourage its usage **now**. Indeed, the shadow DOM
-forces encapsulation, but we often encounter the need to style child components from a parent component, and injecting
-style sheet for each component is not yet performant. We're awaiting
-on [Constructable Stylesheets](https://developers.google.com/web/updates/2019/02/constructable-stylesheets) to go
-further.
+[comment]: <> (ℹ️ `rx-dom` supports partially the shadow DOM, but we strongly discourage its usage **now**. Indeed, the shadow DOM)
+
+[comment]: <> (forces encapsulation, but we often encounter the need to style child components from a parent component, and injecting)
+
+[comment]: <> (style sheet for each component is not yet performant. We're awaiting)
+
+[comment]: <> (on [Constructable Stylesheets]&#40;https://developers.google.com/web/updates/2019/02/constructable-stylesheets&#41; to go)
+
+[comment]: <> (further.)
 
 #### Step 4 - create your component
 
@@ -157,7 +161,7 @@ interface IData {
         <input
           #input
           [value]="$.$input$.subscribe"
-          (input)="() => $.$input$.emit(getNodeReference('input').value)"
+          (input)="() => $.$input$.emit(node.value)"
         >
       </div>
       <div

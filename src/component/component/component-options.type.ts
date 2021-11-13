@@ -1,10 +1,9 @@
-import { IComponentStyleAsync } from '../component-style/component-style.type';
-import { IComponentTemplateAsync } from '../component-template/component-template.type';
-import { ICustomElementOptions } from '../custom-element/custom-element-functions';
+import { IComponentStyle } from '../component-style/component-style.type';
+import { IComponentTemplate } from '../component-template/component-template.type';
 
-export interface IComponentOptions<GData extends object> extends ICustomElementOptions {
-  template?: IComponentTemplateAsync<GData>;
-  styles?: Iterable<IComponentStyleAsync>;
-  useShadowDOM?: boolean;
-  // host?: IHostBinding<any>[];
+export interface IComponentOptions<GData extends object> extends ElementDefinitionOptions {
+  name: string; // tag name
+  template?: IComponentTemplate<GData>;
+  styles?: ArrayLike<IComponentStyle>;
 }
+

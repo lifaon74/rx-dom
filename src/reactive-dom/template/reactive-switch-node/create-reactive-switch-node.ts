@@ -1,4 +1,4 @@
-import { distinctEmitPipe, ISubscribeFunction } from '@lifaon/rx-js-light';
+import { distinctObserverPipe, IObservable } from '@lifaon/rx-js-light';
 import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import { detachManyNodes } from '../../../light-dom/node/move/derived/batch/detach-many-nodes';
@@ -12,7 +12,7 @@ import { createIncrementalUUID } from '../../../misc/uuid/incremental-uuid';
 const INCREMENTAL_SWITCH_UUID = createIncrementalUUID('SWITCH');
 
 export function createReactiveSwitchNode<GValue>(
-  subscribe: ISubscribeFunction<GValue>,
+  subscribe: IObservable<GValue>,
   templates: Map<GValue, IGenericHTMLTemplateOrNull>,
   defaultTemplate: IGenericHTMLTemplateOrNull = null,
   transparent?: boolean,
@@ -26,7 +26,7 @@ export function createReactiveSwitchNode<GValue>(
     () => nodes,
   );
 
-  subscribeOnNodeConnectedTo<GValue>(referenceNode, subscribe, distinctEmitPipe<GValue>()((value: GValue) => {
+  subscribeOnNodeConnectedTo<GValue>(referenceNode, subscribe, distinctObserverPipe<GValue>()((value: GValue) => {
     detachManyNodes(nodes); // with events fine because we are connected, so parent cannot be a document fragment
     nodes = attachOptionalTemplate(
       templates.has(value)

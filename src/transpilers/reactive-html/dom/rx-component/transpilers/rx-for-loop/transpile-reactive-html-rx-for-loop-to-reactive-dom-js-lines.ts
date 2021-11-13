@@ -3,8 +3,8 @@ import { hasAttribute } from '../../../../../../light-dom/attribute/has-attribut
 import { removeAttribute } from '../../../../../../light-dom/attribute/remove-attribute';
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-nodes';
-import { generateGetTemplateReferenceCode } from '../../../../../helpers/generate-get-template-reference-code';
 import { generateObjectPropertiesLines, IObjectProperties } from '../../../../../helpers/generate-object-properties-lines';
+import { generateTemplateVariableName } from '../../../../../helpers/generate-template-variable-name';
 import { scopeLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
 import {
@@ -96,7 +96,7 @@ export function transpileReactiveHTMLRXForLoopToReactiveDOMJSLines(
 
     return generateReactiveDOMJSLinesForRXForLoop(
       items,
-      generateGetTemplateReferenceCode(template),
+      generateTemplateVariableName(template),
       generateObjectPropertiesLines(options),
     );
   } else if (hasAttribute(node, COMMAND_NAME)) {

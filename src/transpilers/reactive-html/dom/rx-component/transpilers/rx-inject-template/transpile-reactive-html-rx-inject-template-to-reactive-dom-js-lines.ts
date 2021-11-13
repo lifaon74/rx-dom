@@ -1,7 +1,7 @@
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-nodes';
 import { dashCaseToCamelCase } from '../../../../../../misc/case-converters/dash-case';
-import { generateGetTemplateReferenceCode } from '../../../../../helpers/generate-get-template-reference-code';
+import { generateTemplateVariableName } from '../../../../../helpers/generate-template-variable-name';
 import { indentLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
 import { extractLetPropertyFromReactiveHTMLAttribute, ILetProperty } from '../helpers/extract-let-property-from-reactive-html-attribute';
@@ -19,12 +19,14 @@ Syntax:
 
 const TAG_NAME: string = 'rx-inject-template';
 
+const TEMPLATE_ATTRIBUTE_NAME: string = 'template';
+
 export function transpileReactiveHTMLRXInjectTemplateToReactiveDOMJSLines(
   node: Element,
 ): ILinesOrNull {
   const name: string = getTagName(node);
   if (name === TAG_NAME) {
-    let referenceName!: string;
+    let templateName!: string;
     const letProperties: ILetProperty[] = [];
 
     const attributes: Attr[] = Array.from(node.attributes);
@@ -32,11 +34,11 @@ export function transpileReactiveHTMLRXInjectTemplateToReactiveDOMJSLines(
       const attribute: Attr = attributes[i];
       const letProperty: ILetProperty | null = extractLetPropertyFromReactiveHTMLAttribute(attribute);
       if (letProperty === null) {
-        if (attribute.name === 'template') {
-          if (referenceName === void 0) {
-            referenceName = attribute.value;
+        if (attribute.name === TEMPLATE_ATTRIBUTE_NAME) {
+          if (templateName === void 0) {
+            templateName = attribute.value;
           } else {
-            throw new Error(`Found duplicate template reference name through attribute 'name'`);
+            throw new Error(`Found duplicate template name through attribute '${TEMPLATE_ATTRIBUTE_NAME}'`);
           }
         } else {
           throw new Error(`Found invalid attribute '${attribute.name}'`);
@@ -54,7 +56,7 @@ export function transpileReactiveHTMLRXInjectTemplateToReactiveDOMJSLines(
       `// inject template`,
       `attachTemplate(`,
       ...indentLines([
-        `${generateGetTemplateReferenceCode(referenceName)},`,
+        `${generateTemplateVariableName(templateName)},`,
         `{`,
         ...indentLines(letProperties.map((letProperty: ILetProperty) => {
           return `${dashCaseToCamelCase(letProperty.name)}: (${letProperty.value}),`;

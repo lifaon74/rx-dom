@@ -1,0 +1,7 @@
+import { IComponent } from '../component.type';
+
+/** COMPONENT **/
+
+export interface IShadowComponent<GData extends object> extends IComponent<GData> {
+}
+

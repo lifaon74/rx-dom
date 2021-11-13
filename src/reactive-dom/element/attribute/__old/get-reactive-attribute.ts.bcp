@@ -1,4 +1,4 @@
-import { IEmitFunction } from '@lifaon/rx-js-light';
+import { IObserver } from '@lifaon/rx-js-light';
 import { IReactiveAttributeValue } from './reactive-attribute-value.type';
 import { getAttributeValue, onAttributeChangeListener } from '../../../light-dom';
 import { subscribeOnNodeConnectedTo } from '../../../misc';
@@ -8,7 +8,7 @@ export interface IGetReactiveAttributeOptions {
 }
 
 export function getReactiveAttribute(
-  emit: IEmitFunction<IReactiveAttributeValue>,
+  emit: IObserver<IReactiveAttributeValue>,
   element: Element,
   name: string,
   {

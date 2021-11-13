@@ -1,6 +1,3 @@
-import { IGenericHTMLTemplate } from '../../light-dom/template/template.type';
-import { IReferencesMapGetter, IReferencesMapSetter } from '../../transpilers/references/create-references-map';
-
 /** COMPILE **/
 
 export interface IComponentTemplateCompileOptions {
@@ -8,18 +5,9 @@ export interface IComponentTemplateCompileOptions {
   contentName?: string;
 }
 
-export type IGetNodeReferenceFunction = IReferencesMapGetter<HTMLElement>;
-export type ISetNodeReferenceFunction = IReferencesMapSetter<HTMLElement>;
-export type IGetTemplateReferenceFunction = IReferencesMapGetter<IGenericHTMLTemplate>;
-export type ISetTemplateReferenceFunction = IReferencesMapSetter<IGenericHTMLTemplate>;
-
 export interface ICompiledComponentTemplateFunctionVariables<GData extends object> {
   data: GData;
   content: DocumentFragment;
-  getNodeReference: IGetNodeReferenceFunction;
-  setNodeReference: ISetNodeReferenceFunction;
-  getTemplateReference: IGetTemplateReferenceFunction;
-  setTemplateReference: ISetTemplateReferenceFunction;
 }
 
 export interface ICompiledComponentTemplateFunction<GData extends object> {
@@ -31,16 +19,8 @@ export interface ICompiledComponentTemplateFunction<GData extends object> {
 
 /** RUN **/
 
-// export type IComponentTemplateOptions<GData extends object> = Omit<ICompiledComponentTemplateFunctionOptions<GData>, 'constantsToImport'>;
-
 export interface IComponentTemplate<GData extends object> {
   (
     variables: ICompiledComponentTemplateFunctionVariables<GData>,
   ): DocumentFragment;
 }
-
-export type IComponentTemplateAsync<GData extends object> =
-  IComponentTemplate<GData>
-  | Promise<IComponentTemplate<GData>>
-  ;
-

@@ -3,7 +3,7 @@ import { onNodeAttachedListener } from '../move/node/__with-event/attach-node-wi
 import { getParentNode } from '../properties/get-parent-node';
 import { isDocumentFragment } from '../type/is-document-fragment';
 import {
-  IEmitFunction, ISubscribeFunction, IUnsubscribeFunction, noop, pipeSubscribeFunction, shareSubscribePipe
+  IObserver, IObservable, IUnsubscribe, noop, pipeObservable, shareObservablePipe
 } from '@lifaon/rx-js-light';
 import { getDocument } from '../explore';
 
@@ -12,11 +12,11 @@ export function onNodeConnectedTo(
   node: Node,
   parentNode: Node = getDocument(),
   triggerOnMove: boolean = false,
-): ISubscribeFunction<boolean> {
-  return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+): IObservable<boolean> {
+  return (emit: IObserver<boolean>): IUnsubscribe => {
     let running: boolean = true;
-    let _unsubscribeFunctions: IUnsubscribeFunction[] = [];
-    let _unsubscribeAttachListener: IUnsubscribeFunction = noop;
+    let _unsubscribeFunctions: IUnsubscribe[] = [];
+    let _unsubscribeAttachListener: IUnsubscribe = noop;
     let _connected: boolean = parentNode.contains(node);
 
 
@@ -44,7 +44,7 @@ export function onNodeConnectedTo(
 
             // removes all unsubscribeFunctions for parents over this node
             while (_unsubscribeFunctions.length > index) {
-              (_unsubscribeFunctions.pop() as IUnsubscribeFunction)();
+              (_unsubscribeFunctions.pop() as IUnsubscribe)();
             }
 
             // console.log('detached', referenceNode);
@@ -102,9 +102,9 @@ export function onNodeConnectedToWithImmediate(
   node: Node,
   parentNode: Node = getDocument(),
   triggerOnMove?: boolean,
-): ISubscribeFunction<boolean> {
-  const listener: ISubscribeFunction<boolean> = onNodeConnectedTo(node, parentNode, triggerOnMove);
-  return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+): IObservable<boolean> {
+  const listener: IObservable<boolean> = onNodeConnectedTo(node, parentNode, triggerOnMove);
+  return (emit: IObserver<boolean>): IUnsubscribe => {
     emit(parentNode.contains(node));
     return listener(emit);
   };
@@ -113,29 +113,29 @@ export function onNodeConnectedToWithImmediate(
 
 /*---*/
 
-const ON_NODE_CONNECTED_TO_CACHE = new WeakMap<Node, WeakMap<Node, Map<boolean, ISubscribeFunction<boolean>>>>();
+const ON_NODE_CONNECTED_TO_CACHE = new WeakMap<Node, WeakMap<Node, Map<boolean, IObservable<boolean>>>>();
 
 export function onNodeConnectedToCached(
   node: Node,
   parentNode: Node = getDocument(),
   triggerOnMove: boolean = false,
-): ISubscribeFunction<boolean> {
+): IObservable<boolean> {
   let map1 = ON_NODE_CONNECTED_TO_CACHE.get(node);
   if (map1 === void 0) {
-    map1 = new WeakMap<Node, Map<boolean, ISubscribeFunction<boolean>>>();
+    map1 = new WeakMap<Node, Map<boolean, IObservable<boolean>>>();
     ON_NODE_CONNECTED_TO_CACHE.set(node, map1);
   }
 
   let map2 = map1.get(parentNode);
   if (map2 === void 0) {
-    map2 = new Map<boolean, ISubscribeFunction<boolean>>();
+    map2 = new Map<boolean, IObservable<boolean>>();
     map1.set(parentNode, map2);
   }
 
   let subscribe = map2.get(triggerOnMove);
   if (subscribe === void 0) {
-    subscribe = pipeSubscribeFunction(onNodeConnectedTo(node, parentNode, triggerOnMove), [
-      shareSubscribePipe<boolean>(),
+    subscribe = pipeObservable(onNodeConnectedTo(node, parentNode, triggerOnMove), [
+      shareObservablePipe<boolean>(),
     ]);
     map2.set(triggerOnMove, subscribe);
   }
@@ -148,9 +148,9 @@ export function onNodeConnectedToWithImmediateCached(
   node: Node,
   parentNode: Node = getDocument(),
   triggerOnMove?: boolean,
-): ISubscribeFunction<boolean> {
-  const listener: ISubscribeFunction<boolean> = onNodeConnectedToCached(node, parentNode, triggerOnMove);
-  return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+): IObservable<boolean> {
+  const listener: IObservable<boolean> = onNodeConnectedToCached(node, parentNode, triggerOnMove);
+  return (emit: IObserver<boolean>): IUnsubscribe => {
     emit(parentNode.contains(node));
     return listener(emit);
   };

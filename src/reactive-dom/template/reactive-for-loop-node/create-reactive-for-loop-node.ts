@@ -1,4 +1,4 @@
-import { createMulticastReplayLastSource, distinctEmitPipe, IEmitFunction, ISource, ISubscribeFunction } from '@lifaon/rx-js-light';
+import { createMulticastReplayLastSource, distinctObserverPipe, IObserver, ISource, IObservable } from '@lifaon/rx-js-light';
 import { createDocumentFragment } from '../../../light-dom/node/create/create-document-fragment';
 import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
@@ -15,7 +15,7 @@ import { trackByIdentity } from './track-by-identity';
 
 interface INodesAndIndex {
   nodes: IHTMLTemplateNodeList | DocumentFragment;
-  index: IEmitFunction<number>;
+  index: IObserver<number>;
 }
 
 // map from a value to a list of template's node
@@ -107,7 +107,7 @@ function generateNodesForReactiveForLoopNode<GItem>(
       // create current nodes from the fragment and the index source
       nodesAndIndex = {
         nodes: template({ item, index: indexSource.subscribe }),
-        index: distinctEmitPipe<number>()(indexSource.emit),
+        index: distinctObserverPipe<number>()(indexSource.emit),
       };
     }
 
@@ -264,7 +264,7 @@ function updateNodesForReactiveForLoopNode<GItem>(
 
 export type IReactiveForLoopNodeTemplateArgument<GItem> = {
   item: GItem;
-  index: ISubscribeFunction<number>;
+  index: IObservable<number>;
 };
 
 export type IReactiveForLoopNodeTemplate<GItem> = IHTMLTemplate<IReactiveForLoopNodeTemplateArgument<GItem>>;
@@ -281,7 +281,7 @@ export interface ICreateReactiveForLoopNodeOptions<GItem> {
 const INCREMENTAL_FOR_LOOP_UUID = createIncrementalUUID('FOR-LOOP');
 
 export function createReactiveForLoopNode<GItem, GTrackByValue>(
-  subscribe: ISubscribeFunction<Iterable<GItem>>,
+  subscribe: IObservable<Iterable<GItem>>,
   template: IReactiveForLoopNodeTemplate<GItem>,
   {
     trackBy = trackByIdentity,

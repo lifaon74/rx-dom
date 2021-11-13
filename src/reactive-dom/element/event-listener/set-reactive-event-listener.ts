@@ -1,17 +1,16 @@
-import { fromEventTarget, IEmitFunction, IKeyValueTuple, ITypedPureEventTarget } from '@lifaon/rx-js-light';
+import { fromEventTarget, IObserver, IReadonlyEventTarget } from '@lifaon/rx-js-light';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 
-export function setReactiveEventListener<GName extends string, GEvent extends Event>(
-  emit: IEmitFunction<GEvent>,
-  target: Node & ITypedPureEventTarget<IKeyValueTuple<GName, GEvent>>,
-  eventName: GName,
+export function setReactiveEventListener<GType extends string, GEvent extends Event>(
+  emit: IObserver<GEvent>,
+  target: Node & IReadonlyEventTarget<Record<GType, GEvent>>,
+  type: GType,
 ): void {
-  subscribeOnNodeConnectedTo(target, fromEventTarget<GName, GEvent>(target, eventName), emit);
+  subscribeOnNodeConnectedTo(target, fromEventTarget<GType, GEvent>(target, type), emit);
 }
 
-
 // export function setReactiveEventListener<GName extends string, GEvent extends Event>(
-//   emit: IEmitFunction<ISubscribeFunction<GEvent>>,
+//   emit: IObserver<IObservable<GEvent>>,
 //   target: Node & ITypedPureEventTarget<IKeyValueTuple<GName, GEvent>>,
 //   eventName: GName,
 // ): void {

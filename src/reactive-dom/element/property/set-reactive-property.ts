@@ -1,9 +1,9 @@
-import { ISubscribeFunction } from '@lifaon/rx-js-light';
+import { IObservable } from '@lifaon/rx-js-light';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { searchCaseInsensitiveProperty } from './search-case-insensitive-property';
 
 export function setReactiveProperty<GPropertyValue>(
-  subscribe: ISubscribeFunction<GPropertyValue>,
+  subscribe: IObservable<GPropertyValue>,
   node: Node,
   name: string,
 ): void {
@@ -13,7 +13,7 @@ export function setReactiveProperty<GPropertyValue>(
 }
 
 export function setCaseInsensitiveReactiveProperty(
-  subscribe: ISubscribeFunction<any>,
+  subscribe: IObservable<any>,
   node: Node,
   name: string,
 ): void {

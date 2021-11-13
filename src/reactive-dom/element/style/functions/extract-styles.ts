@@ -1,4 +1,4 @@
-// import { INullish, ISubscribePipeFunction, mapSubscribePipe } from '@lifaon/rx-js-light';
+// import { INullish, IObservablePipe, mapObservablePipe } from '@lifaon/rx-js-light';
 // import { createStyleElement, getCSSStyleSheetOfStyleElement } from '../../../../component';
 // import { IStylesMap } from './styles-map.type';
 import { IStylePropertyObjectWithOptionalPriorityOrNull } from '../../../../light-dom/style/style-property.type';
@@ -183,6 +183,6 @@ export type IStylePropertyAndValueTuple = [propertyName: string, value: IStylePr
 // }
 //
 //
-// export function extractStylesSubscribePipe(): ISubscribePipeFunction<IStylesLike, IStylesMap> {
-//   return mapSubscribePipe<IStylesLike, IStylesMap>((input: IStylesLike) => extractStylesFromStylesLike(input));
+// export function extractStylesObservablePipe(): IObservablePipe<IStylesLike, IStylesMap> {
+//   return mapObservablePipe<IStylesLike, IStylesMap>((input: IStylesLike) => extractStylesFromStylesLike(input));
 // }

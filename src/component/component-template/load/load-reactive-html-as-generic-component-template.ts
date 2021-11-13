@@ -1,5 +1,8 @@
 import { createNetworkErrorFromResponse } from '@lifaon/rx-js-light';
-import { compileReactiveHTMLAsGenericComponentTemplate, ICompileReactiveHTMLAsGenericComponentTemplateOptions } from '../compile';
+import {
+  compileReactiveHTMLAsGenericComponentTemplate,
+  ICompileReactiveHTMLAsGenericComponentTemplateOptions,
+} from '../compile/compile-reactive-html-as-generic-component-template';
 import { IComponentTemplate } from '../component-template.type';
 
 export interface ILoadReactiveHTMLAsGenericComponentTemplateOptions extends Omit<ICompileReactiveHTMLAsGenericComponentTemplateOptions, 'html'> {

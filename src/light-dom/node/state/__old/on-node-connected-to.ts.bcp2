@@ -1,8 +1,8 @@
 import { noop } from '../../../../misc/helpers/noop';
 import { onNodeDetachedListener } from '../move/node/with-event/detach-node-with-event';
 import { onNodeAttachedListener } from '../move/node/with-event/attach-node-with-event';
-import { IEmitFunction } from '../../../../types/emit-function/emit-function.type';
-import { ISubscribeFunction, IUnsubscribeFunction } from '../../../../types/subscribe-function/subscribe-function.type';
+import { IObserver } from '../../../../types/emit-function/emit-function.type';
+import { IObservable, IUnsubscribe } from '../../../../types/subscribe-function/subscribe-function.type';
 import { getParentNode } from '../properties/get-parent-node';
 import { isDocumentFragment } from '../type/is-document-fragment';
 
@@ -13,8 +13,8 @@ import { isDocumentFragment } from '../type/is-document-fragment';
 //   node: Node,
 //   onDetach: (mode: boolean, index: number) => void,
 //   parentNode: Node = document,
-//   unsubscribeFunctions: IUnsubscribeFunction[] = [],
-// ): IUnsubscribeFunction[] {
+//   unsubscribeFunctions: IUnsubscribe[] = [],
+// ): IUnsubscribe[] {
 //   let _node: Node | null = node;
 //   let _parentNode: Node | null = _node.parentNode;
 //
@@ -37,11 +37,11 @@ export function onNodeConnectedTo(
   node: Node,
   parentNode: Node = document,
   triggerOnMove: boolean = false,
-): ISubscribeFunction<boolean> {
-  return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+): IObservable<boolean> {
+  return (emit: IObserver<boolean>): IUnsubscribe => {
     let running: boolean = true;
-    let _unsubscribeFunctions: IUnsubscribeFunction[] = [];
-    let _unsubscribeAttachListener: IUnsubscribeFunction = noop;
+    let _unsubscribeFunctions: IUnsubscribe[] = [];
+    let _unsubscribeAttachListener: IUnsubscribe = noop;
     let _connected: boolean = parentNode.contains(node);
 
 
@@ -69,7 +69,7 @@ export function onNodeConnectedTo(
 
             // removes all unsubscribeFunctions for parents over this node
             while (_unsubscribeFunctions.length > index) {
-              (_unsubscribeFunctions.pop() as IUnsubscribeFunction)();
+              (_unsubscribeFunctions.pop() as IUnsubscribe)();
             }
 
             // console.log('detached', referenceNode);
@@ -126,9 +126,9 @@ export function onNodeConnectedTo(
 export function onNodeConnectedToWithImmediate(
   node: Node,
   parentNode: Node = document,
-): ISubscribeFunction<boolean> {
-  const listener: ISubscribeFunction<boolean> = onNodeConnectedTo(node, parentNode);
-  return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+): IObservable<boolean> {
+  const listener: IObservable<boolean> = onNodeConnectedTo(node, parentNode);
+  return (emit: IObserver<boolean>): IUnsubscribe => {
     emit(parentNode.contains(node));
     return listener(emit);
   };
@@ -138,9 +138,9 @@ export function onNodeConnectedToWithImmediate(
 // export function onNodeConnectedTo(
 //   node: Node,
 //   parentNode: Node = document,
-// ): ISubscribeFunction<boolean> {
-//   // const listener: ISubscribeFunction<void> = onNodeAttachedListener(node);
-//   return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+// ): IObservable<boolean> {
+//   // const listener: IObservable<void> = onNodeAttachedListener(node);
+//   return (emit: IObserver<boolean>): IUnsubscribe => {
 //     let running: boolean = true;
 //
 //     if (parentNode.contains(node)) {
@@ -152,14 +152,14 @@ export function onNodeConnectedToWithImmediate(
 //         _node = _node.parentNode;
 //       }
 //
-//       let unsubscribe: IUnsubscribeFunction = onNodeAttachedListener(_node)((): void => {
+//       let unsubscribe: IUnsubscribe = onNodeAttachedListener(_node)((): void => {
 //         unsubscribe();
 //         unsubscribe = onNodeConnectedTo(_node, );
 //       });
 //     }
 //
 //
-//     let _unsubscribeFunctions: IUnsubscribeFunction[] = [];
+//     let _unsubscribeFunctions: IUnsubscribe[] = [];
 //
 //     // const clearUnsubscribeFunctions = () => {
 //     //   for (let i = 0, l = _unsubscribeFunctions.length; i < l; i++) {
@@ -202,7 +202,7 @@ export function onNodeConnectedToWithImmediate(
 //     //   if (parentNode.contains(node)) {
 //     //     emit(true);
 //     //
-//     //     let _unsubscribeFunctions: IUnsubscribeFunction[] = [];
+//     //     let _unsubscribeFunctions: IUnsubscribe[] = [];
 //     //
 //     //     clear = () => {
 //     //       for (let i = 0, l = _unsubscribeFunctions.length; i < l; i++) {
@@ -255,13 +255,13 @@ export function onNodeConnectedToWithImmediate(
 //   node: Node,
 //   parentNode: Node = document,
 //   callback: () => void,
-// ): IUnsubscribeFunction {
+// ): IUnsubscribe {
 //   if (parentNode.contains(node)) {
 //     callback();
 //     return noop;
 //   } else {
-//     let _unsubscribeFunctions: IUnsubscribeFunction[] = [];
-//     let _unsubscribeAttachListener: IUnsubscribeFunction;
+//     let _unsubscribeFunctions: IUnsubscribe[] = [];
+//     let _unsubscribeAttachListener: IUnsubscribe;
 //
 //     let _node: Node = node;
 //     let _parentNode: Node | null = _node.parentNode;
@@ -298,14 +298,14 @@ export function onNodeConnectedToWithImmediate(
 // export function onNodeConnectedTo(
 //   node: Node,
 //   parentNode: Node = document,
-// ): ISubscribeFunction<boolean> {
-//   // const listener: ISubscribeFunction<void> = onNodeAttachedListener(node);
-//   return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+// ): IObservable<boolean> {
+//   // const listener: IObservable<void> = onNodeAttachedListener(node);
+//   return (emit: IObserver<boolean>): IUnsubscribe => {
 //     let running: boolean = true;
 //
 //
-//     let _unsubscribeFunctions: IUnsubscribeFunction[] = [];
-//     let _unsubscribeAttachListener: IUnsubscribeFunction | undefined;
+//     let _unsubscribeFunctions: IUnsubscribe[] = [];
+//     let _unsubscribeAttachListener: IUnsubscribe | undefined;
 //
 //     let _node: Node = node;
 //     let _parentNode: Node | null = _node.parentNode;
@@ -345,9 +345,9 @@ export function onNodeConnectedToWithImmediate(
 // export function onNodeConnectedTo(
 //   node: Node,
 //   parentNode: Node = document,
-// ): ISubscribeFunction<boolean> {
-//   // const listener: ISubscribeFunction<void> = onNodeAttachedListener(node);
-//   return (emit: IEmitFunction<boolean>): IUnsubscribeFunction => {
+// ): IObservable<boolean> {
+//   // const listener: IObservable<void> = onNodeAttachedListener(node);
+//   return (emit: IObserver<boolean>): IUnsubscribe => {
 //     let running: boolean = true;
 //     let clear: () => void;
 //
@@ -355,7 +355,7 @@ export function onNodeConnectedToWithImmediate(
 //       if (parentNode.contains(node)) {
 //         emit(true);
 //
-//         let _unsubscribeFunctions: IUnsubscribeFunction[] = [];
+//         let _unsubscribeFunctions: IUnsubscribe[] = [];
 //
 //         clear = () => {
 //           for (let i = 0, l = _unsubscribeFunctions.length; i < l; i++) {

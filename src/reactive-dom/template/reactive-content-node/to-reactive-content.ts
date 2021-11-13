@@ -1,4 +1,4 @@
-import { ISubscribeFunction, mapSubscribePipe, pipeSubscribeFunction } from '@lifaon/rx-js-light';
+import { IObservable, mapObservablePipe, pipeObservable } from '@lifaon/rx-js-light';
 import { createDocumentFragment } from '../../../light-dom/node/create/create-document-fragment';
 import { createTextNode } from '../../../light-dom/node/create/create-text-node';
 import { nodeAppendChild } from '../../../light-dom/node/move/derived/dom-like/node/node-append-child';
@@ -7,7 +7,7 @@ import { isDOMNode } from '../../../light-dom/node/type/is-dom-node';
 import { IDocumentFragmentOrNull } from '../../../light-dom/template/attach-template';
 import { isHTMLTemplate } from '../../../light-dom/template/is-html-template';
 import { IGenericHTMLTemplate } from '../../../light-dom/template/template.type';
-import { toSubscribeFunctionThrowIfUndefined } from '../../../misc/to-subscribe-function';
+import { toObservableThrowIfUndefined } from '../../../misc/to-observable';
 import { IReactiveContent } from './create-reactive-content-node';
 
 export type IToReactiveContentValue =
@@ -19,14 +19,14 @@ export type IToReactiveContentValue =
 
 export type IToReactiveContentInput =
   IToReactiveContentValue
-  | ISubscribeFunction<IToReactiveContentValue>
+  | IObservable<IToReactiveContentValue>
   ;
 
 export function toReactiveContent(
   input: IToReactiveContentInput,
 ): IReactiveContent {
-  return pipeSubscribeFunction(toSubscribeFunctionThrowIfUndefined(input), [
-    mapSubscribePipe<IToReactiveContentValue, IDocumentFragmentOrNull>((value: IToReactiveContentValue): IDocumentFragmentOrNull => {
+  return pipeObservable(toObservableThrowIfUndefined(input), [
+    mapObservablePipe<IToReactiveContentValue, IDocumentFragmentOrNull>((value: IToReactiveContentValue): IDocumentFragmentOrNull => {
       if (value === null) {
         return null;
       } else if (typeof value === 'string') {

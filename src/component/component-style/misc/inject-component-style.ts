@@ -2,27 +2,26 @@ import { nodeAppendChild } from '../../../light-dom/node/move/derived/dom-like/n
 import { getShadowRoot } from '../../../light-dom/node/properties/get-shadow-root';
 import { onNodeConnectedToWithImmediateCached } from '../../../light-dom/node/state/on-node-connected-to/on-node-connected-to';
 import { importNode } from '../../../light-dom/others/import-node';
-import { TOP_PARENT_NODE } from '../../../misc/top-parent-node.constant';
+import { getTopParentNode } from '../../../misc/get-top-parent-node';
 import { IComponent } from '../../component/component.type';
 import { IComponentStyle } from '../component-style.type';
 import { activateStyleElement } from '../helpers/activate-style-element';
-import { applyGlobalStyleElementForComponent, getGlobalStyleElementForComponent } from '../prepare-global-style-element-for-component';
+import { applyGlobalStyleElementForComponent } from '../prepare-global-style-element-for-component';
 import { linkStyleElementWithComponent, unlinkStyleElementWithComponent } from '../style-element-usage-count';
 
 export function injectComponentStyle(
   style: IComponentStyle,
   instance: IComponent<any>,
 ): void {
-  const globalHTMLStyleElement: HTMLStyleElement = getGlobalStyleElementForComponent(style);
-  applyGlobalStyleElementForComponent(globalHTMLStyleElement, instance);
-  onNodeConnectedToWithImmediateCached(instance, TOP_PARENT_NODE)((connected: boolean) => {
+  applyGlobalStyleElementForComponent(style, instance);
+  onNodeConnectedToWithImmediateCached(instance, getTopParentNode())((connected: boolean) => {
     if (connected) {
-      if (linkStyleElementWithComponent(globalHTMLStyleElement, instance)) {
-        activateStyleElement(globalHTMLStyleElement, true);
+      if (linkStyleElementWithComponent(style, instance)) {
+        activateStyleElement(style, true);
       }
     } else {
-      if (unlinkStyleElementWithComponent(globalHTMLStyleElement, instance)) {
-        activateStyleElement(globalHTMLStyleElement, false);
+      if (unlinkStyleElementWithComponent(style, instance)) {
+        activateStyleElement(style, false);
       }
     }
   });

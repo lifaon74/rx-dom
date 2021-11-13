@@ -5,6 +5,6 @@ export function generateReactiveDOMJSLinesForReactiveStyleList(
 ): ILines {
   return [
     `// reactive style list`,
-    `setReactiveStyleList(toSubscribeFunction(${value}), node);`,
+    `setReactiveStyleList(toObservable(${value}), node);`,
   ];
 }

@@ -1,4 +1,4 @@
-import { ISubscribeFunction } from '@lifaon/rx-js-light';
+import { IObservable } from '@lifaon/rx-js-light';
 import { addCSSClass } from '../../../light-dom/class/add-css-class';
 import { removeCSSClass } from '../../../light-dom/class/remove-css-class';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
@@ -8,7 +8,7 @@ import { IClassNamesList } from './functions/extract-class-names';
 export type IReactiveClassListValue = IClassNamesList;
 
 export function setReactiveClassList(
-  subscribe: ISubscribeFunction<IReactiveClassListValue>,
+  subscribe: IObservable<IReactiveClassListValue>,
   element: Element,
 ): void {
   let previousClassNames: IClassNamesList = new Set<string>();

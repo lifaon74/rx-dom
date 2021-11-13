@@ -1,4 +1,4 @@
-import { INullish, isNullish, ISubscribePipeFunction, mapSubscribePipe } from '@lifaon/rx-js-light';
+import { INullish, isNullish, IObservablePipe, mapObservablePipe } from '@lifaon/rx-js-light';
 import { isValidCSSIdentifier } from '../../../../misc/tokenizers/css';
 
 /** TYPES **/
@@ -112,9 +112,9 @@ export function extractClassNamesFromClassNamesLike(
 }
 
 /**
- * Creates a SubscribePipe which converts IClassNamesLike into IClassNamesList
+ * Creates a ObservablePipe which converts IClassNamesLike into IClassNamesList
  */
-export function extractClassNamesSubscribePipe(): ISubscribePipeFunction<IClassNamesLike, IClassNamesList> {
-  return mapSubscribePipe<IClassNamesLike, IClassNamesList>((input: IClassNamesLike) => extractClassNamesFromClassNamesLike(input));
+export function extractClassNamesObservablePipe(): IObservablePipe<IClassNamesLike, IClassNamesList> {
+  return mapObservablePipe<IClassNamesLike, IClassNamesList>((input: IClassNamesLike) => extractClassNamesFromClassNamesLike(input));
 }
 

@@ -1,5 +1,5 @@
 import {
-  composeEmitFunction, ISource, mapToNumberEmitPipe, mapToStringSubscribePipe, pipeSubscribeFunction
+  composeObserver, ISource, mapToNumberObserverPipe, mapToStringObservablePipe, pipeObservable
 } from '@lifaon/rx-js-light';
 import { reactiveAttribute } from './reactive-attribute.ts.bcp';
 
@@ -10,11 +10,11 @@ export function reactiveNumberAttribute(
 ): void {
   reactiveAttribute(
     {
-      subscribe: pipeSubscribeFunction(source.subscribe, [
-        mapToStringSubscribePipe(),
+      subscribe: pipeObservable(source.subscribe, [
+        mapToStringObservablePipe(),
       ]),
-      emit: composeEmitFunction([
-        mapToNumberEmitPipe(),
+      emit: composeObserver([
+        mapToNumberObserverPipe(),
       ], source.emit),
     },
     element,

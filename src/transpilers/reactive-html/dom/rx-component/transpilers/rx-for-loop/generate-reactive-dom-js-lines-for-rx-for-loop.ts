@@ -13,7 +13,7 @@ export function generateReactiveDOMJSLinesForRXForLoop(
       `parentNode,`,
       `createReactiveForLoopNode(`,
       ...indentLines([
-        `toSubscribeFunction(${items}),`,
+        `toObservable(${items}),`,
         `${template},`,
         ...options,
       ]),

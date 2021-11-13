@@ -1,8 +1,8 @@
-import { ISubscribeFunction } from '@lifaon/rx-js-light';
+import { IObservable } from '@lifaon/rx-js-light';
 import { subscribeOnNodeConnectedTo } from '../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 
 export function createReactiveTextNode(
-  subscribe: ISubscribeFunction<string>,
+  subscribe: IObservable<string>,
 ): Text {
   const textNode: Text = new Text();
 

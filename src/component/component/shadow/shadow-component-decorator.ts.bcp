@@ -1,0 +1,15 @@
+import { HTMLElementConstructor } from '../../../light-dom/types/html-element-constructor.type';
+import { IShadowComponentOptions } from './shadow-component-options.type';
+
+/**
+ * DECORATOR (CLASS)
+ */
+export function ShadowComponent<GData extends object>(
+  options: IShadowComponentOptions<GData>,
+) {
+  return <GClass extends HTMLElementConstructor>(
+    target: GClass,
+  ): GClass | void => {
+    return shadowComponentFactory<GClass, GData>(target, options);
+  };
+}

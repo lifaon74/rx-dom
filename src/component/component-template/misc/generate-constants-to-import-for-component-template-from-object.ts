@@ -15,10 +15,6 @@ export function generateConstantsToImportForComponentTemplateFromObject(
 ): IObjectProperties {
   return generateObjectPropertiesFromLinearProperties([
     ...Object.keys(constantsToImport),
-    'getNodeReference',
-    'setNodeReference',
-    'getTemplateReference',
-    'setTemplateReference',
     dataName,
     contentName,
   ]);

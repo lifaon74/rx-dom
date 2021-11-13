@@ -1,10 +1,8 @@
-import {
-  generateCreateElementFunctionWithCustomElements,
-  generateGetNodeModifierFunctionFromArray,
-  HTMLElementConstructor,
-  IGenericNodeModifier,
-} from '../../../light-dom';
-import { DEFAULT_CONSTANTS_TO_IMPORT } from '../../../transpilers';
+import { generateCreateElementFunctionWithCustomElements } from '../../../light-dom/node/create/element-node/derived/generate-create-element-function-with-custom-elements';
+import { generateGetNodeModifierFunctionFromArray } from '../../../light-dom/node/modify/node/generate-get-node-modifier-function';
+import { IGenericNodeModifier } from '../../../light-dom/node/modify/node/node-modifier.type';
+import { HTMLElementConstructor } from '../../../light-dom/types/html-element-constructor.type';
+import { DEFAULT_CONSTANTS_TO_IMPORT } from '../../../transpilers/constants/default-constants-to-import.constant';
 import { IComponentTemplate, IComponentTemplateCompileOptions } from '../component-template.type';
 import { compileReactiveHTMLAsComponentTemplate } from './compile-reactive-html-as-component-template';
 

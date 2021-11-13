@@ -1,4 +1,4 @@
-import { ISubscribeFunction } from '@lifaon/rx-js-light';
+import { IObservable } from '@lifaon/rx-js-light';
 import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
 import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
 import { detachManyNodes } from '../../../light-dom/node/move/derived/batch/detach-many-nodes';
@@ -9,7 +9,7 @@ import { IHTMLTemplateNodeList } from '../../../light-dom/template/template.type
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { createIncrementalUUID } from '../../../misc/uuid/incremental-uuid';
 
-export type IReactiveContent = ISubscribeFunction<IDocumentFragmentOrNull>;
+export type IReactiveContent = IObservable<IDocumentFragmentOrNull>;
 
 const INCREMENTAL_REACTIVE_CONTENT_UUID = createIncrementalUUID('REACTIVE-CONTENT');
 

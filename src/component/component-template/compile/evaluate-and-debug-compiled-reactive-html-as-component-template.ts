@@ -1,4 +1,4 @@
-import { stringToLinesRaw } from '../../../transpilers';
+import { stringToLinesRaw } from '../../../transpilers/helpers/lines-formatting-helpers';
 import { ICompiledComponentTemplateFunctionVariables, IComponentTemplate } from '../component-template.type';
 import { evaluateTranspiledReactiveHTMLAsComponentTemplate } from './evaluate-transpiled-reactive-html-as-component-template';
 

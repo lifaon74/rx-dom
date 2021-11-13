@@ -5,6 +5,6 @@ export function generateReactiveDOMJSLinesForRXInjectContent(
 ): ILines {
   return [
     `// reactive content`,
-    `nodeAppendChild(parentNode, createReactiveContentNode(toSubscribeFunction(${content})));`,
+    `nodeAppendChild(parentNode, createReactiveContentNode(toObservable(${content})));`,
   ];
 }

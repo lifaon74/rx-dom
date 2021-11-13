@@ -42,7 +42,7 @@ interface IData {
         <input
           #input
           [value]="$.$input$.subscribe"
-          (input)="() => $.$input$.emit(getNodeReference('input').value)"
+          (input)="() => $.$input$.emit(node.value)"
         >
       </div>
       <div

@@ -5,10 +5,10 @@ function onNodeConnectedTo(
   node: Node,
   parentNode?: Node,
   options?: IOnNodeConnectedToOptions,
-): ISubscribeFunction<boolean>
+): IObservable<boolean>
 ```
 
-This function detects when `node` is connected to `parentNode` (default: `document`). Its returns a SubscribeFunction
+This function detects when `node` is connected to `parentNode` (default: `document`). Its returns a Observable
 that emits *true* if the node is connected, else *false*.
 
 ⚠️ This function only works if you use the rx-dom's build in functions to mutate the DOM:

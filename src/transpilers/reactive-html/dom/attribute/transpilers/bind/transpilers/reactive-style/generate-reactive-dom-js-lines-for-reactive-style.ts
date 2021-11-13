@@ -6,6 +6,6 @@ export function generateReactiveDOMJSLinesForReactiveStyle(
 ): ILines {
   return [
     `// reactive style '${name}'`,
-    `setReactiveStyle(toSubscribeFunction(${value}), node, ${JSON.stringify(name)});`,
+    `setReactiveStyle(toObservable(${value}), node, ${JSON.stringify(name)});`,
   ];
 }

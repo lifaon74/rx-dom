@@ -1,4 +1,4 @@
-import { createListenerBuilderFunctions, createListenerMap, freeze, ISubscribeFunction } from '@lifaon/rx-js-light';
+import { createListenerBuilderFunctions, createListenerMap, freeze, IObservable } from '@lifaon/rx-js-light';
 import { IAttributeValueOrNull } from '../attribute-value.type';
 import { getAttributeValue } from '../get-attribute-value';
 import { setAttributeValue } from '../set-attribute-value';
@@ -48,7 +48,7 @@ export const {
 export function onAttributeChangeListener(
   element: Element,
   name: string,
-): ISubscribeFunction<IAttributeValueOrNull> {
+): IObservable<IAttributeValueOrNull> {
   return onAttributeReferenceChangeListener(generateAttributeReference(element, name));
 }
 

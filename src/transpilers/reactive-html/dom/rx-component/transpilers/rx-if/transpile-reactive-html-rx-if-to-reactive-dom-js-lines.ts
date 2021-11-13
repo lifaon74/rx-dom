@@ -3,7 +3,7 @@ import { hasAttribute } from '../../../../../../light-dom/attribute/has-attribut
 import { removeAttribute } from '../../../../../../light-dom/attribute/remove-attribute';
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-nodes';
-import { generateGetOptionalTemplateReferenceCode } from '../../../../../helpers/generate-get-template-reference-code';
+import { generateOptionalTemplateVariableName } from '../../../../../helpers/generate-template-variable-name';
 import { scopeLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
 import {
@@ -89,8 +89,8 @@ export function transpileReactiveHTMLRXIfToReactiveDOMJSLines(
 
     return generateReactiveDOMJSLinesForRXIf(
       condition,
-      generateGetOptionalTemplateReferenceCode(templateTrue),
-      generateGetOptionalTemplateReferenceCode(templateFalse),
+      generateOptionalTemplateVariableName(templateTrue),
+      generateOptionalTemplateVariableName(templateFalse),
     );
   } else if (hasAttribute(node, COMMAND_NAME)) {
     const condition: string = getAttributeValue(node, COMMAND_NAME) as string;

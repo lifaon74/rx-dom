@@ -11,7 +11,7 @@ export function transpileReactiveHTMLReactivePropertyToReactiveDOMJSLines(
 ): ILines {
   return [
     `// reactive property '${bindProperty.name}'`,
-    `setReactiveProperty(toSubscribeFunction(${bindProperty.value}), node, ${JSON.stringify(bindProperty.name)});`,
+    `setReactiveProperty(toObservable(${bindProperty.value}), node, ${JSON.stringify(bindProperty.name)});`,
   ];
 }
 

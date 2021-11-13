@@ -6,6 +6,6 @@ export function generateReactiveDOMJSLinesForReactiveAttribute(
 ): ILines {
   return [
     `// reactive attribute '${name}'`,
-    `setReactiveAttribute(toSubscribeFunction(${value}), node, ${JSON.stringify(name)});`,
+    `setReactiveAttribute(toObservable(${value}), node, ${JSON.stringify(name)});`,
   ];
 }

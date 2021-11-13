@@ -1,4 +1,4 @@
-import { ISubscribeFunction } from '../../../../types';
+import { IObservable } from '../../../../types';
 import { ContainerNode } from '../../container-node';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to';
 import { ITemplate } from '../template-interface';
@@ -8,11 +8,11 @@ import { attachNode } from '../../../dom-mutation/node/attach-node';
 
 
 /**
- * A Node which injects a different template according to a SubscribeFunction
+ * A Node which injects a different template according to a Observable
  */
 export class ReactiveIfNode extends ContainerNode {
   constructor(
-    subscribe: ISubscribeFunction<boolean>,
+    subscribe: IObservable<boolean>,
     templateTrue: ITemplate<[]> = createEmptyTemplate,
     templateFalse: ITemplate<[]> = createEmptyTemplate,
   ) {
