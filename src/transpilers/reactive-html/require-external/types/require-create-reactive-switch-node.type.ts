@@ -1,0 +1,4 @@
+export const REQUIRE_CREATE_REACTIVE_SWITCH_NODE_CONSTANT = 'createReactiveSwitchNode';
+
+export type IRequireCreateReactiveSwitchNodeKey = typeof REQUIRE_CREATE_REACTIVE_SWITCH_NODE_CONSTANT;
+

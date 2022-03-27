@@ -1,4 +1,4 @@
-export * from './bind';
-export * from './event';
-export * from './modifier';
+export * from './bind/index';
+export * from './event/index';
+export * from './modifier/index';
 export * from './static/index';

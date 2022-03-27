@@ -5,12 +5,33 @@ import { getChildNodes } from '../../../../../light-dom/node/properties/get-chil
 import { getTagName } from '../../../../../light-dom/node/properties/get-tag-name';
 import { scopeLines } from '../../../../helpers/lines-formatting-helpers';
 import { ILines, ILinesOrNull } from '../../../../types/lines.type';
-import { transpileReactiveHTMLAttributesToReactiveDOMJSLines } from '../../attributes/transpile-reactive-html-attributes-to-reactive-dom-js-lines';
-import { transpileReactiveHTMLNodesToReactiveDOMJSLines } from '../../nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
-import { transpileReactiveHTMLElementModifiersToReactiveDOMJSLines } from './modifier/transpile-reactive-html-element-modifiers-to-reactive-dom-js-lines';
+import { IRequireExternalFunctionCreateElementKey } from '../../../require-external/require-external-function-all-key.type';
+import { IRequireExternalFunction } from '../../../require-external/require-external-function.type';
+import { REQUIRE_NODE_APPEND_CHILD_CONSTANT } from '../../../require-external/types/require-node-append-child.type';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLAttributesToReactiveDOMJSLines,
+  transpileReactiveHTMLAttributesToReactiveDOMJSLines,
+} from '../../attributes/transpile-reactive-html-attributes-to-reactive-dom-js-lines';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines,
+  transpileReactiveHTMLNodesToReactiveDOMJSLines,
+} from '../../nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
+import { getCreateElementFunctionNameForElement } from './get-create-element-function-name-for-element';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLElementModifiersToReactiveDOMJSLines,
+  transpileReactiveHTMLElementModifiersToReactiveDOMJSLines,
+} from './modifier/transpile-reactive-html-element-modifiers-to-reactive-dom-js-lines';
+
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLGenericElementToReactiveDOMJSLines =
+  | IRequireExternalFunctionCreateElementKey
+  | IRequireExternalFunctionKeyForTranspileReactiveHTMLAttributesToReactiveDOMJSLines
+  | IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines
+  | IRequireExternalFunctionKeyForTranspileReactiveHTMLElementModifiersToReactiveDOMJSLines
+  ;
 
 export function transpileReactiveHTMLGenericElementToReactiveDOMJSLines(
   node: Element,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLGenericElementToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const name: string = getTagName(node);
   const isAttribute: IAttributeValueOrNull = getAttributeValue(node, 'is');
@@ -18,17 +39,18 @@ export function transpileReactiveHTMLGenericElementToReactiveDOMJSLines(
   const elementOptions: ICreateElementOptions | null = (isAttribute === null)
     ? null
     : {
-      elementOptions: {
-        is: isAttribute,
-      },
+      is: isAttribute,
     };
+
+  const createElementKey: IRequireExternalFunctionCreateElementKey = getCreateElementFunctionNameForElement(node);
+  const createElement: string = requireExternalFunction(createElementKey);
 
   const elementLines: ILines = [
     `// element '${name}'`,
-    `const node = createElement(${JSON.stringify(name)}${(elementOptions === null) ? '' : `, ${JSON.stringify(elementOptions)}`});`,
+    `const node = ${createElement}(${JSON.stringify(name)}${(elementOptions === null) ? '' : `, ${JSON.stringify(elementOptions)}`});`,
   ];
 
-  const transpiledAttributes: ILinesOrNull = transpileReactiveHTMLAttributesToReactiveDOMJSLines(Array.from(node.attributes));
+  const transpiledAttributes: ILinesOrNull = transpileReactiveHTMLAttributesToReactiveDOMJSLines(Array.from(node.attributes), requireExternalFunction);
   const attributesLines: ILines = (transpiledAttributes === null)
     ? []
     : [
@@ -36,7 +58,7 @@ export function transpileReactiveHTMLGenericElementToReactiveDOMJSLines(
       ...transpiledAttributes,
     ];
 
-  const transpiledChildren: ILinesOrNull = transpileReactiveHTMLNodesToReactiveDOMJSLines(getChildNodes(node));
+  const transpiledChildren: ILinesOrNull = transpileReactiveHTMLNodesToReactiveDOMJSLines(getChildNodes(node), requireExternalFunction);
   const childrenLines: ILines = (transpiledChildren === null)
     ? []
     : scopeLines([
@@ -45,11 +67,17 @@ export function transpileReactiveHTMLGenericElementToReactiveDOMJSLines(
       ...transpiledChildren,
     ]);
 
-  const modifiersLines: ILines = transpileReactiveHTMLElementModifiersToReactiveDOMJSLines(node, [
-    ...attributesLines,
-    ...childrenLines,
-    `nodeAppendChild(parentNode, node);`,
-  ]);
+  const nodeAppendChild: string = requireExternalFunction(REQUIRE_NODE_APPEND_CHILD_CONSTANT);
+
+  const modifiersLines: ILines = transpileReactiveHTMLElementModifiersToReactiveDOMJSLines(
+    node,
+    [
+      ...attributesLines,
+      ...childrenLines,
+      `${nodeAppendChild}(parentNode, node);`,
+    ],
+    requireExternalFunction,
+  );
 
   return scopeLines([
     ...elementLines,

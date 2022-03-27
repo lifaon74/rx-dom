@@ -1,9 +1,16 @@
 import { ILinesOrNull } from '../../../../../types/lines.type';
-import { transpileReactiveHTMLReactiveTextToReactiveDOMJSLines } from './transpile-reactive-html-reactive-text-to-reactive-dom-js-lines';
+import { IRequireExternalFunction } from '../../../../require-external/require-external-function.type';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLReactiveTextToReactiveDOMJSLines,
+  transpileReactiveHTMLReactiveTextToReactiveDOMJSLines,
+} from './transpile-reactive-html-reactive-text-to-reactive-dom-js-lines';
+
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLReactiveTextNodeToReactiveDOMJSLines = IRequireExternalFunctionKeyForTranspileReactiveHTMLReactiveTextToReactiveDOMJSLines;
 
 export function transpileReactiveHTMLReactiveTextNodeToReactiveDOMJSLines(
   node: Text,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLReactiveTextNodeToReactiveDOMJSLines>,
 ): ILinesOrNull {
-  return transpileReactiveHTMLReactiveTextToReactiveDOMJSLines(node.data);
+  return transpileReactiveHTMLReactiveTextToReactiveDOMJSLines(node.data, requireExternalFunction);
 }
 

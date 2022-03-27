@@ -5,16 +5,17 @@ export interface IOptionalValueConverter<GIn, GOut> {
   (value: GIn): GOut | null;
 }
 
-export function wrapGenericToLinesIteratorTranspilerWithOptionalValueConverter<GIn, GOut>(
-  transpiler: IToLinesTranspiler<[GOut]>,
+export function wrapGenericToLinesIteratorTranspilerWithOptionalValueConverter<GIn, GOut, GArgument extends any[]>(
+  transpiler: IToLinesTranspiler<[GOut, ...GArgument]>,
   converter: IOptionalValueConverter<GIn, GOut>,
-): IToLinesTranspiler<[GIn]> {
+): IToLinesTranspiler<[GIn, ...GArgument]> {
   return (
     value: GIn,
+    ...args: GArgument
   ): ILinesOrNull => {
     const _value: GOut | null = converter(value);
     return (_value === null)
       ? null
-      : transpiler(_value);
+      : transpiler(_value, ...args);
   };
 }

@@ -1,8 +1,15 @@
 import { isValidCSSIdentifier } from '../../../../../../../../misc/tokenizers/css';
 import { ILinesOrNull } from '../../../../../../../types/lines.type';
+import { IRequireExternalFunction } from '../../../../../../require-external/require-external-function.type';
 import { IBindProperty } from '../../extract-bind-property-from-reactive-html-attribute';
-import { generateReactiveDOMJSLinesForReactiveClass } from './generate-reactive-dom-js-lines-for-reactive-class';
-import { generateReactiveDOMJSLinesForReactiveClassList } from './generate-reactive-dom-js-lines-for-reactive-class-list';
+import {
+  generateReactiveDOMJSLinesForReactiveClass,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForReactiveClass,
+} from './generate-reactive-dom-js-lines-for-reactive-class';
+import {
+  generateReactiveDOMJSLinesForReactiveClassList,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForReactiveClassList,
+} from './generate-reactive-dom-js-lines-for-reactive-class-list';
 
 const REACTIVE_CLASS_STANDARD_REGEXP: RegExp = new RegExp('^class\\.(.*)$');
 const REACTIVE_CLASS_PREFIXED_REGEXP: RegExp = new RegExp('^class-(.*)');
@@ -17,8 +24,15 @@ const REACTIVE_CLASS_PREFIXED_REGEXP: RegExp = new RegExp('^class-(.*)');
  *    bind-class-class-a="boolean"
  *    bind-class---="['class-a', 'class-b']"
  */
+
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLReactiveClassToReactiveDOMJSLines =
+  | IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForReactiveClassList
+  | IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForReactiveClass
+  ;
+
 export function transpileReactiveHTMLReactiveClassToReactiveDOMJSLines(
   bindProperty: IBindProperty,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLReactiveClassToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const match: RegExpExecArray | null = bindProperty.prefixMode
     ? REACTIVE_CLASS_PREFIXED_REGEXP.exec(bindProperty.name)
@@ -38,8 +52,8 @@ export function transpileReactiveHTMLReactiveClassToReactiveDOMJSLines(
     }
 
     return (className === '..')
-      ? generateReactiveDOMJSLinesForReactiveClassList(bindProperty.value)
-      : generateReactiveDOMJSLinesForReactiveClass(className, bindProperty.value);
+      ? generateReactiveDOMJSLinesForReactiveClassList(bindProperty.value, requireExternalFunction)
+      : generateReactiveDOMJSLinesForReactiveClass(className, bindProperty.value, requireExternalFunction);
   }
 }
 

@@ -1,0 +1,4 @@
+export const REQUIRE_SET_REACTIVE_EVENT_LISTENER_CONSTANT = 'setReactiveEventListener';
+
+export type IRequireSetReactiveEventListenerKey = typeof REQUIRE_SET_REACTIVE_EVENT_LISTENER_CONSTANT;
+

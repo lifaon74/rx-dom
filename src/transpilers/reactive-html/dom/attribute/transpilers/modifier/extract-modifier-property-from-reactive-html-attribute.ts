@@ -15,7 +15,7 @@ const MODIFIER_ATTRIBUTE_BRACKET_PATTERN: string = '\\$([^\\)]+)';
 const MODIFIER_ATTRIBUTE_PREFIX_PATTERN: string = 'mod-(.+)';
 const MODIFIER_ATTRIBUTE_PATTERN: string = `(?:${MODIFIER_ATTRIBUTE_BRACKET_PATTERN})`
   + `|(?:${MODIFIER_ATTRIBUTE_PREFIX_PATTERN})`;
-const MODIFIER_ATTRIBUTE_REGEXP: RegExp = new RegExp(`^${ MODIFIER_ATTRIBUTE_PATTERN }$`);
+const MODIFIER_ATTRIBUTE_REGEXP: RegExp = new RegExp(`^${MODIFIER_ATTRIBUTE_PATTERN}$`);
 
 export function extractModifierPropertyFromReactiveHTMLAttribute(
   attribute: Attr,

@@ -1,4 +1,4 @@
-import { composeObserver, ISource, mapObserverPipe, mapObservablePipe, pipeObservable } from '@lifaon/rx-js-light';
+import { composeObserver, ISource, mapObservablePipe, mapObserverPipe, pipeObservable } from '@lifaon/rx-js-light';
 import { IAttributeValueOrNull } from '../../../../light-dom/attribute/attribute-value.type';
 import { ISyncAttributeWithSourceOptions, syncAttributeWithSource } from './sync-attribute-with-source';
 

@@ -1,8 +1,8 @@
 import { isFunction } from '../../misc/is/is-function';
-import { IHTMLTemplate } from './template.type';
+import { IHTMLTemplate } from './html-template.type';
 
-export function isHTMLTemplate<GTemplateArgument extends object>(
+export function isHTMLTemplate<GArguments extends any[]>(
   value: unknown,
-): value is IHTMLTemplate<GTemplateArgument> {
+): value is IHTMLTemplate<GArguments> {
   return isFunction(value);
 }

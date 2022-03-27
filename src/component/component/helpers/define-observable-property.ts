@@ -42,6 +42,9 @@ const DEFAULT_OPTIONS = {
 };
 
 // TODO refactor (rename) and improve
+/**
+ * @deprecated
+ */
 export function defineObservableProperty<GTarget, GName extends string, GValue>(
   target: GTarget,
   propertyName: GName,
@@ -91,6 +94,9 @@ export function defineObservableProperty<GTarget, GName extends string, GValue>(
   return target as any;
 }
 
+/**
+ * @deprecated
+ */
 export function defineSimpleObservableProperty<GValue>(
   target: any,
   propertyName: string,

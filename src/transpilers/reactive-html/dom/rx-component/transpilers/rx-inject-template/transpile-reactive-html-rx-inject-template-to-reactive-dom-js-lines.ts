@@ -1,9 +1,10 @@
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-nodes';
-import { dashCaseToCamelCase } from '../../../../../../misc/case-converters/dash-case';
+import { generateFullOptionalObjectPropertiesLines } from '../../../../../helpers/generate-object-properties-lines';
 import { generateTemplateVariableName } from '../../../../../helpers/generate-template-variable-name';
-import { indentLines } from '../../../../../helpers/lines-formatting-helpers';
+import { indentLines, optionalLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
+import { convertLetPropertyToObjectPropertyEntry } from '../helpers/convert-let-property-to-object-property-entry';
 import { extractLetPropertyFromReactiveHTMLAttribute, ILetProperty } from '../helpers/extract-let-property-from-reactive-html-attribute';
 
 /*
@@ -52,17 +53,17 @@ export function transpileReactiveHTMLRXInjectTemplateToReactiveDOMJSLines(
       throw new Error(`Should not have any children`);
     }
 
+    const letPropertiesLines: ILinesOrNull = generateFullOptionalObjectPropertiesLines(
+      letProperties.map(convertLetPropertyToObjectPropertyEntry),
+      ',',
+    );
+
     return [
       `// inject template`,
-      `attachTemplate(`,
+      `${generateTemplateVariableName(templateName)}(`,
       ...indentLines([
-        `${generateTemplateVariableName(templateName)},`,
-        `{`,
-        ...indentLines(letProperties.map((letProperty: ILetProperty) => {
-          return `${dashCaseToCamelCase(letProperty.name)}: (${letProperty.value}),`;
-        })),
-        `},`,
         `parentNode,`,
+        ...optionalLines(letPropertiesLines),
       ]),
       `);`,
     ];

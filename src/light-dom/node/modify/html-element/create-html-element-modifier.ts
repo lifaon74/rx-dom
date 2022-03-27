@@ -2,16 +2,19 @@ import { createNodeModifier } from '../node/create-node-modifier';
 import { INodeModifier } from '../node/node-modifier.type';
 import {
   htmlElementModifierFunctionToNodeModifierFunction,
-  IHTMLElementModifierFunctionToNodeModifierFunction,
+  IHTMLElementModifierFunctionToElementModifierFunction,
 } from './html-element-modifier-function-to-node-modifier-function';
 import { IGenericHTMLElementModifierFunction } from './html-element-modifier-function.type';
 
-export function createElementModifier<GName extends string, GHTMLElementModifierFunction extends IGenericHTMLElementModifierFunction>(
+export type IHTMLElementModifier<GName extends string, GHTMLElementModifierFunction extends IGenericHTMLElementModifierFunction> =
+  INodeModifier<GName, IHTMLElementModifierFunctionToElementModifierFunction<GHTMLElementModifierFunction>>;
+
+export function createHTMLElementModifier<GName extends string, GHTMLElementModifierFunction extends IGenericHTMLElementModifierFunction>(
   name: GName,
   modify: GHTMLElementModifierFunction,
-): INodeModifier<GName, IHTMLElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction>> {
-  return createNodeModifier<GName, IHTMLElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction>>(
+): IHTMLElementModifier<GName, GHTMLElementModifierFunction> {
+  return createNodeModifier(
     name,
-    htmlElementModifierFunctionToNodeModifierFunction(modify),
+    htmlElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction>(modify),
   );
 }

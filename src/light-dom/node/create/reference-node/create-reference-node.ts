@@ -1,7 +1,6 @@
 import { createCommentNode } from '../create-comment-node';
 import { createTextNode } from '../create-text-node';
-
-export type IReferenceNode = Comment | Text;
+import { IReferenceNode } from './reference-node.type';
 
 export function createReferenceNode(
   name: string,

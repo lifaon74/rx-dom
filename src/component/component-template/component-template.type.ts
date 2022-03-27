@@ -1,26 +1,8 @@
-/** COMPILE **/
+import { IHTMLTemplate } from '../../light-dom/template/html-template.type';
 
-export interface IComponentTemplateCompileOptions {
-  dataName?: string;
-  contentName?: string;
-}
+export type IComponentTemplateArguments<GData extends object> = [
+  $: GData,
+  $content: DocumentFragment,
+];
 
-export interface ICompiledComponentTemplateFunctionVariables<GData extends object> {
-  data: GData;
-  content: DocumentFragment;
-}
-
-export interface ICompiledComponentTemplateFunction<GData extends object> {
-  (
-    variables: ICompiledComponentTemplateFunctionVariables<GData>,
-    constants: object,
-  ): DocumentFragment;
-}
-
-/** RUN **/
-
-export interface IComponentTemplate<GData extends object> {
-  (
-    variables: ICompiledComponentTemplateFunctionVariables<GData>,
-  ): DocumentFragment;
-}
+export type IComponentTemplate<GData extends object> = IHTMLTemplate<IComponentTemplateArguments<GData>>;

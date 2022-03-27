@@ -5,11 +5,16 @@ import { hasChildNodes } from '../../../../../../../light-dom/node/state/has-chi
 import { generateTemplateVariableName } from '../../../../../../helpers/generate-template-variable-name';
 import { scopeLines } from '../../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../../types/lines.type';
+import { IRequireExternalFunction } from '../../../../../require-external/require-external-function.type';
 import {
   extractRXAttributesFromReactiveHTMLAttribute,
   IMappedAttributes,
 } from '../../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import { generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement } from '../../helpers/generate-reactive-dom-js-lines-for-local-template-from-rx-container-element';
+import {
+  generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement,
+} from '../../helpers/generate-reactive-dom-js-lines-for-local-template-from-rx-container-element';
+
 import { generateReactiveDOMJSLinesForRXSwitchDefault } from './generate-reactive-dom-js-lines-for-rx-switch-default';
 
 const TAG_NAME: string = 'rx-switch-default';
@@ -21,9 +26,12 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   LOCAL_TEMPLATE_NAME,
 ]);
 
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines = IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement;
+
 export function transpileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines(
   node: Element,
   switchDefaultName: string,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const name: string = getTagName(node);
   if (name === TAG_NAME) {
@@ -43,8 +51,16 @@ export function transpileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines(
     removeAttribute(node, COMMAND_NAME);
 
     return scopeLines([
-      ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(node, LOCAL_TEMPLATE_NAME),
-      ...generateReactiveDOMJSLinesForRXSwitchDefault(switchDefaultName, LOCAL_TEMPLATE_NAME),
+      ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(
+        node,
+        LOCAL_TEMPLATE_NAME,
+        null,
+        requireExternalFunction,
+      ),
+      ...generateReactiveDOMJSLinesForRXSwitchDefault(
+        switchDefaultName,
+        LOCAL_TEMPLATE_NAME,
+      ),
     ]);
   } else {
     return null;

@@ -8,8 +8,8 @@ function onNodeConnectedTo(
 ): IObservable<boolean>
 ```
 
-This function detects when `node` is connected to `parentNode` (default: `document`). Its returns a Observable
-that emits *true* if the node is connected, else *false*.
+This function detects when `node` is connected to `parentNode` (default: `document`). Its returns a Observable that emits *true* if the node
+is connected, else *false*.
 
 ⚠️ This function only works if you use the rx-dom's build in functions to mutate the DOM:
 
@@ -30,8 +30,7 @@ onNodeConnectedTo(element, document.body)((connected: boolean) => {
 
 ### onNodeConnectedToWithImmediateCached
 
-Optimization of `onNodeConnectedTo` that share some internal context, to improve performances; and emits immediately the
-state of the node.
+Optimization of `onNodeConnectedTo` that share some internal context, to improve performances; and emits immediately the state of the node.
 
 ℹ️ you should prefer to use this particular function instead of `onNodeConnectedTo`.
 

@@ -1,9 +1,7 @@
 /**
  * Syntax:
  *  - prefixed: let-name
- */ import { dashCaseToCamelCase } from '../../../../../../misc/case-converters/dash-case';
-import { generateObjectPropertyEntry, IObjectPropertyEntry } from '../../../../../helpers/generate-object-properties-lines';
-
+ */
 
 export interface ILetProperty {
   readonly name: string;
@@ -28,12 +26,6 @@ export function extractLetPropertyFromReactiveHTMLAttribute(
       value: attribute.value.trim(),
     };
   }
-}
-
-export function convertLetPropertyToObjectPropertyEntry(
-  letProperty: ILetProperty,
-): IObjectPropertyEntry {
-  return generateObjectPropertyEntry(dashCaseToCamelCase(letProperty.name), letProperty.value);
 }
 
 

@@ -6,11 +6,15 @@ import { hasChildNodes } from '../../../../../../../light-dom/node/state/has-chi
 import { generateOptionalTemplateVariableName } from '../../../../../../helpers/generate-template-variable-name';
 import { scopeLines } from '../../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../../types/lines.type';
+import { IRequireExternalFunction } from '../../../../../require-external/require-external-function.type';
 import {
   extractRXAttributesFromReactiveHTMLAttribute,
   IMappedAttributes,
 } from '../../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import { generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement } from '../../helpers/generate-reactive-dom-js-lines-for-local-template-from-rx-container-element';
+import {
+  generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement,
+} from '../../helpers/generate-reactive-dom-js-lines-for-local-template-from-rx-container-element';
 import { generateReactiveDOMJSLinesForRXSwitchCase } from './generate-reactive-dom-js-lines-for-rx-switch-case';
 
 const TAG_NAME: string = 'rx-switch-case';
@@ -25,10 +29,13 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   LOCAL_TEMPLATE_NAME,
 ]);
 
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines = IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement;
+
 export function transpileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines(
   node: Element,
   switchMapName: string,
   existingSwitchCaseValues: Set<string>,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const name: string = getTagName(node);
   if (name === TAG_NAME) {
@@ -56,8 +63,17 @@ export function transpileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines(
     removeAttribute(node, COMMAND_NAME);
 
     return scopeLines([
-      ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(node, LOCAL_TEMPLATE_NAME),
-      ...generateReactiveDOMJSLinesForRXSwitchCase(switchMapName, caseValue, LOCAL_TEMPLATE_NAME),
+      ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(
+        node,
+        LOCAL_TEMPLATE_NAME,
+        null,
+        requireExternalFunction,
+      ),
+      ...generateReactiveDOMJSLinesForRXSwitchCase(
+        switchMapName,
+        caseValue,
+        LOCAL_TEMPLATE_NAME,
+      ),
     ]);
   } else {
     return null;

@@ -1,0 +1,4 @@
+export const REQUIRE_SET_REACTIVE_PROPERTY_PATH_CONSTANT = 'setReactivePropertyPath';
+
+export type IRequireSetReactivePropertyPathKey = typeof REQUIRE_SET_REACTIVE_PROPERTY_PATH_CONSTANT;
+

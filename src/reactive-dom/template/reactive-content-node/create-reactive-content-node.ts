@@ -1,11 +1,13 @@
 import { IObservable } from '@lifaon/rx-js-light';
-import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
-import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
+import { createReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
+import {
+  attachOptionalDocumentFragmentToReferenceNode,
+} from '../../../light-dom/node/create/reference-node/functions/attach/attach-optional-document-fragment-to-reference-node';
+import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/functions/move/move-nodes-with-reference-node';
+import { IReferenceNodeChildren } from '../../../light-dom/node/create/reference-node/reference-node-children.type';
+import { IReferenceNode } from '../../../light-dom/node/create/reference-node/reference-node.type';
 import { detachManyNodes } from '../../../light-dom/node/move/derived/batch/detach-many-nodes';
-import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
-import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
-import { attachOptionalTemplateFragment, IDocumentFragmentOrNull } from '../../../light-dom/template/attach-template';
-import { IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
+import { IDocumentFragmentOrNull } from '../../../light-dom/node/type/document-fragment-or-null.type';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { createIncrementalUUID } from '../../../misc/uuid/incremental-uuid';
 
@@ -19,7 +21,7 @@ export function createReactiveContentNode(
 ): IReferenceNode {
   const referenceNode: IReferenceNode = createReferenceNode(INCREMENTAL_REACTIVE_CONTENT_UUID(), transparent);
 
-  let nodes: IHTMLTemplateNodeList = [];
+  let nodes: IReferenceNodeChildren = [];
 
   moveNodesWithReferenceNode(
     referenceNode,
@@ -28,10 +30,9 @@ export function createReactiveContentNode(
 
   subscribeOnNodeConnectedTo<IDocumentFragmentOrNull>(referenceNode, subscribe, (fragment: IDocumentFragmentOrNull) => {
     detachManyNodes(nodes);
-    nodes = attachOptionalTemplateFragment(
+    nodes = attachOptionalDocumentFragmentToReferenceNode(
       fragment,
-      getParentNode(referenceNode) as IParentNode,
-      getNextSibling(referenceNode),
+      referenceNode,
     );
   });
 

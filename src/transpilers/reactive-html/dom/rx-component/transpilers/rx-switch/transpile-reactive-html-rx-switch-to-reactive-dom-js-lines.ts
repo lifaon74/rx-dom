@@ -2,13 +2,23 @@ import { getChildNodes } from '../../../../../../light-dom/node/properties/get-c
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { isElementNode } from '../../../../../../light-dom/node/type/is-element-node';
 import { ILines, ILinesOrNull } from '../../../../../types/lines.type';
+import { IRequireExternalFunction } from '../../../../require-external/require-external-function.type';
 import {
   extractRXAttributesFromReactiveHTMLAttribute,
   IMappedAttributes,
 } from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import { generateReactiveDOMJSLinesForRXSwitch } from './generate-reactive-dom-js-lines-for-rx-switch';
-import { transpileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines } from './rx-switch-case/transpile-reactive-html-rx-switch-case-to-reactive-dom-js-lines';
-import { transpileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines } from './rx-switch-default/transpile-reactive-html-rx-switch-default-to-reactive-dom-js-lines';
+import {
+  generateReactiveDOMJSLinesForRXSwitch,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForRXSwitch,
+} from './generate-reactive-dom-js-lines-for-rx-switch';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines,
+  transpileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines,
+} from './rx-switch-case/transpile-reactive-html-rx-switch-case-to-reactive-dom-js-lines';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines,
+  transpileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines,
+} from './rx-switch-default/transpile-reactive-html-rx-switch-default-to-reactive-dom-js-lines';
 import { SWITCH_DEFAULT_NAME } from './switch-default-name.constant';
 import { SWITCH_MAP_NAME } from './switch-map-name.constant';
 
@@ -20,8 +30,15 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   EXPRESSION_ATTRIBUTE_NAME,
 ]);
 
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchToReactiveDOMJSLines =
+  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines
+  | IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines
+  | IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForRXSwitch
+  ;
+
 export function transpileReactiveHTMLRXSwitchToReactiveDOMJSLines(
   node: Element,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLRXSwitchToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const name: string = getTagName(node);
   if (name === TAG_NAME) {
@@ -41,9 +58,9 @@ export function transpileReactiveHTMLRXSwitchToReactiveDOMJSLines(
     for (let i = 0, l = childNodes.length; i < l; i++) {
       const childNode: ChildNode = childNodes[i];
       if (isElementNode(childNode)) {
-        const result: ILinesOrNull = transpileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines(childNode, SWITCH_MAP_NAME, existingSwitchCaseValues);
+        const result: ILinesOrNull = transpileReactiveHTMLRXSwitchCaseToReactiveDOMJSLines(childNode, SWITCH_MAP_NAME, existingSwitchCaseValues, requireExternalFunction);
         if (result === null) {
-          const result: ILinesOrNull = transpileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines(childNode, SWITCH_DEFAULT_NAME);
+          const result: ILinesOrNull = transpileReactiveHTMLRXSwitchDefaultToReactiveDOMJSLines(childNode, SWITCH_DEFAULT_NAME, requireExternalFunction);
           if (result === null) {
             throw new Error(`Found invalid element '${getTagName(childNode)}'`);
           } else {
@@ -60,7 +77,13 @@ export function transpileReactiveHTMLRXSwitchToReactiveDOMJSLines(
       }
     }
 
-    return generateReactiveDOMJSLinesForRXSwitch(expression, childLines, SWITCH_MAP_NAME);
+    return generateReactiveDOMJSLinesForRXSwitch(
+      expression,
+      childLines,
+      requireExternalFunction,
+      SWITCH_MAP_NAME,
+      SWITCH_DEFAULT_NAME,
+    );
   } else {
     return null;
   }

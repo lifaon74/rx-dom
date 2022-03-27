@@ -1,18 +1,19 @@
-import { generateObjectPropertiesLines, IObjectProperties } from '../../../../../helpers/generate-object-properties-lines';
-import { indentLines } from '../../../../../helpers/lines-formatting-helpers';
-import { ILines } from '../../../../../types/lines.type';
+import { indentLines, optionalLines } from '../../../../../helpers/lines-formatting-helpers';
+import { ILines, ILinesOrNull } from '../../../../../types/lines.type';
 
 export function generateReactiveDOMJSLinesForRXTemplate(
-  lines: ILines,
-  constantsToImport?: IObjectProperties,
+  argumentsLines: ILinesOrNull,
+  bodyLines: ILinesOrNull,
 ): ILines {
   return [
     `(`,
-    ...indentLines(generateObjectPropertiesLines(constantsToImport, [])),
+    ...indentLines([
+      `parentNode,`,
+      ...optionalLines(argumentsLines),
+    ]),
     `) => {`,
     ...indentLines([
-      `const parentNode = createDocumentFragment();`,
-      ...lines,
+      ...optionalLines(bodyLines),
       `return parentNode;`,
     ]),
     `}`,

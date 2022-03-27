@@ -16,7 +16,7 @@ const EVENT_ATTRIBUTE_BRACKET_PATTERN: string = '\\(([^\\)]+)\\)';
 const EVENT_ATTRIBUTE_PREFIX_PATTERN: string = 'on-(.+)';
 const EVENT_ATTRIBUTE_PATTERN: string = `(?:${EVENT_ATTRIBUTE_BRACKET_PATTERN})`
   + `|(?:${EVENT_ATTRIBUTE_PREFIX_PATTERN})`;
-const EVENT_ATTRIBUTE_REGEXP: RegExp = new RegExp(`^${ EVENT_ATTRIBUTE_PATTERN }$`);
+const EVENT_ATTRIBUTE_REGEXP: RegExp = new RegExp(`^${EVENT_ATTRIBUTE_PATTERN}$`);
 
 export function extractEventPropertyFromReactiveHTMLAttribute(
   attribute: Attr,

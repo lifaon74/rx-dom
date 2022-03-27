@@ -1,4 +1,4 @@
-import { INullish, isNullish, IObservablePipe, mapObservablePipe } from '@lifaon/rx-js-light';
+import { INullish, IObservablePipe, isNullish, mapObservablePipe } from '@lifaon/rx-js-light';
 import { isValidCSSIdentifier } from '../../../../misc/tokenizers/css';
 
 /** TYPES **/
@@ -22,7 +22,7 @@ export type IClassNamesLike =
 /** FUNCTIONS **/
 
 /**
- * Expects iterable of well formed class names, or throws
+ * Expects iterable of well-formed class names, or throws
  */
 export function extractClassNamesFromIterator(
   iterator: Iterator<string>,
@@ -54,7 +54,7 @@ export function extractClassNamesFromIterable(
 }
 
 /**
- * Expects object having well formed class names as keys, or throws.
+ * Expects object having well-formed class names as keys, or throws.
  * Returns only class names where object[key] is true
  */
 export function extractClassNamesFromObject(
@@ -75,7 +75,7 @@ export function extractClassNamesFromObject(
 
 /**
  * Extracts a list of class names from a string.
- * Expects string of well formed class names (separated by spaces), or throws
+ * Expects string of well-formed class names (separated by spaces), or throws
  */
 export function extractClassNamesFromString(
   input: IClassNamesAsString,

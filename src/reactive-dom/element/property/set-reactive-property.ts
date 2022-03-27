@@ -1,30 +1,25 @@
 import { IObservable } from '@lifaon/rx-js-light';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
-import { searchCaseInsensitiveProperty } from './search-case-insensitive-property';
+import { searchCaseInsensitivePropertyOrThrow } from './search-case-insensitive-property';
 
 export function setReactiveProperty<GPropertyValue>(
   subscribe: IObservable<GPropertyValue>,
   node: Node,
-  name: string,
+  propertyKey: PropertyKey,
 ): void {
-  subscribeOnNodeConnectedTo(node, subscribe, (value: GPropertyValue) => {
-    node[name] = value;
+  subscribeOnNodeConnectedTo(node, subscribe, (value: GPropertyValue): void => {
+    node[propertyKey] = value;
   });
 }
 
 export function setCaseInsensitiveReactiveProperty(
   subscribe: IObservable<any>,
   node: Node,
-  name: string,
+  propertyKey: PropertyKey,
 ): void {
-  const _name: string | null = searchCaseInsensitiveProperty(name, node);
-  if (_name === null) {
-    console.warn(node);
-    throw new Error(`Missing property '${name}'`);
-  }
   return setReactiveProperty(
     subscribe,
     node,
-    _name,
+    searchCaseInsensitivePropertyOrThrow(propertyKey, node),
   );
 }

@@ -24,10 +24,10 @@ export function patchObjectMethod<// generics
 
   const patched = function(this: unknown, ...args: unknown[]): unknown {
     if (isPatching()) {
-      return (native as IGenericFunction).apply(this, args);
+      return (native as unknown as IGenericFunction).apply(this, args);
     } else {
       startPatching();
-      const result: unknown = (newFunction as IGenericFunction).apply(this, args);
+      const result: unknown = (newFunction as unknown as IGenericFunction).apply(this, args);
       endPatching();
       return result;
     }
@@ -37,7 +37,7 @@ export function patchObjectMethod<// generics
     ...Object.getOwnPropertyDescriptor(patched, 'name'),
     value: methodName,
   });
-  patched.toString = (native as IGenericFunction).toString.bind(native);
+  patched.toString = (native as unknown as IGenericFunction).toString.bind(native);
 
-  obj[methodName] = patched as GObject[GMethodName];
+  obj[methodName] = patched as unknown as GObject[GMethodName];
 }

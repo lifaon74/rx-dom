@@ -1,0 +1,10 @@
+import { IHTMLTemplate } from '../../../../light-dom/template/html-template.type';
+import { IRawComponentTemplateFunctionArguments } from './raw-component-template-function.type';
+
+export type IRawComponentTemplateFunctionArgumentsWithImportsAsLastArgument<GData extends object> = [
+  ...IRawComponentTemplateFunctionArguments<GData>,
+  object, // what to import
+];
+
+export type IRawComponentTemplateFunctionWithImportsAsLastArgument<GData extends object> = IHTMLTemplate<IRawComponentTemplateFunctionArgumentsWithImportsAsLastArgument<GData>>;
+

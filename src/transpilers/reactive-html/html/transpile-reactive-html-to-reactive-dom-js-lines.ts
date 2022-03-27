@@ -1,9 +1,18 @@
 import { getChildNodes } from '../../../light-dom/node/properties/get-child-nodes';
 import { ILinesOrNull } from '../../types/lines.type';
-import { transpileReactiveHTMLNodesToReactiveDOMJSLines } from '../dom/nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines,
+  transpileReactiveHTMLNodesToReactiveDOMJSLines,
+} from '../dom/nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
+import { IRequireExternalFunction } from '../require-external/require-external-function.type';
+
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLToReactiveDOMJSLines =
+  | IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines
+  ;
 
 export function transpileReactiveHTMLToReactiveDOMJSLines(
   html: string,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const document: Document = new DOMParser()
     .parseFromString(
@@ -22,5 +31,5 @@ export function transpileReactiveHTMLToReactiveDOMJSLines(
   //   'text/html',
   //   // 'application/xhtml+xml'
   // );
-  return transpileReactiveHTMLNodesToReactiveDOMJSLines(getChildNodes(document.body));
+  return transpileReactiveHTMLNodesToReactiveDOMJSLines(getChildNodes(document.body), requireExternalFunction);
 }

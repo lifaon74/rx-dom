@@ -1,53 +1,12 @@
-import { ILines } from '../types/lines.type';
+import { ILines, ILinesOrNull } from '../types/lines.type';
 import { indentLines } from './lines-formatting-helpers';
 
-export type IObjectPropertyEntry = [propertyName: string, propertyValue: string | ILines];
+export type IObjectPropertyEntry = [
+  propertyName: string,
+  propertyValue: string,
+];
+
 export type IObjectProperties = IObjectPropertyEntry[];
-
-export function generateObjectPropertiesLines(
-  entries: IObjectProperties = [],
-  onEmpty: ILines = [`{}`],
-): ILines {
-  if (entries.length === 0) {
-    return onEmpty;
-  } else {
-    return [
-      `{`,
-      ...indentLines(
-        entries
-          .map(([propertyName, propertyValue]: IObjectPropertyEntry): ILines => {
-
-            const propertyValueLines: ILines = (typeof propertyValue === 'string')
-              ? (
-                (
-                  (propertyName === propertyValue)
-                  || (propertyValue.trim() === '')
-                )
-                  ? []
-                  : [propertyValue]
-              )
-              : propertyValue;
-
-            const length: number = propertyValueLines.length;
-
-            return (length === 0)
-              ? [`${propertyName},`]
-              : (
-                (length === 1)
-                  ? [`${propertyName}: ${propertyValueLines[0]},`]
-                  : [
-                    `${propertyName}: ${propertyValueLines[0]}`,
-                    ...propertyValueLines.slice(1, -1),
-                    `${propertyValueLines[length - 1]},`,
-                  ]
-              );
-          })
-          .flat(),
-      ),
-      `}`,
-    ];
-  }
-}
 
 export function generateObjectPropertyEntry(
   propertyName: string,
@@ -59,13 +18,43 @@ export function generateObjectPropertyEntry(
   ];
 }
 
-export function generateObjectPropertiesFromLinearProperties(
-  propertyNames: readonly string[],
-): IObjectProperties {
-  return propertyNames.map((propertyName: string) => {
-    return [propertyName, propertyName];
-  });
+export function generateObjectPropertiesLines(
+  properties: IObjectProperties,
+): ILines {
+  return properties
+    .map(([propertyName, propertyValue]: IObjectPropertyEntry): string => {
+      const value: string = ((propertyName === propertyValue) || (propertyValue === ''))
+        ? ''
+        : `: ${propertyValue}`;
+      return `${propertyName}${value},`;
+    });
 }
 
+export function generateFullNonEmptyObjectPropertiesLines(
+  properties: IObjectProperties,
+  trailing: string = '',
+): ILines {
+  return [
+    `{`,
+    ...indentLines(generateObjectPropertiesLines(properties)),
+    `}${trailing}`,
+  ];
+}
 
+export function generateFullObjectPropertiesLines(
+  properties: IObjectProperties,
+  trailing: string = '',
+): ILines {
+  return (properties.length === 0)
+    ? [`{}${trailing}`]
+    : generateFullNonEmptyObjectPropertiesLines(properties, trailing);
+}
 
+export function generateFullOptionalObjectPropertiesLines(
+  properties: IObjectProperties,
+  trailing?: string,
+): ILinesOrNull {
+  return (properties.length === 0)
+    ? null
+    : generateFullNonEmptyObjectPropertiesLines(properties, trailing);
+}

@@ -1,25 +1,31 @@
-import { isHTMLElement } from '../../type/is-html-element';
 import { INodeModifierFunction } from '../node/node-modifier-function.type';
 import { IGenericHTMLElementModifierFunction, IHTMLElementModifierFunction } from './html-element-modifier-function.type';
 
-/** INFER **/
+export type IHTMLElementModifierFunctionToElementModifierFunction<GHTMLElementModifierFunction extends IGenericHTMLElementModifierFunction> =
+  GHTMLElementModifierFunction extends IHTMLElementModifierFunction<infer GArguments, infer GOutElement>
+    ? INodeModifierFunction<GArguments, GOutElement>
+    : never;
 
-export type IHTMLElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction extends IGenericHTMLElementModifierFunction> =
-  GHTMLElementModifierFunction extends IHTMLElementModifierFunction<infer GArguments, infer GNode>
-    ? INodeModifierFunction<GArguments, GNode>
-    : never
-  ;
+// export function htmlElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction extends IGenericHTMLElementModifierFunction>(
+//   modify: GHTMLElementModifierFunction,
+// ): IHTMLElementModifierFunctionToElementModifierFunction<GHTMLElementModifierFunction> {
+//   return ((
+//     node: Element,
+//     ...args: InferHTMLElementModifierFunctionGArguments<GHTMLElementModifierFunction>
+//   ): InferHTMLElementModifierFunctionGOutElement<GHTMLElementModifierFunction> => {
+//     if (isHTMLElement(node)) {
+//       return modify(node as HTMLElement, ...args) as InferHTMLElementModifierFunctionGOutElement<GHTMLElementModifierFunction>;
+//     } else {
+//       throw new Error(`Not an HTMLElement`);
+//     }
+//   }) as unknown as IHTMLElementModifierFunctionToElementModifierFunction<GHTMLElementModifierFunction>;
+// }
 
-/** FUNCTION **/
-
+/**
+ * Fast version
+ */
 export function htmlElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction extends IGenericHTMLElementModifierFunction>(
-  callback: GHTMLElementModifierFunction,
-): IHTMLElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction> {
-  return ((node: Node, ...args: any[]): Node => {
-    if (isHTMLElement(node)) {
-      return callback(node, ...args);
-    } else {
-      throw new Error(`Not an HTMLElement`);
-    }
-  }) as IHTMLElementModifierFunctionToNodeModifierFunction<GHTMLElementModifierFunction>;
+  modify: GHTMLElementModifierFunction,
+): IHTMLElementModifierFunctionToElementModifierFunction<GHTMLElementModifierFunction> {
+  return modify as unknown as IHTMLElementModifierFunctionToElementModifierFunction<GHTMLElementModifierFunction>;
 }

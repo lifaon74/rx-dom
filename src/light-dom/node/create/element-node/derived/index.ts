@@ -1,2 +1,3 @@
-export * from './generate-create-element-function-with-custom-elements';
-export * from './generate-create-element-function-with-router-outlet';
+export * from './types/index';
+export * from './generate-create-custom-element-function-from-custom-elements-list';
+

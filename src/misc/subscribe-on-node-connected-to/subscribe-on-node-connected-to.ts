@@ -1,4 +1,4 @@
-import { IObserver, IObservable, IUnsubscribe } from '@lifaon/rx-js-light';
+import { IObservable, IObserver, IUnsubscribe } from '@lifaon/rx-js-light';
 import { onNodeConnectedToWithImmediateCached } from '../../light-dom/node/state/on-node-connected-to/on-node-connected-to';
 import { getTopParentNode } from '../get-top-parent-node';
 

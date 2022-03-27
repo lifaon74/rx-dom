@@ -3,17 +3,24 @@ import { hasAttribute } from '../../../../../../light-dom/attribute/has-attribut
 import { removeAttribute } from '../../../../../../light-dom/attribute/remove-attribute';
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-nodes';
-import { generateObjectPropertiesLines, IObjectProperties } from '../../../../../helpers/generate-object-properties-lines';
+import { generateFullOptionalObjectPropertiesLines, IObjectProperties } from '../../../../../helpers/generate-object-properties-lines';
 import { generateTemplateVariableName } from '../../../../../helpers/generate-template-variable-name';
 import { scopeLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
+import { IRequireExternalFunction } from '../../../../require-external/require-external-function.type';
 import {
   extractRXAttributesFromReactiveHTMLAttribute,
   IMappedAttributes,
 } from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import { generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement } from '../helpers/generate-reactive-dom-js-lines-for-local-template-from-rx-container-element';
+import {
+  generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement,
+} from '../helpers/generate-reactive-dom-js-lines-for-local-template-from-rx-container-element';
 import { extractRXForLoopCommand, IRXForLoopCommand } from './extract-rx-for-loop-command';
-import { generateReactiveDOMJSLinesForRXForLoop } from './generate-reactive-dom-js-lines-for-rx-for-loop';
+import {
+  generateReactiveDOMJSLinesForRXForLoop,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForRXForLoop,
+} from './generate-reactive-dom-js-lines-for-rx-for-loop';
 
 /*
 Syntax:
@@ -65,9 +72,15 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   TRACK_BY_ATTRIBUTE_NAME,
 ]);
 
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLRXForLoopToReactiveDOMJSLines =
+  | IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForRXForLoop
+  | IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement
+  ;
+
 // export function compileRXForLoop(
 export function transpileReactiveHTMLRXForLoopToReactiveDOMJSLines(
   node: Element,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLRXForLoopToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const name: string = getTagName(node);
   if (name === TAG_NAME) {
@@ -97,7 +110,8 @@ export function transpileReactiveHTMLRXForLoopToReactiveDOMJSLines(
     return generateReactiveDOMJSLinesForRXForLoop(
       items,
       generateTemplateVariableName(template),
-      generateObjectPropertiesLines(options),
+      generateFullOptionalObjectPropertiesLines(options, ','),
+      requireExternalFunction,
     );
   } else if (hasAttribute(node, COMMAND_NAME)) {
     const command: IRXForLoopCommand = extractRXForLoopCommand(getAttributeValue(node, COMMAND_NAME) as string);
@@ -108,19 +122,29 @@ export function transpileReactiveHTMLRXForLoopToReactiveDOMJSLines(
       options.push(['trackBy', command.trackBy]);
     }
 
-    const constantsToImport: IObjectProperties = [];
+    const properties: IObjectProperties = [];
 
     if (command.item !== void 0) {
-      constantsToImport.push(['item', command.item]);
+      properties.push(['item', command.item]);
     }
 
     if (command.index !== void 0) {
-      constantsToImport.push(['index', command.index]);
+      properties.push(['index', command.index]);
     }
 
     return scopeLines([
-      ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(node, LOCAL_TEMPLATE_NAME, constantsToImport),
-      ...generateReactiveDOMJSLinesForRXForLoop(command.items, LOCAL_TEMPLATE_NAME, generateObjectPropertiesLines(options)),
+      ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(
+        node,
+        LOCAL_TEMPLATE_NAME,
+        generateFullOptionalObjectPropertiesLines(properties, ','),
+        requireExternalFunction,
+      ),
+      ...generateReactiveDOMJSLinesForRXForLoop(
+        command.items,
+        LOCAL_TEMPLATE_NAME,
+        generateFullOptionalObjectPropertiesLines(options, ','),
+        requireExternalFunction,
+      ),
     ]);
   } else {
     return null;

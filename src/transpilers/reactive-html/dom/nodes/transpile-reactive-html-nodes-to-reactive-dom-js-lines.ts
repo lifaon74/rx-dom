@@ -1,7 +1,19 @@
-import { createGenericToLinesIteratorTranspilerWithAsyncReference } from '../../../helpers/iterator-transpiler/create-generic-to-lines-iterator-transpiler-with-async-reference';
-import { transpileReactiveHTMLGenericNodesToReactiveDOMJSLines } from './transpilers/transpile-reactive-html-generic-nodes-to-reactive-dom-js-lines';
+import {
+  createGenericToLinesIteratorTranspilerWithAsyncReference,
+} from '../../../helpers/iterator-transpiler/create-generic-to-lines-iterator-transpiler-with-async-reference';
+import { IRequireExternalFunction } from '../../require-external/require-external-function.type';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLGenericNodesToReactiveDOMJSLines,
+  transpileReactiveHTMLGenericNodesToReactiveDOMJSLines,
+} from './transpilers/transpile-reactive-html-generic-nodes-to-reactive-dom-js-lines';
 
-export const transpileReactiveHTMLNodesToReactiveDOMJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ArrayLike<Node>]>(() => [
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines =
+  | IRequireExternalFunctionKeyForTranspileReactiveHTMLGenericNodesToReactiveDOMJSLines
+  ;
+
+type IRequireExternalFunctionForTranspileReactiveHTMLNodesToReactiveDOMJSLines = IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines>;
+
+export const transpileReactiveHTMLNodesToReactiveDOMJSLines = createGenericToLinesIteratorTranspilerWithAsyncReference<[ArrayLike<Node>, IRequireExternalFunctionForTranspileReactiveHTMLNodesToReactiveDOMJSLines]>(() => [
   transpileReactiveHTMLGenericNodesToReactiveDOMJSLines,
 ]);
 

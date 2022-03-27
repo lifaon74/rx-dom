@@ -1,11 +1,4 @@
-import {
-  IObserver,
-  IObservable,
-  IUnsubscribe,
-  noop,
-  pipeObservable,
-  shareObservablePipe,
-} from '@lifaon/rx-js-light';
+import { IObservable, IObserver, IUnsubscribe, noop, pipeObservable, shareObservablePipe } from '@lifaon/rx-js-light';
 import { getDocument } from '../../explore/get-document';
 import { nodeContains } from '../../explore/node-contains';
 import { nodeContainsTraversingShadowDOM } from '../../explore/node-contains-traversing-shadow-dom';

@@ -1,20 +1,22 @@
-import { createMulticastReplayLastSource, distinctObserverPipe, IObserver, ISource, IObservable } from '@lifaon/rx-js-light';
+import { createMulticastReplayLastSource, distinctObserverPipe, IObservable, IObserver, ISource } from '@lifaon/rx-js-light';
 import { createDocumentFragment } from '../../../light-dom/node/create/create-document-fragment';
-import { createReferenceNode, IReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
-import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/move-nodes-with-reference-node';
+import { createReferenceNode } from '../../../light-dom/node/create/reference-node/create-reference-node';
+import { moveNodesWithReferenceNode } from '../../../light-dom/node/create/reference-node/functions/move/move-nodes-with-reference-node';
+import { IReferenceNodeChildren } from '../../../light-dom/node/create/reference-node/reference-node-children.type';
+import { IReferenceNode } from '../../../light-dom/node/create/reference-node/reference-node.type';
 import { attachManyNodes } from '../../../light-dom/node/move/derived/batch/attach-many-nodes';
 import { attachNode } from '../../../light-dom/node/move/node/attach/attach-node';
 import { detachNodeHavingParent } from '../../../light-dom/node/move/node/detach/derived/detach-node-having-parent';
 import { getChildNodes } from '../../../light-dom/node/properties/get-child-nodes';
 import { getNextSibling } from '../../../light-dom/node/properties/get-next-sibling';
 import { getParentNode, IParentNode } from '../../../light-dom/node/properties/get-parent-node';
-import { IHTMLTemplate, IHTMLTemplateNodeList } from '../../../light-dom/template/template.type';
+import { IReactiveHTMLTemplate } from '../../../light-dom/template/reactive-html-template.type';
 import { subscribeOnNodeConnectedTo } from '../../../misc/subscribe-on-node-connected-to/subscribe-on-node-connected-to';
 import { createIncrementalUUID } from '../../../misc/uuid/incremental-uuid';
 import { trackByIdentity } from './track-by-identity';
 
 interface INodesAndIndex {
-  nodes: IHTMLTemplateNodeList | DocumentFragment;
+  nodes: IReferenceNodeChildren | DocumentFragment;
   index: IObserver<number>;
 }
 
@@ -106,7 +108,7 @@ function generateNodesForReactiveForLoopNode<GItem>(
 
       // create current nodes from the fragment and the index source
       nodesAndIndex = {
-        nodes: template({ item, index: indexSource.subscribe }),
+        nodes: template(createDocumentFragment(), { item, index: indexSource.subscribe }),
         index: distinctObserverPipe<number>()(indexSource.emit),
       };
     }
@@ -137,7 +139,7 @@ function detachNodesOfTrackByMap(
   while (!(trackByMapIteratorResult = trackByMapIterator.next()).done) {
     const nodeList: INodesAndIndex[] = trackByMapIteratorResult.value;
     for (let i = 0, li = nodeList.length; i < li; i++) {
-      const nodes: IHTMLTemplateNodeList = nodeList[i].nodes as IHTMLTemplateNodeList;
+      const nodes: IReferenceNodeChildren = nodeList[i].nodes as IReferenceNodeChildren;
       for (let j = 0, lj = nodes.length; j < lj; j++) {
         detachNodeHavingParent(nodes[j]);
         // console.log('detach node', nodes[j]);
@@ -158,7 +160,7 @@ function detachNodesOfTrackByMap(
 function attachNodesForReactiveForLoopNode(
   nodesAndIndexList: INodesAndIndex[],
   referenceNode: Node,
-): IHTMLTemplateNodeList {
+): IReferenceNodeChildren {
   const allNodes: ChildNode[] = [];
   const fragmentContainer: DocumentFragment = createDocumentFragment();
 
@@ -190,14 +192,14 @@ function attachNodesForReactiveForLoopNode(
 function moveNodesForReactiveForLoopNode(
   nodesAndIndexList: INodesAndIndex[],
   referenceNode: Node,
-): IHTMLTemplateNodeList {
+): IReferenceNodeChildren {
   const allNodes: ChildNode[] = [];
   const parentNode: IParentNode = getParentNode(referenceNode) as IParentNode;
 
   for (let i = 0, li = nodesAndIndexList.length; i < li; i++) {
     const nodesAndIndex: INodesAndIndex = nodesAndIndexList[i];
     nodesAndIndex.index(i);
-    let nodes: IHTMLTemplateNodeList | DocumentFragment = nodesAndIndex.nodes;
+    let nodes: IReferenceNodeChildren | DocumentFragment = nodesAndIndex.nodes;
 
     if (Array.isArray(nodes)) {
       const length: number = nodes.length;
@@ -224,12 +226,12 @@ function moveNodesForReactiveForLoopNode(
 
 interface IUpdateNodesForReactiveForLoopNodeReturn {
   readonly currentTrackByMap: ITrackByMap; // the trackByMap generated
-  readonly nodes: IHTMLTemplateNodeList; // the list of nodes
+  readonly nodes: IReferenceNodeChildren; // the list of nodes
 }
 
 function updateNodesForReactiveForLoopNode<GItem>(
   referenceNode: Node,
-  previousNodes: IHTMLTemplateNodeList,
+  previousNodes: IReferenceNodeChildren,
   previousTrackByMap: ITrackByMap,
   template: IReactiveForLoopNodeTemplate<GItem>,
   items: Iterable<GItem>,
@@ -250,7 +252,7 @@ function updateNodesForReactiveForLoopNode<GItem>(
   const detached: number = detachNodesOfTrackByMap(previousTrackByMap);
 
   // refresh DOM
-  const nodes: IHTMLTemplateNodeList = (detached === previousNodes.length)
+  const nodes: IReferenceNodeChildren = (detached === previousNodes.length)
     ? attachNodesForReactiveForLoopNode(nodesAndIndexList, referenceNode)
     : moveNodesForReactiveForLoopNode(nodesAndIndexList, referenceNode);
 
@@ -267,7 +269,7 @@ export type IReactiveForLoopNodeTemplateArgument<GItem> = {
   index: IObservable<number>;
 };
 
-export type IReactiveForLoopNodeTemplate<GItem> = IHTMLTemplate<IReactiveForLoopNodeTemplateArgument<GItem>>;
+export type IReactiveForLoopNodeTemplate<GItem> = IReactiveHTMLTemplate<IReactiveForLoopNodeTemplateArgument<GItem>>;
 
 export interface IReactiveForLoopNodeTrackByFunction<GItem> {
   (item: GItem): any;
@@ -291,7 +293,7 @@ export function createReactiveForLoopNode<GItem, GTrackByValue>(
   const referenceNode: IReferenceNode = createReferenceNode(INCREMENTAL_FOR_LOOP_UUID(), transparent);
 
   let previousTrackByMap: ITrackByMap = createTrackByMap();
-  let nodes: IHTMLTemplateNodeList = [];
+  let nodes: IReferenceNodeChildren = [];
 
   moveNodesWithReferenceNode(
     referenceNode,

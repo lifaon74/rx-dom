@@ -1,10 +1,11 @@
 import { freeze } from '@lifaon/rx-js-light';
 import { defineCustomElement } from '../../light-dom/custom-element/define-custom-element';
-import { attachNodeChildrenToNewDocumentFragment } from '../../light-dom/node/move/derived/batch/attach-node-children-to-new-document-fragment';
+import {
+  attachNodeChildrenToNewDocumentFragment,
+} from '../../light-dom/node/move/derived/batch/attach-node-children-to-new-document-fragment';
 import { HTMLElementConstructor } from '../../light-dom/types/html-element-constructor.type';
 import { isFunction } from '../../misc/is/is-function';
 import { injectComponentStyles } from '../component-style/misc/inject-component-style';
-import { injectComponentTemplate } from '../component-template/misc/inject-component-template';
 import { IComponentOptions } from './component-options.type';
 import { IComponent } from './component.type';
 
@@ -28,8 +29,7 @@ function initComponent<GData extends object>(
   }
 
   if (template !== void 0) {
-    injectComponentTemplate(
-      template,
+    template(
       instance,
       data,
       attachNodeChildrenToNewDocumentFragment(instance),
@@ -48,7 +48,10 @@ export function componentFactory<GBaseClass extends HTMLElementConstructor, GDat
 
     constructor(...args: any[]) {
       super(...args);
-      initComponent<GData>(this, options);
+      // delegates DOM update (style and content) after the element is fully created
+      queueMicrotask(() => {
+        initComponent<GData>(this, options);
+      });
     }
   };
 

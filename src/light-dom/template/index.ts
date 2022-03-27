@@ -1,3 +1,3 @@
-export * from './attach-template';
+export * from './html-template.type';
 export * from './is-html-template';
-export * from './template.type';
+export * from './reactive-html-template.type';

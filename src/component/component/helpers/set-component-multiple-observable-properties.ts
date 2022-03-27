@@ -1,5 +1,5 @@
-import { ISource, IObservable } from '@lifaon/rx-js-light';
-import { IHavingObservableProperty, defineObservableProperty } from './define-observable-property';
+import { IObservable, ISource } from '@lifaon/rx-js-light';
+import { defineObservableProperty, IHavingObservableProperty } from './define-observable-property';
 
 export type IObservableProperty<GName extends string, GValue> = [name: GName, value: GValue];
 export type IGenericObservableProperty = IObservableProperty<string, any>;

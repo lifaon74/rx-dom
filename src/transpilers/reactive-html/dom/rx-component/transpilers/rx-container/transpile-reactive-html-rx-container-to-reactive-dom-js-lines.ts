@@ -1,7 +1,11 @@
 import { getChildNodes } from '../../../../../../light-dom/node/properties/get-child-nodes';
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
 import { ILinesOrNull } from '../../../../../types/lines.type';
-import { transpileReactiveHTMLNodesToReactiveDOMJSLines } from '../../../nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
+import { IRequireExternalFunction } from '../../../../require-external/require-external-function.type';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines,
+  transpileReactiveHTMLNodesToReactiveDOMJSLines,
+} from '../../../nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
 
 /*
 Syntax:
@@ -15,11 +19,14 @@ Syntax:
 
 const TAG_NAME: string = 'rx-container';
 
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLRXContainerToReactiveDOMJSLines = IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines;
+
 export function transpileReactiveHTMLRXContainerToReactiveDOMJSLines(
   node: Element,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLRXContainerToReactiveDOMJSLines>,
 ): ILinesOrNull {
   if (isRXContainer(node)) {
-    return transpileReactiveHTMLNodesToReactiveDOMJSLines(getChildNodes(node));
+    return transpileReactiveHTMLNodesToReactiveDOMJSLines(getChildNodes(node), requireExternalFunction);
   } else {
     return null;
   }

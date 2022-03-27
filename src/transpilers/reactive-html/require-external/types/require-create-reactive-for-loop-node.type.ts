@@ -1,0 +1,4 @@
+export const REQUIRE_CREATE_REACTIVE_FOR_LOOP_NODE_CONSTANT = 'createReactiveForLoopNode';
+
+export type IRequireCreateReactiveForLoopNodeKey = typeof REQUIRE_CREATE_REACTIVE_FOR_LOOP_NODE_CONSTANT;
+

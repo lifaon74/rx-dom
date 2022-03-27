@@ -1,16 +1,17 @@
 import { getChildNodes } from '../../../../../../light-dom/node/properties/get-child-nodes';
 import { getTagName } from '../../../../../../light-dom/node/properties/get-tag-name';
-import { IObjectProperties } from '../../../../../helpers/generate-object-properties-lines';
-import { indentLines, optionalLines } from '../../../../../helpers/lines-formatting-helpers';
-import { ILinesOrNull } from '../../../../../types/lines.type';
-import { transpileReactiveHTMLNodesToReactiveDOMJSLines } from '../../../nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
-import {
-  convertLetPropertyToObjectPropertyEntry,
-  extractLetPropertyFromReactiveHTMLAttribute,
-  ILetProperty,
-} from '../helpers/extract-let-property-from-reactive-html-attribute';
-import { generateReactiveDOMJSLinesForRXTemplate } from './generate-reactive-dom-js-lines-for-rx-template';
+import { generateFullOptionalObjectPropertiesLines } from '../../../../../helpers/generate-object-properties-lines';
 import { generateTemplateVariableName } from '../../../../../helpers/generate-template-variable-name';
+import { indentLines } from '../../../../../helpers/lines-formatting-helpers';
+import { ILinesOrNull } from '../../../../../types/lines.type';
+import { IRequireExternalFunction } from '../../../../require-external/require-external-function.type';
+import {
+  IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines,
+  transpileReactiveHTMLNodesToReactiveDOMJSLines,
+} from '../../../nodes/transpile-reactive-html-nodes-to-reactive-dom-js-lines';
+import { convertLetPropertyToObjectPropertyEntry } from '../helpers/convert-let-property-to-object-property-entry';
+import { extractLetPropertyFromReactiveHTMLAttribute, ILetProperty } from '../helpers/extract-let-property-from-reactive-html-attribute';
+import { generateReactiveDOMJSLinesForRXTemplate } from './generate-reactive-dom-js-lines-for-rx-template';
 
 /*
 Syntax:
@@ -27,13 +28,16 @@ Syntax:
 
 const TEMPLATE_NAME_ATTRIBUTE_NAME: string = 'name';
 
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLRXTemplateToReactiveDOMJSLines = IRequireExternalFunctionKeyForTranspileReactiveHTMLNodesToReactiveDOMJSLines;
+
 export function transpileReactiveHTMLRXTemplateToReactiveDOMJSLines(
   node: Element,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLRXTemplateToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const name: string = getTagName(node);
   if (name === 'rx-template') {
     let templateName!: string;
-    const constantsToImports: IObjectProperties = [];
+    const letProperties: ILetProperty[] = [];
 
     const attributes: Attr[] = Array.from(node.attributes);
     for (let i = 0, l = attributes.length; i < l; i++) {
@@ -51,7 +55,7 @@ export function transpileReactiveHTMLRXTemplateToReactiveDOMJSLines(
           throw new Error(`Found invalid attribute '${attribute.name}'`);
         }
       } else {
-        constantsToImports.push(convertLetPropertyToObjectPropertyEntry(letProperty));
+        letProperties.push(letProperty);
       }
     }
 
@@ -59,13 +63,21 @@ export function transpileReactiveHTMLRXTemplateToReactiveDOMJSLines(
       throw new Error(`Missing a name for this template`);
     }
 
-    const transpiledChildren: ILinesOrNull = transpileReactiveHTMLNodesToReactiveDOMJSLines(getChildNodes(node));
+    const letPropertiesLines: ILinesOrNull = generateFullOptionalObjectPropertiesLines(
+      letProperties.map(convertLetPropertyToObjectPropertyEntry),
+      ',',
+    );
+
+    const transpiledChildren: ILinesOrNull = transpileReactiveHTMLNodesToReactiveDOMJSLines(
+      getChildNodes(node),
+      requireExternalFunction,
+    );
 
     return [
       `// template`,
       `const ${generateTemplateVariableName(templateName)} = (`,
       ...indentLines(
-        generateReactiveDOMJSLinesForRXTemplate(optionalLines(transpiledChildren), constantsToImports),
+        generateReactiveDOMJSLinesForRXTemplate(letPropertiesLines, transpiledChildren),
       ),
       `);`,
     ];

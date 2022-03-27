@@ -1,7 +1,7 @@
 // import { INullish, IObservablePipe, mapObservablePipe } from '@lifaon/rx-js-light';
 // import { createStyleElement, getCSSStyleSheetOfStyleElement } from '../../../../component';
 // import { IStylesMap } from './styles-map.type';
-import { IStylePropertyObjectWithOptionalPriorityOrNull } from '../../../../light-dom/style/style-property.type';
+import { IStylePropertyObjectWithOptionalPriorityOrNull } from '../../../../light-dom/style/types/style-property-object.type';
 
 // /** TYPES **/
 //

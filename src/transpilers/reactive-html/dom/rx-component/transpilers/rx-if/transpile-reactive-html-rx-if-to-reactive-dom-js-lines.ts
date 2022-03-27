@@ -6,12 +6,19 @@ import { hasChildNodes } from '../../../../../../light-dom/node/state/has-child-
 import { generateOptionalTemplateVariableName } from '../../../../../helpers/generate-template-variable-name';
 import { scopeLines } from '../../../../../helpers/lines-formatting-helpers';
 import { ILinesOrNull } from '../../../../../types/lines.type';
+import { IRequireExternalFunction } from '../../../../require-external/require-external-function.type';
 import {
   extractRXAttributesFromReactiveHTMLAttribute,
   IMappedAttributes,
 } from '../helpers/extract-rx-attributes-from-reactive-html-attribute';
-import { generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement } from '../helpers/generate-reactive-dom-js-lines-for-local-template-from-rx-container-element';
-import { generateReactiveDOMJSLinesForRXIf } from './generate-reactive-dom-js-lines-for-rx-if';
+import {
+  generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement,
+} from '../helpers/generate-reactive-dom-js-lines-for-local-template-from-rx-container-element';
+import {
+  generateReactiveDOMJSLinesForRXIf,
+  IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForRXIf,
+} from './generate-reactive-dom-js-lines-for-rx-if';
 
 /*
 Syntax:
@@ -62,8 +69,14 @@ const ATTRIBUTE_NAMES: Set<string> = new Set<string>([
   TEMPLATE_FALSE_ATTRIBUTE_NAME,
 ]);
 
+export type IRequireExternalFunctionKeyForTranspileReactiveHTMLRXIfToReactiveDOMJSLines =
+  | IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForRXIf
+  | IRequireExternalFunctionKeyForGenerateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement
+  ;
+
 export function transpileReactiveHTMLRXIfToReactiveDOMJSLines(
   node: Element,
+  requireExternalFunction: IRequireExternalFunction<IRequireExternalFunctionKeyForTranspileReactiveHTMLRXIfToReactiveDOMJSLines>,
 ): ILinesOrNull {
   const name: string = getTagName(node);
   if (name === TAG_NAME) {
@@ -91,14 +104,25 @@ export function transpileReactiveHTMLRXIfToReactiveDOMJSLines(
       condition,
       generateOptionalTemplateVariableName(templateTrue),
       generateOptionalTemplateVariableName(templateFalse),
+      requireExternalFunction,
     );
   } else if (hasAttribute(node, COMMAND_NAME)) {
     const condition: string = getAttributeValue(node, COMMAND_NAME) as string;
     removeAttribute(node, COMMAND_NAME);
 
     return scopeLines([
-      ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(node, LOCAL_TEMPLATE_NAME),
-      ...generateReactiveDOMJSLinesForRXIf(condition, LOCAL_TEMPLATE_NAME, 'null'),
+      ...generateReactiveDOMJSLinesForLocalTemplateFromRXContainerElement(
+        node,
+        LOCAL_TEMPLATE_NAME,
+        null,
+        requireExternalFunction,
+      ),
+      ...generateReactiveDOMJSLinesForRXIf(
+        condition,
+        LOCAL_TEMPLATE_NAME,
+        'null',
+        requireExternalFunction,
+      ),
     ]);
   } else {
     return null;

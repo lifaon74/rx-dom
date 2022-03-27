@@ -1,10 +1,8 @@
-
 export function generateTemplateVariableName(
   templateName: string,
 ): string {
   return `template_${templateName}`;
 }
-
 
 const NULL_TEMPLATE: string = 'null';
 

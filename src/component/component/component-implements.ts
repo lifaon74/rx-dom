@@ -1,4 +1,3 @@
-
 /**
  * Called immediately when a new Component is created,
  *  - INFO: use it to return the data to inject into your template
